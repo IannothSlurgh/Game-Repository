@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+	<style>
+	img
+	{
+		display: block;
+	}
+	img.tile
+	{
+		display: block;
+		width: 605px;
+		height: 605px;
+		position:absolute;
+		left:20px;
+		top:20px;
+	}
+	img.tile2
+	{
+		display: block;
+		width: 257px;
+		height: 470px;
+		position:absolute;
+		left:645px;
+		top:20px;
+	}
+	.on_top
+	{
+		position:absolute;
+		z-index:1;
+	}
+	p.stat_player_turn
+	{
+		left: 748px;
+		top: 20px;
+	}
+	p.stat_hp
+	{
+		left: 728px;
+		top: 200px;	
+	}
+	p.stat_damage
+	{
+		left: 823px;
+		top: 200px;	
+	}
+	p.stat_movement
+	{
+		left: 728px;
+		top: 250px;		
+	}
+	p.stat_range
+	{
+		left: 823px;
+		top: 250px;	
+	}
+	p.stat_ability
+	{
+		left: 733px;
+		top: 330px;	
+	}
+	p.stat_log
+	{
+		left: 733px;
+		top: 420px;	
+	}
+	img.stat_icon
+	{
+		width: 92px;
+		height: 82px;
+		left: 723px;
+		top: 66px;
+	}
+	</style>
+	<body>
+	<img id = "grid" class = "tile" src = "grid.gif" />
+	<img id = "next" class = "tile2" src = "next.gif" />
+	<p id = "stat_player_turn class" class = "on_top stat_player_turn"> Annoth </p>
+	<p id = "stat_hp" class = "on_top stat_hp"> 10 </p>
+	<p id = "stat_damage" class = "on_top stat_damage"> 10 </p>
+	<p id = "stat_movement" class = "on_top stat_movement"> 10 </p>
+	<p id = "stat_range" class = "on_top stat_range"> 10 </p>
+	<p id = "stat_ability" class = "on_top stat_ability"> No Ability </p>
+	<p id = "stat_log" class = "on_top stat_log"> Log </p>
+	<img id = "stat_icon" class = "on_top stat_icon" src = "test2.gif"  />
+	<div id="div_tiles"> </div>
+	</body>
+	<script>
+	var this_player, player_1, player_2, player_3, player_4;
+	//({"src":null, "xcoor":null, "ycoor":null, "health":null, "damage":null, "range":null, "movement":null "can_move":null})
+	var player_1_units = new Array();
+	var player_2_units = new Array();
+	var player_3_units = new Array();
+	var player_4_units = new Array();
+	var events_locked = false;
+	var last_event =
+	{
+		type:null,
+		action:null,
+		xcoor:null,
+		ycoor:null
+	};
+	
+	//Makes finding selected unit easier.
+	var selected_unit =
+	{
+		owner:null,
+		arr_index:null
+	};
+	//var ws = new WebSocket("");
+	
+	function addTile(xcoor, ycoor)
+	{
+		var id = "X"+xcoor.toString()+"Y"+ycoor.toString();
+		addImage(id, "test2.gif", 23+43*xcoor, 23+43*ycoor, 1, 40, 40);
+	}
+	
+	function addImage(id, src, left, top, z, width, height)
+	{
+		try{
+			var img_new = document.createElement("img");
+			img_new.id=id;
+			img_new.src=src;
+			img_new.style.display="block";
+			img_new.style.position="absolute";
+			img_new.style.top=top.toString()+"px";
+			img_new.style.left=left.toString()+"px";
+			img_new.style.zIndex=z.toString();
+			img_new.style.width=width.toString()+"px";
+			img_new.style.height=height.toString()+"px";
+			var div_tiles = document.getElementById("div_tiles");
+			if(div_tiles==null)
+			{
+				alert("Uh");
+			}
+			div_tiles.appendChild(img_new);
+		}
+		catch(err)
+		{
+			alert(err);
+		}
+	}
+	
+	function findUnitList(player_name)
+	{
+		var unit_list;
+		if(player_name==player_1)
+		{
+			unit_list = player_1_units;
+		}
+		else if(player_name==player_2)
+		{
+			unit_list = player_2_units
+		}
+		else if(player_name==player_3)
+		{
+			unit_list = player_3_units
+		}
+		else if(player_name==player_4)
+		{
+			unit_list = player_4_units
+		}
+		return unit_list;
+	}
+	
+	function clearSelection()
+	{
+		selected_unit.owner = null;
+		selected_unit.arr_index = null;
+		document.getElementById("stat_hp").innerhtml = "";
+		document.getElementById("stat_damage").innerhtml = "";
+		document.getElementById("stat_movement").innerhtml = "";
+		document.getElementById("stat_range").innerhtml = "";
+		document.getElementById("stat_ability").innerhtml = "";
+		document.getElementById("stat_log").innerhtml = "";
+		document.getElementById("stat_icon").src = "";
+	}
+	
+	function changeStatsGraphical(stats)
+	{
+		if(stats.src!=null)
+		{
+			document.getElementById("stat_icon").src = stats.src;
+		}
+		if(stats.health!=null)
+		{
+			document.getElementById("stat_hp").innerhtml = stats.health.toString();
+		}
+		if(stats.damage!=null)
+		{
+			document.getElementById("stat_damage").innerhtml = stats.health.toString();
+		}
+		if(stats.range!=null)
+		{
+			document.getElementById("stat_range").innerhtml = stats.health.toString();
+		}
+		if(stats.movement!=null)
+		{
+			document.getElementById("stat_movement").innerhtml = stats.health.toString();
+		}
+	}
+	
+	function select(xcoor, ycoor, unit_owner)
+	{
+		var src = "";
+		var health = 0;
+		var movement = 0;
+		var damage = 0;
+		var range = 0;
+		var unit_list;
+		var stats =
+		{
+			src:null,
+			health:null,
+			movement:null,
+			damage:null,
+			range:null
+		};
+		selected_unit.owner = unit_owner;
+		unit_list = findUnitList(unit_owner);
+		for(var i = 0; i < unit_list.length; ++i)
+		{
+			if(unit_list[i].xcoor == xcoor)
+			{
+				if(unit_list[i].ycoor == ycoor)
+				{
+					stats.src = unit_list[i].src;
+					stats.health = unit_list[i].health;
+					stats.movement = unit_list[i].movement;
+					stats.damage = unit_list[i].damage;
+					stats.range = unit_list[i].range;
+					
+					selected_unit.arr_index = i;
+				}
+			}
+		}
+		changeStatsGraphical(stats);
+	}
+	
+	function endturn(nextPlayer)
+	{
+		if(nextPlayer == this_player)
+		{
+			events_locked = false;
+		}
+		else
+		{
+			events_locked = true;
+		}
+		document.stat_player_turn.innerhtml = nextPlayer;
+		clearSelection();
+	}
+	
+	function move(xcoor, ycoor)
+	{
+		var unit_list = findUnitList(selected_unit.owner);
+		unit_list[selected_unit.arr_index].xcoor = xcoor;
+		unit_list[selected_unit.arr_index].ycoor = ycoor;
+		//Do graphical changes.
+	}
+	
+	function sendEvent(action, xcoor, ycoor)
+	{
+		if(! events_locked || action == "Exit" )
+		{
+			events_locked = true;
+			try
+			{
+				var client_event = 
+				{
+					"type":"Event",
+					"action":action,
+					"xcoor":xcoor,
+					"ycoor":ycoor
+				};
+				//ws.send(JSON.stringify(client_event));
+				if(! action == "Exit")
+				{
+					last_event.type="Event";
+					last_event.action=action;
+					last_event.xcoor=xcoor;
+					last_event.ycoor=ycoor;
+				}
+			}
+			catch(err)
+			{
+				events_locked = false;
+			}
+		}
+	}
+	
+	function translateServerMessage(message)
+	{
+		try
+		{
+			var decrypted = JSON.parse(message.data);
+			if(decrypted.type == "Confirmation")
+			{
+				if(decrypted.success)
+				{
+					if(decrypted.action == "Select")
+					{
+						select(last_event.xcoor, last_event.ycoor, decrypted.whoSecondary);
+					}
+					else if(decrypted.action == "Endturn")
+					{
+						endTurn(decrypted.whoSecondary);
+					}
+				}
+				events_locked = false;
+			}
+			else if(decrypted.type == "Notification")
+			{
+			}
+		}
+		catch(err)
+		{
+		}
+	}
+	//ws.onmessage = translateServerMessage;
+	alert("Hello");
+	//addImage("x0y0", "test2.gif", 100, 100, 1, 40, 40);
+	for(var i = 0; i<14; ++i)
+	{
+		for(var j = 0; j<14; ++j)
+		{
+			addTile(i,j);
+		}
+	}
+	</script>
+</html>
