@@ -71,8 +71,8 @@
 	}
 	</style>
 	<body>
-	<img id = "grid" class = "tile" src = "grid.gif" />
-	<img id = "next" class = "tile2" src = "next.gif" />
+	<img id = "grid" class = "tile" src = "grid.gif" ondragstart = "return false" ondrop = "return false"/>
+	<img id = "next" class = "tile2 no_drag" src = "next.gif" ondragstart = "return false" ondrop = "return false"/>
 	<p id = "stat_player_turn class" class = "on_top stat_player_turn"> Annoth </p>
 	<p id = "stat_hp" class = "on_top stat_hp"> 10 </p>
 	<p id = "stat_damage" class = "on_top stat_damage"> 10 </p>
@@ -80,13 +80,17 @@
 	<p id = "stat_range" class = "on_top stat_range"> 10 </p>
 	<p id = "stat_ability" class = "on_top stat_ability"> No Ability </p>
 	<p id = "stat_log" class = "on_top stat_log"> Log </p>
-	<img id = "stat_icon" class = "on_top stat_icon" src = "test2.gif"  />
+	<img id = "stat_icon" class = "on_top stat_icon" src = "test2.gif" ondragstart = "return false" ondrop = "return false" />
+	
 	<div id="div_tiles"> </div>
 	</body>
 	<script>
 	var this_player, player_1, player_2, player_3, player_4;
 	//({"src":null, "xcoor":null, "ycoor":null, "health":null, "damage":null, "range":null, "movement":null "can_move":null})
 	var player_1_units = new Array();
+	player_1_units.push({src:"goblin-icon.png", xcoor:null, ycoor:null, health:2, damage:1, range:2, movement:2, can_move:true, can_attack:true});
+	player_1 = "Annoth";
+	this_player = "Annoth"
 	var player_2_units = new Array();
 	var player_3_units = new Array();
 	var player_4_units = new Array();
@@ -97,7 +101,9 @@
 		action:null,
 		xcoor:null,
 		ycoor:null
-	};
+	};	
+	
+	var count = 0;
 	
 	//Makes finding selected unit easier.
 	var selected_unit =
@@ -107,15 +113,50 @@
 	};
 	//var ws = new WebSocket("");
 	
+	function getTeamColor(player_name)
+	{
+		if(player_name == player_1)
+		{
+			return "blue";
+		}
+		else if(player_name == player_2)
+		{
+			return "teal"
+		}
+		else if(player_name == player_3)
+		{
+			return "orange"
+		}
+		else if(player_name == player_4)
+		{
+			return "purple"
+		}
+	}
+	
+	function getAbsoluteFromGrid(coor)
+	{
+		return 23+43*coor;
+	}
+	
 	function addTile(xcoor, ycoor)
 	{
 		var id = "X"+xcoor.toString()+"Y"+ycoor.toString();
-		addImage(id, "test2.gif", 23+43*xcoor, 23+43*ycoor, 1, 40, 40);
+		try
+		{
+		addImage(id, "test2.gif", getAbsoluteFromGrid(xcoor), getAbsoluteFromGrid(ycoor), 1, 40, 40);
+		document.getElementById(id).onclick = function() { sendEvent("Lclick", xcoor, ycoor); return false; };
+		document.getElementById(id).oncontextmenu = function() { sendEvent("Rclick", xcoor, ycoor); return false; };
+		}
+		catch(err)
+		{
+		alert(err);
+		}
 	}
 	
 	function addImage(id, src, left, top, z, width, height)
 	{
-		try{
+		try
+		{
 			var img_new = document.createElement("img");
 			img_new.id=id;
 			img_new.src=src;
@@ -126,16 +167,30 @@
 			img_new.style.zIndex=z.toString();
 			img_new.style.width=width.toString()+"px";
 			img_new.style.height=height.toString()+"px";
+			img_new.ondragstart=function(){return false;};
+			img_new.ondrop=function(){return false;};
 			var div_tiles = document.getElementById("div_tiles");
-			if(div_tiles==null)
-			{
-				alert("Uh");
-			}
 			div_tiles.appendChild(img_new);
 		}
 		catch(err)
 		{
 			alert(err);
+		}
+	}
+	
+	function moveSelectionBox(xcoor, ycoor)
+	{
+		var border_width = 3;
+		var selection_box = document.getElementById("selection");
+		if(selection_box == null)
+		{
+			addImage("selection", "selection.png", getAbsoluteFromGrid(xcoor)-border_width, getAbsoluteFromGrid(ycoor)-border_width, 3, 46, 46);
+		}
+		else
+		{
+			selection_box.style.left = (getAbsoluteFromGrid(xcoor)-border_width).toString()+"px";
+			selection_box.style.top = (getAbsoluteFromGrid(ycoor)-border_width).toString()+"px";
+			selection_box.style.display="block";
 		}
 	}
 	
@@ -165,13 +220,14 @@
 	{
 		selected_unit.owner = null;
 		selected_unit.arr_index = null;
-		document.getElementById("stat_hp").innerhtml = "";
-		document.getElementById("stat_damage").innerhtml = "";
-		document.getElementById("stat_movement").innerhtml = "";
-		document.getElementById("stat_range").innerhtml = "";
-		document.getElementById("stat_ability").innerhtml = "";
-		document.getElementById("stat_log").innerhtml = "";
+		document.getElementById("stat_hp").innerHTML = "";
+		document.getElementById("stat_damage").innerHTML = "";
+		document.getElementById("stat_movement").innerHTML = "";
+		document.getElementById("stat_range").innerHTML = "";
+		document.getElementById("stat_ability").innerHTML = "";
+		document.getElementById("stat_log").innerHTML = "";
 		document.getElementById("stat_icon").src = "";
+		document.getElementById("selection").style.display="none";
 	}
 	
 	function changeStatsGraphical(stats)
@@ -182,19 +238,19 @@
 		}
 		if(stats.health!=null)
 		{
-			document.getElementById("stat_hp").innerhtml = stats.health.toString();
+			document.getElementById("stat_hp").innerHTML = stats.health.toString();
 		}
 		if(stats.damage!=null)
 		{
-			document.getElementById("stat_damage").innerhtml = stats.health.toString();
+			document.getElementById("stat_damage").innerHTML = stats.damage.toString();
 		}
 		if(stats.range!=null)
 		{
-			document.getElementById("stat_range").innerhtml = stats.health.toString();
+			document.getElementById("stat_range").innerHTML = stats.range.toString();
 		}
 		if(stats.movement!=null)
 		{
-			document.getElementById("stat_movement").innerhtml = stats.health.toString();
+			document.getElementById("stat_movement").innerHTML = stats.movement.toString();
 		}
 	}
 	
@@ -233,6 +289,7 @@
 			}
 		}
 		changeStatsGraphical(stats);
+		moveSelectionBox(xcoor, ycoor);
 	}
 	
 	function endturn(nextPlayer)
@@ -245,20 +302,54 @@
 		{
 			events_locked = true;
 		}
-		document.stat_player_turn.innerhtml = nextPlayer;
+		document.stat_player_turn.innerHTML = nextPlayer;
 		clearSelection();
+	}
+	
+	function place(xcoor, ycoor, player_name, nth_unit)
+	{
+		var unit_list = findUnitList(player_name);
+		unit_list[nth_unit].xcoor = xcoor;
+		unit_list[nth_unit].ycoor = ycoor;
+		var tile = document.getElementById("X"+xcoor.toString()+"Y"+ycoor.toString());
+		tile.src = unit_list[nth_unit].src;
+		var color = getTeamColor(player_name);
+		addImage(color+nth_unit.toString(), "team_color_"+color+".png", getAbsoluteFromGrid(xcoor), getAbsoluteFromGrid(ycoor), 0, 40, 40);
+	}
+	
+	function moveTeamColor(xcoor, ycoor)
+	{
+		var color = getTeamColor(selected_unit.owner);
+		var team_color = document.getElementById(color+selected_unit.arr_index.toString());
+		team_color.style.top = getAbsoluteFromGrid(ycoor).toString()+"px";
+		team_color.style.left = getAbsoluteFromGrid(xcoor).toString()+"px";
 	}
 	
 	function move(xcoor, ycoor)
 	{
 		var unit_list = findUnitList(selected_unit.owner);
+		var original_xcoor = unit_list[selected_unit.arr_index].xcoor;
+		var original_ycoor = unit_list[selected_unit.arr_index].ycoor;
+		var original_tile = document.getElementById("X"+original_xcoor+"Y"+original_ycoor);
+		var new_tile = document.getElementById("X"+xcoor+"Y"+ycoor);
 		unit_list[selected_unit.arr_index].xcoor = xcoor;
 		unit_list[selected_unit.arr_index].ycoor = ycoor;
-		//Do graphical changes.
+		original_tile.src="test2.gif";
+		new_tile.src = unit_list[selected_unit.arr_index].src;
+		moveSelectionBox(xcoor, ycoor);
+		moveTeamColor(xcoor, ycoor);
 	}
 	
 	function sendEvent(action, xcoor, ycoor)
 	{
+		if(selected_unit.owner == null)
+		{
+			select(xcoor, ycoor, "Annoth");
+		}
+		else
+		{
+			move(xcoor, ycoor);
+		}
 		if(! events_locked || action == "Exit" )
 		{
 			events_locked = true;
@@ -285,6 +376,7 @@
 				events_locked = false;
 			}
 		}
+		++count;
 	}
 	
 	function translateServerMessage(message)
@@ -316,8 +408,6 @@
 		}
 	}
 	//ws.onmessage = translateServerMessage;
-	alert("Hello");
-	//addImage("x0y0", "test2.gif", 100, 100, 1, 40, 40);
 	for(var i = 0; i<14; ++i)
 	{
 		for(var j = 0; j<14; ++j)
@@ -325,5 +415,7 @@
 			addTile(i,j);
 		}
 	}
+	alert("Hello");
+	place(0,0,"Annoth",0);
 	</script>
 </html>
