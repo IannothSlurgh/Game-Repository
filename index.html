@@ -1,0 +1,825 @@
+<!--
+This page implements a simple chat room client, to illustrate WebSocket with
+socket.io and node.js.
+-->
+
+	<style>
+	img
+	{
+		display: block;
+	}
+	img.tile
+	{
+		display: none;
+		width: 605px;
+		height: 605px;
+		position:absolute;
+		left:20px;
+		top:20px;
+	}
+	img.tile2
+	{
+		display: none;
+		width: 257px;
+		height: 470px;
+		position:absolute;
+		left:645px;
+		top:20px;
+	}
+	.midground
+	{
+		position:absolute;
+	}
+	.on_top
+	{
+		position:absolute;
+		z-index:1;
+	}
+	p.stat_player_turn
+	{
+		display: none;
+		left: 748px;
+		top: 20px;
+	}
+	p.stat_hp
+	{
+		display: none;
+		left: 728px;
+		top: 200px;	
+	}
+	p.stat_damage
+	{
+		display: none;
+		left: 823px;
+		top: 200px;	
+	}
+	p.stat_movement
+	{
+		display: none;
+		left: 728px;
+		top: 250px;		
+	}
+	p.stat_range
+	{
+		display: none;
+		left: 823px;
+		top: 250px;	
+	}
+	p.stat_ability
+	{
+		display: none;
+		left: 733px;
+		top: 330px;	
+	}
+	p.stat_log
+	{
+		display: none;
+		left: 733px;
+		top: 420px;	
+	}
+	img.stat_icon
+	{
+		display: none;
+		width: 92px;
+		height: 82px;
+		left: 723px;
+		top: 66px;
+	}
+	img.stat_end_turn
+	{
+		display: none;
+		left: 711px;
+		top: 397px;
+		width: 108px;
+		height: 35px;
+	}
+	</style>
+	<body>
+	<img id = "grid" class = "tile" src = "http://i.imgur.com/aHE7pRt.gif" ondragstart = "return false" ondrop = "return false"/>
+	<img id = "next" class = "tile2" src = "http://imgur.com/V0EIP4O.gif" ondragstart = "return false" ondrop = "return false"/>
+	<p id = "stat_player_turn" class = "on_top stat_player_turn"> </p>
+	<p id = "stat_hp" class = "on_top stat_hp"></p>
+	<p id = "stat_damage" class = "on_top stat_damage"></p>
+	<p id = "stat_movement" class = "on_top stat_movement"></p>
+	<p id = "stat_range" class = "on_top stat_range"></p>
+	<p id = "stat_ability" class = "on_top stat_ability"> </p>
+	<p id = "stat_log" class = "on_top stat_log"></p>
+	<img id = "stat_icon" class = "on_top stat_icon" src = "http://i.imgur.com/ubwIthk.gif" ondragstart = "return false" ondrop = "return false" />
+	<img id = "stat_end_turn" class = "on_top stat_end_turn" src = "http://imgur.com/AEI8M7q.png" ondragstart = "return false" ondrop = "return false" oncontextmenu = "return false" />
+	
+	<div id="div_tiles"> </div>
+	</body>
+	<script>
+	//({"src":null, "xcoor":null, "ycoor":null, "health":null, "damage":null, "range":null, "movement":null "can_move":null})
+	var this_player_name = null;
+	var events_locked = false;
+	var player_1 =
+	{
+		unit_list:[],
+		name:null
+	};
+	var player_2 =
+	{
+		unit_list:[],
+		name:null		
+	};
+	var player_3 =
+	{
+		unit_list:[],
+		name:null
+	};
+	var player_4 =
+	{
+		unit_list:[],
+		name:null		
+	};
+	var last_event =
+	{
+		type:null,
+		action:null,
+		xcoor:null,
+		ycoor:null
+	};		
+	//Makes finding selected unit easier.
+	var selected_unit =
+	{
+		owner:null,
+		arr_index:null
+	};
+	//var ws = new WebSocket("");
+	player_1.unit_list.push({src:"http://i.imgur.com/5SeUpMM.png", xcoor:null, ycoor:null, health:2, damage:1, range:2, movement:2, can_move:true, can_attack:true});
+	player_1.name = "Annoth";
+	this_player_name = "Annoth";
+	player_2.unit_list.push({src:"http://i.imgur.com/5SeUpMM.png", xcoor:null, ycoor:null, health:2, damage:1, range:2, movement:2, can_move:true, can_attack:true});
+	player_2.name = "Pyrosox";
+	
+	var count = 0;
+	
+	function getTeamColor(player_name)
+	{
+		if(player_name == player_1.name)
+		{
+			return "blue";
+		}
+		else if(player_name == player_2.name)
+		{
+			return "teal"
+		}
+		else if(player_name == player_3.name)
+		{
+			return "orange"
+		}
+		else if(player_name == player_4.name)
+		{
+			return "purple"
+		}
+	}
+	
+	function getAbsoluteFromGrid(coor)
+	{
+		return 23+43*coor;
+	}
+	
+	function addTile(xcoor, ycoor)
+	{
+		var id = "X"+xcoor.toString()+"Y"+ycoor.toString();
+		try
+		{
+		addImage(id, "http://i.imgur.com/ubwIthk.gif", getAbsoluteFromGrid(xcoor), getAbsoluteFromGrid(ycoor), 1, 40, 40);
+		document.getElementById(id).onclick = function() { sendEvent("Lclick", xcoor, ycoor); return false; };
+		document.getElementById(id).oncontextmenu = function() { sendEvent("Rclick", xcoor, ycoor); return false; };
+		}
+		catch(err)
+		{
+		alert(err);
+		}
+	}
+	
+	function addImage(id, src, left, top, z, width, height)
+	{
+		try
+		{
+			var img_new = document.createElement("img");
+			img_new.id=id;
+			img_new.src=src;
+			img_new.style.display="block";
+			img_new.style.position="absolute";
+			img_new.style.top=top.toString()+"px";
+			img_new.style.left=left.toString()+"px";
+			img_new.style.zIndex=z.toString();
+			img_new.style.width=width.toString()+"px";
+			img_new.style.height=height.toString()+"px";
+			img_new.ondragstart=function(){return false;};
+			img_new.ondrop=function(){return false;};
+			var div_tiles = document.getElementById("div_tiles");
+			div_tiles.appendChild(img_new);
+		}
+		catch(err)
+		{
+			alert(err);
+		}
+	}
+	
+	function moveSelectionBox(xcoor, ycoor)
+	{
+		var border_width = 3;
+		var selection_box = document.getElementById("selection");
+		if(selection_box == null)
+		{
+			addImage("selection", "http://imgur.com/VSv5AOI.png", getAbsoluteFromGrid(xcoor)-border_width, getAbsoluteFromGrid(ycoor)-border_width, 3, 46, 46);
+		}
+		else
+		{
+			selection_box.style.left = (getAbsoluteFromGrid(xcoor)-border_width).toString()+"px";
+			selection_box.style.top = (getAbsoluteFromGrid(ycoor)-border_width).toString()+"px";
+			selection_box.style.display="block";
+		}
+	}
+	
+	function findUnitList(player_name)
+	{
+		var unit_list;
+		if(player_name==player_1.name)
+		{
+			unit_list = player_1.unit_list;
+		}
+		else if(player_name==player_2.name)
+		{
+			unit_list = player_2.unit_list;
+		}
+		else if(player_name==player_3.name)
+		{
+			unit_list = player_3.unit_list;
+		}
+		else if(player_name==player_4.name)
+		{
+			unit_list = player_4.unit_list;
+		}
+		return unit_list;
+	}
+	
+	function findUnit(player_name, xcoor, ycoor)
+	{
+		var unit_list = findUnitList(player_name);
+		for(var i = 0; i<unit_list.length; ++i)
+		{
+			if(unit_list[i].xcoor == xcoor)
+			{
+				if(unit_list[i].ycoor == ycoor)
+				{
+					return unit_list[i];
+				}
+			}
+		}
+		return null;
+	}
+	
+	function clearSelection()
+	{
+		selected_unit.owner = null;
+		selected_unit.arr_index = null;
+		document.getElementById("stat_hp").innerHTML = "";
+		document.getElementById("stat_damage").innerHTML = "";
+		document.getElementById("stat_movement").innerHTML = "";
+		document.getElementById("stat_range").innerHTML = "";
+		document.getElementById("stat_ability").innerHTML = "";
+		document.getElementById("stat_log").innerHTML = "";
+		document.getElementById("stat_icon").src = "";
+		document.getElementById("selection").style.display="none";
+	}
+	
+	function changeStatsGraphical(stats)
+	{
+		if(stats.src!=null)
+		{
+			document.getElementById("stat_icon").src = stats.src;
+		}
+		if(stats.health!=null)
+		{
+			document.getElementById("stat_hp").innerHTML = stats.health.toString();
+		}
+		if(stats.damage!=null)
+		{
+			document.getElementById("stat_damage").innerHTML = stats.damage.toString();
+		}
+		if(stats.range!=null)
+		{
+			document.getElementById("stat_range").innerHTML = stats.range.toString();
+		}
+		if(stats.movement!=null)
+		{
+			document.getElementById("stat_movement").innerHTML = stats.movement.toString();
+		}
+	}
+	
+	function select(xcoor, ycoor, unit_owner)
+	{
+		var src = "";
+		var health = 0;
+		var movement = 0;
+		var damage = 0;
+		var range = 0;
+		var unit_list;
+		var stats =
+		{
+			src:null,
+			health:null,
+			movement:null,
+			damage:null,
+			range:null
+		};
+		selected_unit.owner = unit_owner;
+		unit_list = findUnitList(unit_owner);
+		for(var i = 0; i < unit_list.length; ++i)
+		{
+			if(unit_list[i].xcoor == xcoor)
+			{
+				if(unit_list[i].ycoor == ycoor)
+				{
+					stats.src = unit_list[i].src;
+					stats.health = unit_list[i].health;
+					stats.movement = unit_list[i].movement;
+					stats.damage = unit_list[i].damage;
+					stats.range = unit_list[i].range;
+					
+					selected_unit.arr_index = i;
+				}
+			}
+		}
+		changeStatsGraphical(stats);
+		moveSelectionBox(xcoor, ycoor);
+	}
+	
+	function endTurn(nextPlayer)
+	{
+		alert("trigger");
+		if(nextPlayer == this_player_name)
+		{
+			events_locked = false;
+		}
+		else
+		{
+			events_locked = true;
+		}
+		document.getElementById("stat_player_turn").innerHTML = nextPlayer+"\'s turn";
+		clearSelection();
+	}
+	
+	function place(xcoor, ycoor, player_name, nth_unit)
+	{
+		var unit_list = findUnitList(player_name);
+		unit_list[nth_unit].xcoor = xcoor;
+		unit_list[nth_unit].ycoor = ycoor;
+		var tile = document.getElementById("X"+xcoor.toString()+"Y"+ycoor.toString());
+		tile.src = unit_list[nth_unit].src;
+		var color = getTeamColor(player_name);
+		if(color == "blue")
+		{
+			addImage(color+nth_unit.toString(), "http://imgur.com/0naGZPu.png", getAbsoluteFromGrid(xcoor), getAbsoluteFromGrid(ycoor), 0, 40, 40);
+		}
+		if(color == "teal")
+		{
+			addImage(color+nth_unit.toString(), "http://imgur.com/2uaKXfL.png", getAbsoluteFromGrid(xcoor), getAbsoluteFromGrid(ycoor), 0, 40, 40);
+		}
+	}
+	
+	function moveTeamColor(xcoor, ycoor)
+	{
+		var color = getTeamColor(selected_unit.owner);
+		var team_color = document.getElementById(color+selected_unit.arr_index.toString());
+		team_color.style.top = getAbsoluteFromGrid(ycoor).toString()+"px";
+		team_color.style.left = getAbsoluteFromGrid(xcoor).toString()+"px";
+	}
+	
+	function move(xcoor, ycoor)
+	{
+		var unit_list = findUnitList(selected_unit.owner);
+		var original_xcoor = unit_list[selected_unit.arr_index].xcoor;
+		var original_ycoor = unit_list[selected_unit.arr_index].ycoor;
+		var original_tile = document.getElementById("X"+original_xcoor+"Y"+original_ycoor);
+		var new_tile = document.getElementById("X"+xcoor+"Y"+ycoor);
+		unit_list[selected_unit.arr_index].xcoor = xcoor;
+		unit_list[selected_unit.arr_index].ycoor = ycoor;
+		original_tile.src="http://i.imgur.com/ubwIthk.gif";
+		new_tile.src = unit_list[selected_unit.arr_index].src;
+		moveSelectionBox(xcoor, ycoor);
+		moveTeamColor(xcoor, ycoor);
+	}
+	
+	function attack(xcoor, ycoor, secondary_player, attacker_health, defender_health)
+	{
+		var attacker = findUnitList(selected_unit.owner)[selected_unit.arr_index];
+		var defender = findUnit(secondary_player, xcoor, ycoor);
+		defender.health = defender_health;
+		attacker.health = attacker_health;
+		if(defender_health <= 0)
+		{
+			document.getElementById("X"+xcoor+"Y"+ycoor).src = "http://i.imgur.com/ubwIthk.gif";
+		}
+		if(attacker_health <= 0)
+		{
+			document.getElementById("X"+attacker.xcoor+"Y"+attacker.ycoor).src = "http://i.imgur.com/ubwIthk.gif";
+			var color_id = getTeamColor(selected_unit.owner)+selected_unit.arr_index;
+		}
+	}
+	
+	function sendEvent(action, xcoor, ycoor)
+	{
+		/*if(selected_unit.owner == null)
+		{
+			if(xcoor == 0)
+			{
+				select(xcoor, ycoor, "Annoth");
+			}
+			else if(xcoor != null)
+			{
+				select(xcoor, ycoor, "Pyrosox");
+			}
+		}
+		else
+		{
+			if(xcoor != null)
+			{
+				move(xcoor, ycoor);
+			}
+			else
+			{
+				endTurn("Pyrosox");
+			}
+		}*/
+		
+		if(! events_locked || action == "Exit" )
+		{
+			events_locked = true;
+			try
+			{
+				var client_event = 
+				{
+					"type":"Event",
+					"action":action,
+					"xcoor":xcoor,
+					"ycoor":ycoor
+				};
+				//ws.send(JSON.stringify(client_event));
+				if(! action == "Exit")
+				{
+					last_event.type="Event";
+					last_event.action=action;
+					last_event.xcoor=xcoor;
+					last_event.ycoor=ycoor;
+				}
+			}
+			catch(err)
+			{
+				events_locked = false;
+			}
+		}
+	}
+	
+	socket.on
+	( 'phaseIIIservermessage',
+		function translateServerMessage(message)
+		{
+			try
+			{
+				var decrypted = JSON.parse(message.data);
+				if(decrypted.type == "Confirmation")
+				{
+					if(decrypted.success)
+					{
+						if(decrypted.action == "Select")
+						{
+							select(last_event.xcoor, last_event.ycoor, decrypted.whoSecondary);
+						}
+						else if(decrypted.action == "Endturn")
+						{
+							endTurn(decrypted.whoSecondary);
+						}
+						else if(decrypted.action == "Move")
+						{
+							move(decrypted.xcoor, decrypted.ycoor);
+						}
+						else if(decrypted.action == "Attack")
+						{
+							attack(decrypted.xcoor, decrypted.ycoor, decrypted.whoSecondary, decrypted.healthSelf, decrypted.healthTarget);
+						}
+						else if(decrypted.action == "Place")
+						{
+							place(decrypted.xcoor, decrypted.ycoor, this_player_name);
+						}
+					}
+					events_locked = false;
+				}
+				else if(decrypted.type == "Notification")
+				{
+					if(decrypted.action == "Select")
+					{
+						select(last_event.xcoor, last_event.ycoor, decrypted.whoSecondary);
+					}
+					else if(decrypted.action == "Endturn")
+					{
+						endTurn(decrypted.whoSecondary);
+					}
+					else if(decrypted.action == "Move")
+					{
+						move(decrypted.xcoor, decrypted.ycoor);
+					}
+					else if(decrypted.action == "Attack")
+					{
+						attack(decrypted.xcoor, decrypted.ycoor, decrypted.whoSecondary, decrypted.healthSelf, decrypted.healthTarget);
+					}
+					else if(decrypted.action == "Place")
+					{
+						place(decrypted.xcoor, decrypted.ycoor, decrypted.whoPrimary);
+					}
+				}
+			}
+			catch(err)
+			{
+			}
+		}
+	);
+		
+		function init()
+		{
+			for(var i = 0; i<14; ++i)
+			{
+				for(var j = 0; j<14; ++j)
+				{
+					addTile(i,j);
+				}
+			}
+			document.getElementById("stat_end_turn").onclick = function(){ sendEvent("Endturn", null, null); };
+			place(0,0,"Annoth",0);
+			place(13,13,"Pyrosox",0);
+			document.getElementById("stat_end_turn").style.display = "block";
+			document.getElementById("stat_hp").style.display = "block";
+			document.getElementById("stat_damage").style.display = "block";
+			document.getElementById("stat_movement").style.display = "block";
+			document.getElementById("stat_range").style.display = "block";
+			document.getElementById("stat_icon").style.display = "block";
+			document.getElementById("stat_log").style.display = "block";
+			document.getElementById("stat_ability").style.display = "block";
+			document.getElementById("grid").style.display = "block";
+			document.getElementById("next").style.display = "block";
+			
+			//Hide
+			document.getElementById("loggedin").style.display = "none";
+			document.getElementById("board").style.display = "none";
+			document.getElementById("msg").style.display = "none";
+			document.getElementById("send").style.display = "none";
+			document.getElementById("start_button").style.display = "none";
+		}
+	
+	//ws.onmessage = translateServerMessage;
+	//attack(0, 0, 0, 0, 0);
+	//End merger
+	</script>
+
+<style>
+body {
+  font-family: sans-serif;
+}
+
+#status {
+  font-size: 14pt;
+  color: gray;
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+#board {
+  width: 800px;
+  height: 600px;
+  border: 1px solid gray;
+  padding: 3px;
+}
+
+#board div {
+  margin-top: 5px;
+}
+
+#loggedin {
+  position: absolute;
+  width: 200px;
+  height: 550px;
+  border: 1px solid gray;
+  padding: 3px;
+  left: 818px;
+  top: 8px;
+}
+
+#loggedin div {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+#msg {
+  width: 740px;
+  margin-right: 10px;
+}
+
+#send {
+  width: 50px;
+}
+
+#login_section, #chat_section {
+  display: none;
+}
+
+#start_button{
+position: absolute;
+left: 818px;
+top: 568px;
+width: 208px;
+height: 72px;
+}
+
+.user_name {
+  font-size: 10pt;
+  font-weight: bold;
+  color: blue;
+}
+
+.says {
+  font-size: 10pt;
+  color: gray;
+}
+
+.msg {
+  font-size: 12pt;
+  font-family: serif;
+}
+
+.notification {
+  color: green;
+}
+
+</style>
+
+<!--
+jQuery is a JavaScript library that provides many handy tools, e.g. for
+manipulating HTML elements, handling events, etc.
+-->
+<script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+
+<!--
+socket.io.js will be provided by the node.js server that you will run.
+-->
+<script src="/socket.io/socket.io.js"></script>
+<!--<script src="/dacosta/node_modules/socket.io/lib/socket.io.js"></script>-->
+
+<div id="warning">
+  JavaScript is required to run this app.
+</div>
+
+<div id="login_section" >
+  <div id="status">Connecting...</div>
+  Input your user:
+  <input id="name" type="text"></input>
+  <input id="login" type="button" value="Log In" disabled="true"></input>
+</div>
+
+
+
+<div id="chat_section" style = "width:1200px">
+  <div id="board">
+  </div>
+  <div id="loggedin">
+    Users:
+  </div>
+  <input id="msg" type="text"></input>
+  <input id="send" type="button" value="Send"></input>
+  <button id="start_button" onclick="init()">Ready</button>
+</div>
+
+<script>
+  // $(document) returns a jQuery object representing the whole document (page).
+  // $(document).ready(fn) tells jQuery to call function 'fn' after the whole
+  // document is loaded.
+  $(document).ready(function() {
+    // Hide the warning section and show the login section.
+    $('#warning').css('display', 'none');
+    $('#login_section').css('display', 'block');
+
+    // Initialize socket.io.
+    // document.location.host returns the host of the current page.
+    var socket = io.connect('http://' + document.location.host);
+
+    // If a welcome message is received, it means the chat room is available.
+    // The Log In button will be then enabled.
+    socket.on(
+      'msg',
+      function(message) {
+        $('#status').text(message);
+        $('#login').attr('disabled', false);
+      });
+
+    // If a login_ok message is received, proceed to the chat section.
+    socket.on(
+      'login_ok',
+      function() {
+        $('#login_section').css('display', 'none');
+        $('#chat_section').css('display', 'block');
+        $('#status').text('Logged In.');
+      });
+
+    // If a login_failed message is received, stay in the login section but
+    // display an error message.
+    socket.on(
+      'login_failed',
+      function() {
+        $('#status').text('Failed to log in!');
+      });
+
+    // If a chat message is received, display it.
+    socket.on(
+      'chat',
+      function(message) {
+		var obj = JSON.parse(message);
+        if (obj && obj.user_name && obj.msg) {
+          var user_name = obj.user_name;
+          var msg = obj.msg;
+          // This will create a div element using the HTML code:
+          var div = $('<div></div>');
+          // Similarly, create span elements with CSS classes and corresponding
+          // contents, and append them in a row to the new div element.
+          div.append($('<span></span>').addClass('user_name').text(user_name));
+          div.append($('<span></span>').addClass('says').text(' says: '));
+          div.append($('<span></span>').addClass('msg').text(msg));
+          // Add the new div element to the chat board.
+          $('#board').append(div);
+        }
+      });
+
+	socket.on(
+	  'userlist',
+	  function(message){
+		var obj = JSON.parse(message);
+		var user_name = obj.user_name;
+	    var div = $('<div></div>');
+          div.append($('<span></span>').addClass('user_name').text(user_name));
+          $('#loggedin').append(div);
+	});
+	
+    // If a notification is received, display it.
+    socket.on(
+      'notification',
+      function(message) {
+        if (message) {
+          // Similar to the handler of 'chat' event ...
+          var div = $('<div></div>');
+          div.append($('<span></span>').addClass('notification').text(message));
+          $('#board').append(div);
+        }
+      });
+
+    // When the Log In button is clicked, the provided function will be called,
+    // which sends a login message to the server.
+    $('#login').click(function() {
+      var name = $('#name').val();
+      if (name) {
+        name = name.trim();
+        if (name.length > 0) {
+          socket.emit('login', { user_name: name });
+		  socket.emit('userlist', { user_name: name});
+        }
+      }
+      // Clear the input field.
+      $('#name').val('');
+    });
+
+    // When Enter is pressed in the name field, it should be treated as clicking
+    // on the Log In button.
+    $('#name').keyup(function(event) {
+      if (event.keyCode == 13) {
+        $('#login').click();
+      }
+    });
+
+    // When the Log In button is clicked, the provided function will be called,
+    // which sends a chat message to the server.
+    $('#send').click(function() {
+      var data = $('#msg').val();
+      if (data) {
+        data = data.trim();
+        if (data.length > 0) {
+          socket.emit('chat', { msg: data });
+        }
+      }
+      // Clear the input field.
+      $('#msg').val('');
+    });
+
+    // When Enter is pressed in the message field, it should be treated as
+    // clicking on the Send button.
+    $('#msg').keyup(function(event) {
+      if (event.keyCode == 13) {
+        $('#send').click();
+      }
+    });
+  });
+</script>
+
