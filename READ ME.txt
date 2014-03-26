@@ -1,0 +1,4 @@
+To run the prototype, double click on index.html which will open the game in our browser. Use WASD to move
+the black square (the player). The brown squares are the coins to collect. Once a coin is collected, another
+spawns randomly in the grid. At the top-right, there is the score counter and the timer which counts down
+from 30 seconds. Once the timer ends, the screen will display 'Victory!', press any key to restart the game.

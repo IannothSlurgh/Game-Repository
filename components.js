@@ -1,0 +1,165 @@
+//Grid component allows an element to be Located
+Crafty.c('Grid', {
+	init: function() {
+		this.attr({
+			w: Game.map_grid.tile.width,
+			h: Game.map_grid.tile.height
+		});
+	},
+	
+	//Locate this entity at the given position on grid
+	at: function(x, y){
+		if(x === undefined && y === undefined){
+			return {x: this.x/Game.map_grid.tile.width,
+				y: this.y/Game.map_grid.tile.height};
+		}
+		else{
+			this.attr({x: x * Game.map_grid.tile.width, 
+				y: y * Game.map_grid.tile.height});
+			return this;
+		}
+	}
+});
+
+//entity that is drawn in 2D on canvas via Grid
+Crafty.c('Actor', {
+	init: function() {
+		this.requires('2D, Canvas, Grid');
+	},
+});
+
+//Tree is an Actor with a certain color
+Crafty.c('Wall', {
+	init: function() {
+		this.requires('Actor, Color, Solid')
+			.color('rgb(20, 185, 40)');
+	},
+});
+
+Crafty.c('EnemyPlayer', {
+	init: function() {
+		this.attr({
+			index: undefined
+		});
+		
+		this.requires('Actor, Color')
+			.color('rgb(223, 0, 255)');
+	},
+});
+
+Crafty.c('Path', {
+	init: function(){
+		this.requires('Actor, Color')
+			.color('rgb(249, 223, 125)');
+	},
+});
+
+Crafty.c('PlayerCharacter', {
+	init: function(){
+		this.attr({
+			score: 0
+		});
+		
+		this.requires('Actor, Fourway, Color, Collision')
+			.fourway(4)
+			.color('rgb(20, 75, 40)')
+			.stopOnSolids()
+			.onHit('Money', this.collectMoney)
+			.bind('Move', function(){
+				//send new x, y coordinates to server
+				
+			});
+	},
+	
+	//registers a stop-movement when entity hits an entity
+	//with the "Solid" component
+	stopOnSolids: function() {
+		this.onHit('Solid', this.stopMovement);
+		return this;
+	},
+	
+	//stops movement
+	stopMovement: function(){
+		this._speed = 0;
+		if(this._movement){
+			this.x -= this._movement.x;
+			this.y -= this._movement.y;
+		}
+	},
+	
+	collectMoney: function(data){
+		money = data[0].obj;
+		this.score += money.value;
+		money.collect();
+		//send signal to the server indicating that money has been collected
+		Crafty.trigger('MoneyCollected', this);
+		Crafty.trigger('ChangeScore', this);
+	}
+});
+
+Crafty.c('Money', {
+	init: function(){
+		this.attr({
+			value: 10
+		});
+		this.requires('Actor, Color')
+			.color('rgb(170, 125, 40)');
+	},
+	
+	collect: function(){
+		this.destroy();
+	}
+});
+
+Crafty.c('2PlayerButton', {
+	init: function(){
+		this.requires('2D, Canvas, Color, Mouse')
+		.color('rgb(255, 51, 51)')
+		.bind('MouseOver', function(e){
+			this.color('rgb(178, 34, 34)');
+		})
+		.bind('MouseOut', function(e){
+			this.color('rgb(255, 51, 51)');
+		})
+		.bind('Click', function(e){
+			is_two_player_game = true;
+			Crafty.scene('Game');
+		});
+	}
+	
+});
+
+Crafty.c('4PlayerButton', {
+	init: function(){
+		this.requires('2D, Canvas, Color, Mouse')
+		.color('rgb(255, 255, 0)')
+		.bind('MouseOver', function(e){
+			this.color('rgb(255, 215, 0)')
+		})
+		.bind('MouseOut', function(e){
+			this.color('rgb(255, 255, 0)');
+		})
+		.bind('Click', function(e){
+			is_two_player_game = false;
+			Crafty.scene('Game');
+		});
+	}
+	
+});
+
+Crafty.c('HelpButton', {
+	init: function(){
+		this.requires('2D, Canvas, Color, Mouse')
+		.color('rgb(0, 255, 255)')
+		.bind('MouseOver', function(e){
+			this.color('rgb(64, 224, 208)')
+		})
+		.bind('MouseOut', function(e){
+			this.color('rgb(0, 255, 255)');
+		})
+		.bind('Click', function(e){
+			//To Be Implemented
+		});
+	}
+	
+});
