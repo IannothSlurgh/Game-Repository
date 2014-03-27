@@ -74,7 +74,7 @@ function reset()
 function ready()
 {
 	clearInterval(counter);
-	Crafty.scene('Phase 3');
+	//Crafty.scene('Phase 3');
 }
 
 var count=120;
