@@ -108,10 +108,6 @@ Crafty.c('Money', {
 		});
 		this.requires('Actor, Color')
 			.color('rgb(170, 125, 40)');
-	},
-	
-	collect: function(){
-		this.destroy();
 	}
 });
 

@@ -185,7 +185,8 @@ Crafty.scene('Game', function(){
 	
 	socket.on('destroyMoney', function(message){
 		var money_index = message.collected_money_index;
-		money_list[money_index].at(message.x, message.y);
+		money_list[money_index].x = message.x;
+		money_list[money_index].y = message.y;
 	});
 	
 	//Place money around grid
