@@ -408,7 +408,11 @@ Crafty.scene('ConnectionRoom', function(){
     // document.location.host returns the host of the current page.
     var socket = io.connect('http://' + document.location.host);
 	$('#start_button').click(function(){
-		$('#chat_section').css('display', 'none');
+		document.getElementById("board").style.display = "none";
+		document.getElementById("loggedin").style.display = "none";
+		document.getElementById("msg").style.display = "none";
+		document.getElementById("send").style.display = "none";
+		document.getElementById("start_button").style.display = "none";
 		Crafty.scene('Game');
 	 });
     // If a welcome message is received, it means the chat room is available.
