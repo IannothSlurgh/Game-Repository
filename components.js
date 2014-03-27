@@ -195,3 +195,20 @@ Crafty.c('MineCart', {
 			});
 	}
 });
+
+Crafty.c('StartButton', {
+	init: function(){
+		this.requires('2D, Canvas, Color, Mouse')
+		.color('rgb(0, 255, 255)')
+		.bind('MouseOver', function(e){
+			this.color('rgb(64, 224, 208)')
+		})
+		.bind('MouseOut', function(e){
+			this.color('rgb(0, 255, 255)');
+		})
+		.bind('Click', function(e){
+			//To Be Implemented
+		});
+	}
+	
+});

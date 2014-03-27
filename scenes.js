@@ -389,6 +389,8 @@ Crafty.scene('StartScreen', function(){
 });
 
 Crafty.scene('ConnectionRoom', function(){
+	Crafty.e('StartButton')
+		.attr({x: 352, y: 508, w: 176, h: 76});
 	 $(document).ready(function() {
     // Hide the warning section and show the login section.
     $('#warning').css('display', 'none');
