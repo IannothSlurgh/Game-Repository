@@ -2,7 +2,7 @@ var mazeData;
 var player_number = 0;
 var is_two_player_game = false;
 var enemy_list = new Array();
-var socket = io.connect('http://' + document.location.host);
+var socket;
 
 function hasUnvisitedNeighbor(row, col, dir){
 	if(dir == 0 && (col - 2) >= 0)
@@ -420,7 +420,7 @@ Crafty.scene('ConnectionRoom', function(){
 
     // Initialize socket.io.
     // document.location.host returns the host of the current page.
-    
+    socket = io.connect('http://' + document.location.host);
 	$('#start_button').click(function(){
 		document.getElementById("board").style.display = "none";
 		document.getElementById("loggedin").style.display = "none";
