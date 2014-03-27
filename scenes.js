@@ -165,9 +165,7 @@ Crafty.scene('Game', function(){
 	
 	Crafty.bind('PlayerMoved', function(){
 		var player_info = { "index" : 1, "x" : player.x, "y": player.y };
-		console.log(player_info);
 		socket.emit('PlayerMovement', JSON.stringify(player_info));
-		console.log("Finished socket emit!");
 	});
 	
 	socket.on('updateEnemyPlayer', function(message){
@@ -244,6 +242,7 @@ Crafty.scene('Game', function(){
 	
 	this.add_money = this.bind('MoneyCollected', function(player, money){
 		var exit = false;
+		console.log(money);
 		socket.emit('CollectMoney', JSON.stringify({ collected_money_index : money.index}));
 		while(!exit){
 			var x = Math.floor(Math.random() * Game.map_grid.width);
