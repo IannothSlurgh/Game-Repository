@@ -383,6 +383,7 @@ Crafty.scene('StartScreen', function(){
 
 Crafty.scene('Phase 2', function(){
 	Crafty.stage.elem.style.display = "none";
+	document.getElementById("shop").style.display = "block";
 	document.getElementById("command").style.display = "block";
 	document.getElementById("yourGold").style.display = "block";
 	document.getElementById("yourUnit").style.display = "block";
@@ -391,13 +392,15 @@ Crafty.scene('Phase 2', function(){
 	document.getElementById("yourUnitList").style.display = "block";
 	document.getElementById("ready").style.display = "block";
 	document.getElementById("reset").style.display = "block";
+	document.getElementById("shop").style.top = "0px";
+	document.getElementById("shop").style.left = "0px";
 	document.getElementById("yourTimer").style.top = "20px";
-	document.getElementById("yourTimer").style.left = "800px";
+	document.getElementById("yourTimer").style.left = "560px";
 	document.getElementById("yourGold").style.top = "120px";
-	document.getElementById("yourGold").style.left = "800px";
+	document.getElementById("yourGold").style.left = "700px";
 	document.getElementById("yourUnit").style.top = "220px";
-	document.getElementById("yourUnit").style.left = "800px";
-	document.getElementById("yourUnitList").style.top = "400px";
+	document.getElementById("yourUnit").style.left = "710px";
+	document.getElementById("yourUnitList").style.top = "450px";
 	document.getElementById("yourUnitList").style.left= "0px";
 	counter=setInterval(timer, 1000);
 	reset();
@@ -405,6 +408,7 @@ Crafty.scene('Phase 2', function(){
 });
 
 Crafty.scene('Phase 3', function(){
+	document.getElementById("shop").style.display = "none";
 	document.getElementById("command").style.display = "none";
 	document.getElementById("yourGold").style.display = "none";
 	document.getElementById("yourUnit").style.display = "none";
