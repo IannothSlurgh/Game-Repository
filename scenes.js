@@ -3,6 +3,7 @@ var player_number = 0;
 var is_two_player_game = false;
 var enemy_list = new Array();
 var socket;
+var player;
 
 function hasUnvisitedNeighbor(row, col, dir){
 	if(dir == 0 && (col - 2) >= 0)
@@ -164,7 +165,7 @@ function place_player()
 		.attr({x: col * 16 - 8, y: row * 16 - 15, w: 75})
 		.text("Player");
 		
-	Crafty.e('PlayerCharacter').at(col, row).attach(player_text);
+	player = Crafty.e('PlayerCharacter').at(col, row).attach(player_text);
 }
 
 function place_enemy_player(index)
@@ -285,6 +286,10 @@ Crafty.scene('Game', function(){
 		place_enemy_player(2);
 		place_enemy_player(3);
 	}
+	
+	Crafty.bind('PlayerMoved', function(){
+		socket.emit('PlayerMovement', player);
+	});
 	
 	socket.on('updateEnemyPlayer', function(message){
 		var enemy_index = message.index;

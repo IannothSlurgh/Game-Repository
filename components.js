@@ -68,7 +68,7 @@ Crafty.c('PlayerCharacter', {
 			.onHit('Money', this.collectMoney)
 			.bind('Move', function(){
 				//send new x, y coordinates to server
-				socket.emit('PlayerMovement', this);
+				Crafty.trigger('PlayerMoved');
 			});
 	},
 	
