@@ -213,19 +213,6 @@ function place_enemy_player(index)
 	enemy_list.push(Crafty.e('EnemyPlayer').attr({index: index}).at(col, row));
 }
 
-socket.on('updateEnemyPlayer', function(message){
-	var enemy_index = message.index;
-	
-	for(var i = 0; i < enemy_list.length; i++)
-	{
-		if(enemy_list[i] == enemy_index)
-		{
-			enemy_list[i].x = message.x;
-			enemy_list[i].y = message.y;
-		}
-	}
-});
-
 Crafty.scene('Help', function() {
 	Crafty.e('2D, Canvas, Image')
 		.attr({x: 0, y: 0})
@@ -299,6 +286,18 @@ Crafty.scene('Game', function(){
 		place_enemy_player(3);
 	}
 	
+	socket.on('updateEnemyPlayer', function(message){
+		var enemy_index = message.index;
+	
+		for(var i = 0; i < enemy_list.length; i++)
+			{
+				if(enemy_list[i] == enemy_index)
+				{
+					enemy_list[i].x = message.x;
+					enemy_list[i].y = message.y;
+				}
+			}
+	});
 	
 	//Place money around grid
 	var max_money = 100;
