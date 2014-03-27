@@ -289,7 +289,9 @@ Crafty.scene('Game', function(){
 	
 	Crafty.bind('PlayerMoved', function(){
 		var player_info = { "index" : 1, "x" : player.x, "y": player.y };
+		console.log(player_info);
 		socket.emit('PlayerMovement', JSON.stringify(player_info));
+		console.log("Finished socket emit!");
 	});
 	
 	socket.on('updateEnemyPlayer', function(message){
