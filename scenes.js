@@ -212,6 +212,15 @@ function place_enemy_player(index)
 	enemy_list.push(Crafty.e('EnemyPlayer').attr({index: index}).at(col, row));
 }
 
+Crafty.scene('Help', function() {
+	Crafty.e('2D, Canvas, Image')
+		.attr({x: 0, y: 0})
+		.image("help_background.gif");
+		document.getElementById("help").style.display = "block";
+		document.getElementById("next").style.display = "block";
+		document.getElementById("back").style.display = "block";
+});
+
 Crafty.scene('Game', function(){
 	//2D array to keep track of all occupied tiles
 	this.occupied = new Array(Game.map_grid.width);
