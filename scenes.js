@@ -364,11 +364,11 @@ Crafty.scene('Victory', function(){
 
 Crafty.scene('StartScreen', function(){
 	
-	
+	console.log('This is working.');
 	Crafty.e('2D, Canvas, Image')
 		.attr({x: 0, y: 0})
 		.image("https://raw.githubusercontent.com/IannothSlurgh/Game-Repository/master/start_background.png");
-		
+	console.log('This is working.');
 	Crafty.e('MineCart')
 		.attr({x: -100, y: 262, w: 100, h: 50});
 		
