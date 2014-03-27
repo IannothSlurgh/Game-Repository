@@ -1,3 +1,4 @@
+	//
 	var this_player, player_1, player_2, player_3, player_4;
 	//({"src":null, "xcoor":null, "ycoor":null, "health":null, "damage":null, "range":null, "movement":null "can_move":null})
 	var player_1_units = new Array();

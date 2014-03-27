@@ -77,69 +77,132 @@
 		left: 723px;
 		top: 66px;
 	}
-	
-</style>
+	body {
+	  font-family: sans-serif;
+	}
 
-<head>
+	#status {
+	  font-size: 14pt;
+	  color: gray;
+	  margin-top: 12px;
+	  margin-bottom: 12px;
+	}
+
+	#board {
+	  width: 800px;
+	  height: 600px;
+	  border: 1px solid gray;
+	  padding: 3px;
+	}
+
+	#board div {
+	  margin-top: 5px;
+	}
+
+	#loggedin {
+	  position: absolute;
+	  width: 200px;
+	  height: 550px;
+	  border: 1px solid gray;
+	  padding: 3px;
+	  left: 818px;
+	  top: 8px;
+	}
+
+	#loggedin div {
+	  margin-top: 5px;
+	  margin-bottom: 5px;
+	  margin-right: 5px;
+	  margin-left: 5px;
+	}
+
+	#start_button {
+	  position: absolute;
+	  left: 818px;
+	  top: 568px;
+	  width: 208px;
+	  height: 72px;
+	}
+	
+	#msg {
+	  width: 740px;
+	  margin-right: 10px;
+	}
+
+	#send {
+	  width: 50px;
+	}
+
+	#login_section, #chat_section {
+	  display: none;
+	}
+
+	.user_name {
+	  font-size: 10pt;
+	  font-weight: bold;
+	  color: blue;
+	}
+
+	.says {
+	  font-size: 10pt;
+	  color: gray;
+	}
+
+	.msg {
+	  font-size: 12pt;
+	  font-family: serif;
+	}
+
+	.notification {
+	  color: green;
+	}
+</style>
+<div id="warning">
+  
+</div>
+
+<div id="login_section" >
+  <div id="status">Connecting...</div>
+  Input your user:
+  <input id="name" type="text"></input>
+  <input id="login" type="button" value="Log In" disabled="true"></input>
+</div>
+
+
+
+<div id="chat_section" style = "width:1200px">
+  <div id="board">
+  </div>
+  <div id="loggedin">
+    Users:
+  </div>
+  <input id="msg" type="text"></input>
+  <input id="send" type="button" value="Send"></input>
+  <button id="start_button"> Ready </button>
+</div>
+
 	<style>
 	.unitlist 
 	{
-		width: 575px; 
-		height:400px;
+		width:775px; 
+		height:200px;
 		overflow:auto; 
 		background: green;
 	}
 	</style>
-	<script src="crafty.js"></script>
-	<script src="game.js"></script>
-	<script src="components.js"></script>
-	<script src="scenes.js"></script>
-	<script src="ian_code.js"></script>
-	<script src="phase_two.js"></script>
-	<script>
-		window.addEventListener('load', Game.start);
-	</script>
-</head>
+	<script src="https://rawgithub.com/IannothSlurgh/Game-Repository/master/crafty.js"></script>
+	<script src ="https://rawgithub.com/IannothSlurgh/Game-Repository/master/game.js"></script>
+	<script src="https://rawgithub.com/IannothSlurgh/Game-Repository/master/components.js"></script>
+	<script src="https://rawgithub.com/IannothSlurgh/Game-Repository/master/scenes.js"></script>
+	<script src="https://rawgithub.com/IannothSlurgh/Game-Repository/master/ian_code.js"></script>
+	<script src="https://rawgithub.com/IannothSlurgh/Game-Repository/master/phase_two.js"></script>
+	<script type = "image/png" src="https://rawgithub.com/IannothSlurgh/Game-Repository/master/start_background.png"></script>
+	<script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+
 <body style = "margin: 0px; font-size: 150%">
-	
-	<img id = "help" src = "Background.gif" style="position: absolute; top: 0px; left: 0px; display = none; z-index: -1;"/>
-	<input type="image" id="nextHelp" src="NextHelp.gif" onclick="nextHelpScreen()" style="position: absolute; top: 576px; left: 761px; display:none;">
-	<input type="image" id="back" src="Back.gif" onclick="previousHelpScreen()" style="position: absolute; top: 576px; left: 0px; display:none;">
-	<input type="image" id="finish" src="Finish.gif" onclick="returnFromHelpScreen()" style="position: absolute; top: 576px; left: 761px; display:none;">
-	<input type="image" id="returnHome" src="Return.gif" onclick="returnFromHelpScreen()" style="position: absolute; top: 576px; left: 0px; display:none;">
-	<p id = "helpText1" style="position: absolute; top: 0px; left: 0px; bottom: 624px; right: 880px; display:none">Phase 1: THE MAZE<br />During this part of
-	the game, you will control a single unit (player 1 = blue, player 2 = white, player 3 = red, player 4 = gray), moving it with the “w, a, s, and d” keys
-	(forward, left, down and right respectively). The goal is to collect as many gold icons (yellow) as possible within the allotted time of 2 minutes 
-	by navigating through the maze. Units can stand on top of each other and they cannot go through the walls of the maze. A base amount of ??? gold is given 
-	to you at the start of this phase, and the more gold you get, the more units you will be able to purchase for combat later in the game.</p>
-	<p id = "helpText2" style="position: absolute; top: 0px; left: 0px; bottom: 624px; right: 880px; display:none">Phase 2: THE STORE<br />During this part of 
-	the game, you may purchase units to use in combat by spending the gold you got from phase 1. A total of 8 units may be purchased, and are purchased by 
-	double clicking on the unit’s row in the scroll bar. Should you be unhappy with any selection you make, you may reset your selections by clicking the reset 
-	button, giving you all your gold back and making it so you have 0 units selected. Be careful though, this part of the game is also timed and you are given
-	2 minutes to determine what you will use for combat (note: a player is given a goblin at the start of the next phase if they do not purchase any units). 
-	When you are finished making your purchases, click the ready button, or wait for time to expire. Nothing will happen until everyone has either clicked 
-	ready, or 2 minutes has passed. Your current and personal maximum resources are also displayed on this screen. The units that you can choose from are 
-	listed below.<br /><img type="image" id="fakeStore" src="fakeShop.gif"><br /><img type="image" id="symbols" src="symbols.gif"></p>
-	<p id = "helpText3" style="position: absolute; top: 0px; left: 0px; bottom: 624px; right: 880px; display:none">Phase 3: THE BATTLEFIELD<br />
-	This is where all the battling takes place, and in order to be victorious, you must be the last player on the map with units remaining. First, you must 
-	place the units in the order in which you purchased them by left clicking on empty tiles in your starting zone (Player 1 = bottom left, Player 2 = upper 
-	right, Player 3 = upper left, Player 4 = lower right). Once all your units have been placed,  the player with the lowest gathered resources begins the 
-	game by left clicking a single unit and then clicking again somewhere on the game board. If the player right clicks on an opponent’s unit’s space, 
-	then an attack will be made against that unit. If that enemy’s unit was adjacent to your attacking unit, (left, right, forward, or backwards, not 
-	diagonally) then that enemy’s unit will retaliate, dealing damage to the attacking unit equal to 50% of the enemy unit’s attack/damage (warrior retaliates
-	for 2 damage, rogue retaliates for 2 damage). If the enemy’s unit is not adjacent to your attacking unit, then no retaliation will occur (0 damage dealt 
-	to the attacker). If that “somewhere on the game board” left click is on an open space, and your unit’s movement/speed is greater than or equal to the 
-	number of squares required to reach that spot, your unit will move to that location. Units may move through other friendly units while moving and may 
-	attack through units in order to hit opponents units. After moving your unit, you may then make an attack with that unit (note: you do not have to move 
-	in order to make an attack). You will also see an information box on the right hand side of your screen during this phase. This information box contains 
-	the left clicked unit’s information, and also contains a button in order to end your turn (End Turn).</p>
-	
-	
-	
-	
-	
-	<img id = "grid" class = "tile" src = "grid.gif" ondragstart = "return false" ondrop = "return false"/>
-	<img id = "next" class = "tile2 no_drag" src = "next.gif" ondragstart = "return false" ondrop = "return false"/>
+	<img id = "grid" class = "tile"  src = "https://rawgithub.com/IannothSlurgh/Game-Repository/master/grid.gif" ondragstart = "return false" ondrop = "return false"/>
+	<img id = "next" class = "tile2 no_drag" src = "https://rawgithub.com/IannothSlurgh/Game-Repository/master/next.gif" ondragstart = "return false" ondrop = "return false"/>
 	<p id = "stat_player_turn class" class = "on_top stat_player_turn"> Annoth </p>
 	<p id = "stat_hp" class = "on_top stat_hp"> 10 </p>
 	<p id = "stat_damage" class = "on_top stat_damage"> 10 </p>
@@ -147,12 +210,9 @@
 	<p id = "stat_range" class = "on_top stat_range"> 10 </p>
 	<p id = "stat_ability" class = "on_top stat_ability"> No Ability </p>
 	<p id = "stat_log" class = "on_top stat_log"> Log </p>
-	<img id = "stat_icon" class = "on_top stat_icon" src = "test2.gif" ondragstart = "return false" ondrop = "return false" />
+	<img id = "stat_icon" class = "on_top stat_icon" type = "image/gif" src = "https://raw.githubusercontent.com/IannothSlurgh/Game-Repository/master/test2.gif" ondragstart = "return false" ondrop = "return false" />
 	
 	<div id="div_tiles"> </div>
-	
-	
-  <img id = "shop" src = "Background.gif" style="position: absolute; top: 0px; left: 0px; display:none; z-index: -1;"/>
   <p id="command" style = "display: none;">
   Click the button of the unit you wish to purchase.
   </p>
@@ -170,15 +230,15 @@
    Your Units: <span id="theUnits"></span>
   </p>
   <p style ="margin: 0px;">
-   <input type="image" id="reset" src="Reset.gif" onclick="reset()" style="position: absolute; top: 300px; left: 700px; display:none;">
-   <input type="image" id="ready" src="Ready.gif" onclick="ready()" style="position: absolute; top: 400px; left: 700px; display:none;">
+   <button onclick="reset()" type="button" id="reset" style="position: absolute; font-size: 300%; top: 400px; left: 800px; padding-left: 13px; padding-right: 12px; display:none;">Reset</button>
+   <button onclick="ready()" type="button" id="ready" style="position: absolute; font-size: 300%; top: 500px; left: 800px; display:none;">Ready</button> 
   </p>
  </body>
  <div id="scrollbar" class="unitlist" style = "display: none;">
-    <input type="image" src="Warrior.gif" onclick="selectWarrior()">
-    <br /> <input type="image" src="Hunter.gif" onclick="selectHunter()">
-    <br /> <input type="image" src="Rogue.gif" onclick="selectRogue()">
-    <br /> <input type="image" src="Goblin.gif" onclick="selectGoblin()">
+    <input type="image" src="https://raw.githubusercontent.com/IannothSlurgh/Game-Repository/master/test2.gif" onclick="selectWarrior()"> Hit Points: 16 / Attack: 4 / Range: 1 / Movement: 2 / Cost: 400
+    <br /> <button onclick="selectHunter()" type="button" id="hunter" style="font-size: 150%; padding-left: 12px; padding-right: 13px;">Hunter</button> Hit Points: 8 / Attack: 2 / Range: 5 / Movement: 1 / Cost: 300
+    <br /> <button onclick="selectRogue()" type="button" id="rogue" style="font-size: 150%; padding-left: 13px; padding-right: 13px;">Rogue</button> Hit Points: 10 / Attack: 3 / Range: 1 / Movement: 2 / Cost: 200
+    <br /> <button onclick="selectGoblin()" type="button" id="goblin" style="font-size: 150%; padding-left: 15px; padding-right: 15px;">Goblin</button> Hit Points: 6 / Attack: 2 / Range: 1 / Movement: 4 / Cost: 100
   </div>
 </html>
 

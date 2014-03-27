@@ -17,7 +17,7 @@ function handler(request, response) {
   // argument) to process the content of the file.
   // __dirname is a preset variable pointing to the folder of this file.
   fs.readFile(
-    __dirname + '/index.html',
+    __dirname + '/index1.html',
     function(err, content) {
       if (err) {
         // If an error happened when loading 'index.html', return a 500 error.
@@ -30,6 +30,157 @@ function handler(request, response) {
     });
 }
 
+//---------------Maze Algorithm--------------------------------------------------------------
+var mazeData = new Array(55);
+
+function hasUnvisitedNeighbor(row, col, dir){
+	if(dir == 0 && (col - 2) >= 0)
+	{
+		return (mazeData[row][col - 2] == 'U');
+	}
+	else if(dir == 1 && (col + 2) < 39){
+		return (mazeData[row][col + 2] == 'U');
+	}
+	else if(dir == 2 && (row - 2) >= 0){
+		return (mazeData[row - 2][col] == 'U');
+	}
+	else if(dir == 3 && (row + 2) < 55){
+		return (mazeData[row + 2][col] == 'U');
+	}
+	else{;
+		return false;
+	}
+}
+
+function generateMaze(row, column){
+	mazeData[row][column] = '.';
+	
+	while(hasUnvisitedNeighbor(row, column, 0) || hasUnvisitedNeighbor(row, column, 1)
+		|| hasUnvisitedNeighbor(row, column, 2) || hasUnvisitedNeighbor(row, column, 3))
+	{
+		var direction = Math.floor(Math.random() * 4);
+		//window.alert("direction " + direction);
+		if(hasUnvisitedNeighbor(row, column, direction))
+		{	
+			//window.alert("in here");
+			switch(direction)
+			{
+				
+				case 0:
+					mazeData[row][column - 1] = '.';
+					generateMaze(row, column - 2);
+					break;
+				case 1:
+					mazeData[row][column + 1] = '.';
+					generateMaze(row, column + 2);
+					break;
+				case 2:
+					mazeData[row - 1][column] = '.';
+					generateMaze(row - 2, column);
+			    	break;
+				case 3:
+					mazeData[row + 1][column] = '.';
+					generateMaze(row + 2, column);
+					break;
+			}
+		}
+	}
+}
+
+function initialize_maze()
+{
+	for(var i = 0; i < 55; i++){
+		mazeData[i] = new Array(39);
+		for(var j = 0; j < 39; j++){
+			mazeData[i][j] = 'U';
+		}
+	}
+	
+	for(var x = 0; x < 55; x++){
+		for(var y = 0; y < 39; y++){
+			var at_edge = x == 0 || x == 55 - 1 ||
+				y == 0 || y == 39 - 1;
+				
+			var cell_num = x + (y * 39);
+			
+			if(at_edge){
+				mazeData[x][y] = '#';
+			}			
+			else if(y % 2 == 0 && cell_num % 2 == 0){
+				mazeData[x][y] = '#';
+			}
+			else if(y % 2 != 0 && cell_num % 2 != 0){
+				mazeData[x][y] = '#';
+			}
+		}
+	}
+}
+
+function modify_maze()
+{
+	for(var x = 1; x < 55 - 1; x++){
+		mazeData[x][1] = '.';
+		if(mazeData[x][3] == '#' && Math.random() < .75)
+		{
+			mazeData[x][2] = '#';
+		}
+		mazeData[x][39 - 2] = '.';
+		if(mazeData[x][39 - 4] == '#' && Math.random() < .75)
+		{
+			mazeData[x][39 - 3] = '#';
+		}
+	}
+	
+	for(var y = 1; y < 39 - 1; y++){
+		mazeData[1][y] = '.';
+		if(mazeData[3][y] == '#' && Math.random() < .75)
+		{
+			mazeData[2][y] = '#';
+		}
+		
+		mazeData[55 - 2][y] = '.';
+		if(mazeData[55 - 4][y] == '#' && Math.random() < .75)
+		{
+			mazeData[55 - 3][y] = '#';
+		}
+	}
+}
+
+function mazeGenerationAlgorithm()
+{
+	//initialize grid
+	initialize_maze();
+	
+	//choose valid start position in the grid
+	var col = Math.floor(Math.random() * 55);
+	var row = Math.floor(Math.random() * 39);
+		
+	while(mazeData[col][row] == '#' && !(col == 0 || col == 55 - 1 ||
+				col == 0 || col == 39 - 1)){
+		col = Math.floor(Math.random() * 55);
+		row = Math.floor(Math.random() * 39);
+	}
+	
+	generateMaze(col, row);
+	
+	modify_maze();
+	
+	var max_money = 100;
+	var money_count = 0;
+	while(money_count < max_money){
+		var x = Math.floor(Math.random() * 55);
+		var y = Math.floor(Math.random() * 39);
+		
+		if(mazeData[x][y] == '.'){
+			mazeData[x][y] = '$';
+			
+			money_count++;
+		}
+	}
+}
+
+mazeGenerationAlgorithm();
+//------------------------------------------------------------------------------
 var clients = [];
 
 io.sockets.on(
@@ -37,7 +188,7 @@ io.sockets.on(
   function(client) {
     // Send a welcome message first.
     client.emit('msg', 'Login');
-
+	client.emit('mazeDataMsg', JSON.stringify({mazeArray : mazeData}));
     // Listen to an event called 'login'. The client should emit this event when
     // it wants to log in to the chat room.
     client.on(
@@ -105,6 +256,26 @@ io.sockets.on(
 				}
               }
             });
+	});
+	
+	client.on(
+		'PlayerMovement',
+		function(message){
+			if(true) {
+				var obj = JSON.parse(message);
+				console.log(obj);
+				client.broadcast.emit('updateEnemyPlayer', obj);
+			}
+	});
+	
+	client.on(
+		'CollectMoney',
+		function(message){
+			if(true) {
+				var obj = JSON.parse(message);
+				console.log(obj);
+				client.broadcast.emit('destroyMoney', obj);
+			}
 	});
 	
 	client.on(

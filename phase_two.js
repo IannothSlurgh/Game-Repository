@@ -1,3 +1,4 @@
+//
 var money=2000; //dummy value
 var units=new Array();
 var unitCount = 0;
