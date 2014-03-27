@@ -134,8 +134,16 @@ Crafty.scene('Game', function(){
 	for(var x = 0; x < Game.map_grid.width; x++){
 		for(var y = 0; y < Game.map_grid.height; y++){
 			if(mazeData[x][y] != '.'){
-				Crafty.e('Wall').at(x, y);
-				this.occupied[x][y] = true;
+				if(mazeData[x][y] == '$'){
+					Crafty.e('Path').at(x, y);
+					money_list.push(Crafty.e('Money').attr({index : money_list.length}).at(x, y));
+					this.occupied[x][y] = true;
+				}
+				else
+				{
+					Crafty.e('Wall').at(x, y);
+					this.occupied[x][y] = true;
+				}
 			}
 			else
 			{
@@ -191,18 +199,7 @@ Crafty.scene('Game', function(){
 	});
 	
 	//Place money around grid
-	var max_money = 100;
-	var money_count = 0;
-	while(money_count < max_money){
-		var x = Math.floor(Math.random() * Game.map_grid.width);
-		var y = Math.floor(Math.random() * Game.map_grid.height);
-		
-		if(!this.occupied[x][y]){
-			this.occupied[x][y] = true;
-			money_list.push(Crafty.e('Money').attr({index : money_list.length}).at(x, y));
-			money_count++;
-		}
-	}
+	
 	
 	Crafty.e("2D, DOM, Text")
 		.attr({x: 0, y: 0, w: 75})
