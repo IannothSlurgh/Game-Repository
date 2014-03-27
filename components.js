@@ -103,7 +103,7 @@ Crafty.c('PlayerCharacter', {
 Crafty.c('Money', {
 	init: function(){
 		this.attr({
-			array_index : -1;
+			array_index : -1,
 			value: 10
 		});
 		this.requires('Actor, Color')
