@@ -2,6 +2,7 @@ var mazeData;
 var player_number = 0;
 var is_two_player_game = false;
 var enemy_list = new Array();
+var socket = io.connect('http://' + document.location.host);
 
 function hasUnvisitedNeighbor(row, col, dir){
 	if(dir == 0 && (col - 2) >= 0)
@@ -212,6 +213,19 @@ function place_enemy_player(index)
 	enemy_list.push(Crafty.e('EnemyPlayer').attr({index: index}).at(col, row));
 }
 
+socket.on('updateEnemyPlayer', function(message){
+	var enemy_index = message.index;
+	
+	for(var i = 0; i < enemy_list.length; i++)
+	{
+		if(enemy_list[i] == enemy_index)
+		{
+			enemy_list[i].x = message.x;
+			enemy_list[i].y = message.y;
+		}
+	}
+});
+
 Crafty.scene('Help', function() {
 	Crafty.e('2D, Canvas, Image')
 		.attr({x: 0, y: 0})
@@ -406,7 +420,7 @@ Crafty.scene('ConnectionRoom', function(){
 
     // Initialize socket.io.
     // document.location.host returns the host of the current page.
-    var socket = io.connect('http://' + document.location.host);
+    
 	$('#start_button').click(function(){
 		document.getElementById("board").style.display = "none";
 		document.getElementById("loggedin").style.display = "none";
