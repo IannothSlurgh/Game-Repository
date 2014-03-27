@@ -233,26 +233,6 @@ Crafty.scene('Game', function(){
 		}
 	}
 	
-	mazeData = new Array(Game.map_grid.width);
-	
-	
-	//initialize grid
-	initialize_maze();
-	
-	//choose valid start position in the grid
-	var col = Math.floor(Math.random() * Game.map_grid.width);
-	var row = Math.floor(Math.random() * Game.map_grid.height);
-		
-	while(mazeData[col][row] == '#' && !(x == 0 || x == Game.map_grid.width - 1 ||
-				y == 0 || y == Game.map_grid.height - 1)){
-		col = Math.floor(Math.random() * Game.map_grid.width);
-		row = Math.floor(Math.random() * Game.map_grid.height);
-	}
-	
-	generateMaze(col, row);
-	
-	modify_maze();
-	
 	for(var x = 26; x < 31; x++)
 	{
 		for(var y = 18; y < 23; y++)
@@ -380,18 +360,6 @@ Crafty.scene('Game', function(){
 	this.unbind('MoneyCollected', this.add_money);
 });
 
-//restarts the game
-Crafty.scene('Victory', function(){
-	Crafty.e('2D, DOM, Text')
-		.attr({x: 0, y: 0})
-		.text('Victory!');
-	this.restart_game = this.bind('KeyDown', function(){
-		Crafty.scene('Game');
-	});
-}, function(){
-	this.unbind('KeyDown', this.restart_game);
-});
-
 Crafty.scene('StartScreen', function(){
 	
 	console.log('This is working.');
@@ -444,7 +412,14 @@ Crafty.scene('ConnectionRoom', function(){
         $('#status').text(message);
         $('#login').attr('disabled', false);
       });
-
+	
+	socket.on{
+		'msg',
+		function(message){
+			mazeData = JSON.parse(message).mazeArray;
+		});
+	}
+	
     // If a login_ok message is received, proceed to the chat section.
     socket.on(
       'login_ok',
