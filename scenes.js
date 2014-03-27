@@ -399,6 +399,7 @@ Crafty.scene('StartScreen', function(){
 
 Crafty.scene('ConnectionRoom', function(){
 	 $(document).ready(function() {
+	
     // Hide the warning section and show the login section.
     $('#warning').css('display', 'none');
     $('#login_section').css('display', 'block');
@@ -406,7 +407,9 @@ Crafty.scene('ConnectionRoom', function(){
     // Initialize socket.io.
     // document.location.host returns the host of the current page.
     var socket = io.connect('http://' + document.location.host);
-
+	$('#start_button').click(function(){
+		Crafty.scene('Game');
+	 });
     // If a welcome message is received, it means the chat room is available.
     // The Log In button will be then enabled.
     socket.on(
