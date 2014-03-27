@@ -131,12 +131,14 @@ Crafty.scene('Game', function(){
 	}
 	
 	//draw grid on screen
+	var money_counter = 0;
 	for(var x = 0; x < Game.map_grid.width; x++){
 		for(var y = 0; y < Game.map_grid.height; y++){
 			if(mazeData[x][y] != '.'){
 				if(mazeData[x][y] == '$'){
 					Crafty.e('Path').at(x, y);
-					money_list.push(Crafty.e('Money').attr({index : money_list.length}).at(x, y));
+					money_list.push(Crafty.e('Money').attr({index : money_counter}).at(x, y));
+					money_counter++;
 					this.occupied[x][y] = true;
 				}
 				else
