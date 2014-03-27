@@ -57,7 +57,7 @@ Crafty.c('Path', {
 Crafty.c('PlayerCharacter', {
 	init: function(){
 		this.attr({
-			score: 0
+			score: 0,
 			index: player_number
 		});
 		
