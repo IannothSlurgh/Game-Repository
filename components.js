@@ -91,11 +91,11 @@ Crafty.c('PlayerCharacter', {
 	},
 	
 	collectMoney: function(data){
-		money = data[0].obj;
+		var money = data[0].obj;
 		this.score += money.value;
 		
 		//send signal to the server indicating that money has been collected
-		Crafty.trigger('MoneyCollected', this, money);
+		Crafty.trigger('MoneyCollected', money);
 		Crafty.trigger('ChangeScore', this);
 	}
 });

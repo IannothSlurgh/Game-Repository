@@ -240,7 +240,7 @@ Crafty.scene('Game', function(){
 			}
 		});
 	
-	this.add_money = this.bind('MoneyCollected', function(player, money){
+	this.add_money = this.bind('MoneyCollected', function(money){
 		var exit = false;
 		console.log(money);
 		socket.emit('CollectMoney', JSON.stringify({ collected_money_index : money.index}));
