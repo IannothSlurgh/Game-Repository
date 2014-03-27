@@ -418,7 +418,6 @@ Crafty.scene('ConnectionRoom', function(){
 		function(message){
 			mazeData = JSON.parse(message).mazeArray;
 		});
-	}
 	
     // If a login_ok message is received, proceed to the chat section.
     socket.on(
