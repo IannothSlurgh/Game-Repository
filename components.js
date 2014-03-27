@@ -54,6 +54,8 @@ Crafty.c('Path', {
 	},
 });
 
+
+
 Crafty.c('PlayerCharacter', {
 	init: function(){
 		this.attr({
