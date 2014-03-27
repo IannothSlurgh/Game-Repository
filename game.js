@@ -28,3 +28,5 @@ Game = {
 		Crafty.scene('StartScreen');
 	}
 };
+
+window.addEventListener('load', Game.start);
