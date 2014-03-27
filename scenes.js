@@ -175,7 +175,7 @@ Crafty.scene('Game', function(){
 			}
 	});
 	
-	socket.on('destroyMoney', fucntion(message){
+	socket.on('destroyMoney', function(message){
 		var money_index = message.collected_money_index;
 		var exit = false;
 		while(!exit){
