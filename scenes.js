@@ -288,8 +288,8 @@ Crafty.scene('Game', function(){
 	}
 	
 	Crafty.bind('PlayerMoved', function(){
-		var player_info = { index : 1, x : player.x, y: player.y };
-		socket.emit('PlayerMovement', player_info);
+		var player_info = { "index" : 1, "x" : player.x, "y": player.y };
+		socket.emit('PlayerMovement', JSON.stringfy(player_info));
 	});
 	
 	socket.on('updateEnemyPlayer', function(message){
@@ -297,7 +297,7 @@ Crafty.scene('Game', function(){
 	
 		for(var i = 0; i < enemy_list.length; i++)
 			{
-				if(enemy_list[i] == enemy_index)
+				if(enemy_list[i].index == enemy_index)
 				{
 					enemy_list[i].x = message.x;
 					enemy_list[i].y = message.y;
