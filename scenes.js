@@ -212,14 +212,79 @@ function place_enemy_player(index)
 	enemy_list.push(Crafty.e('EnemyPlayer').attr({index: index}).at(col, row));
 }
 
+
+//help screen stuff
+var helpCount = 1;
 Crafty.scene('Help', function() {
-	Crafty.e('2D, Canvas, Image')
-		.attr({x: 0, y: 0})
-		.image("help_background.gif");
 		document.getElementById("help").style.display = "block";
-		document.getElementById("next").style.display = "block";
-		document.getElementById("back").style.display = "block";
+		nextHelpScreen();
 });
+function nextHelpScreen() {
+	switch(helpCount) {
+	case 1: //phase 1 information
+		helpCount++;
+		document.getElementById("nextHelp").style.display = "block";
+		document.getElementById("nextHelp").style.top = "576px";
+		document.getElementById("nextHelp").style.left = "761px";
+		document.getElementById("Return").style.display = "block";
+		document.getElementById("Return").style.top = "576px";
+		document.getElementById("Return").style.left = "0px";
+		document.getElementById("helpText1").style.display = "block";
+		document.getElementById("helpText1").style.top = "0px";
+		document.getElementById("helpText1").style.bottom = "624px";
+		document.getElementById("helpText1").style.left = "0px";
+		document.getElementById("helpText1").style.right = "880px";
+		break;
+	case 2: //phase 2 information
+		helpCount++;
+		document.getElementById("nextHelp").style.display = "none";
+		document.getElementById("Return").style.display = "none";
+		document.getElementById("helpText1").style.display = "none";
+		document.getElementById("nextHelp").style.display = "block";
+		document.getElementById("nextHelp").style.top = "576px";
+		document.getElementById("nextHelp").style.left = "761px";
+		document.getElementById("back").style.display = "block";
+		document.getElementById("back").style.top = "576px";
+		document.getElementById("back").style.left = "0px";
+		document.getElementById("helpText2").style.display = "block";
+		document.getElementById("helpText2").style.top = "0px";
+		document.getElementById("helpText2").style.bottom = "624px";
+		document.getElementById("helpText2").style.left = "0px";
+		document.getElementById("helpText2").style.right = "880px";
+		break;
+	case 3: //phase 3 information
+		helpCount = 1;
+		document.getElementById("nextHelp").style.display = "none";
+		document.getElementById("back").style.display = "none";
+		document.getElementById("helpText2").style.display = "none";
+		document.getElementById("Finish").sytle.display = "block";
+		document.getElementById("Finish").style.top = "576px";
+		document.getElementById("Finish").style.left = "761px";
+		document.getElementById("back").style.display = "block";
+		document.getElementById("back").style.top = "576px";
+		document.getElementById("back").style.left = "0px";
+		document.getElementById("helpText3").style.display = "block";
+		document.getElementById("helpText3").style.top = "0px";
+		document.getElementById("helpText3").style.bottom = "624px";
+		document.getElementById("helpText3").style.left = "0px";
+		document.getElementById("helpText3").style.right = "880px";
+		break;
+	}
+}
+function previousHelpScreen() {
+	helpCount--;
+	nextHelpScreen();
+}
+function returnFromHelpScreen() {
+	document.getElementById("nextHelp").style.display = "none";
+	document.getElementById("back").style.display = "none";
+	document.getElementById("finish").style.display = "none";
+	document.getElementById("return").style.display = "none";
+	document.getElementById("help").style.display = "none";
+	document.getElementById("helpText3").style.display = "none";
+	document.getElementById("helpText1").style.display = "none";
+	Crafty.scene('StartScreen');
+}
 
 Crafty.scene('Game', function(){
 	//2D array to keep track of all occupied tiles
@@ -399,7 +464,6 @@ Crafty.scene('StartScreen', function(){
 
 Crafty.scene('ConnectionRoom', function(){
 	 $(document).ready(function() {
-	
     // Hide the warning section and show the login section.
     $('#warning').css('display', 'none');
     $('#login_section').css('display', 'block');
@@ -407,14 +471,15 @@ Crafty.scene('ConnectionRoom', function(){
     // Initialize socket.io.
     // document.location.host returns the host of the current page.
     var socket = io.connect('http://' + document.location.host);
-	$('#start_button').click(function(){
+		$('#start_button').click(function(){
 		document.getElementById("board").style.display = "none";
 		document.getElementById("loggedin").style.display = "none";
 		document.getElementById("msg").style.display = "none";
 		document.getElementById("send").style.display = "none";
 		document.getElementById("start_button").style.display = "none";
 		Crafty.scene('Game');
-	 });
+		});
+
     // If a welcome message is received, it means the chat room is available.
     // The Log In button will be then enabled.
     socket.on(
@@ -532,7 +597,7 @@ Crafty.scene('ConnectionRoom', function(){
 
 Crafty.scene('Phase 2', function(){
 	Crafty.stage.elem.style.display = "none";
-	//document.getElementById("shop").style.display = "block";
+	document.getElementById("shop").style.display = "block";
 	document.getElementById("command").style.display = "block";
 	document.getElementById("yourGold").style.display = "block";
 	document.getElementById("yourUnit").style.display = "block";
@@ -541,8 +606,8 @@ Crafty.scene('Phase 2', function(){
 	document.getElementById("yourUnitList").style.display = "block";
 	document.getElementById("ready").style.display = "block";
 	document.getElementById("reset").style.display = "block";
-	//document.getElementById("shop").style.top = "0px";
-	//document.getElementById("shop").style.left = "0px";
+	document.getElementById("shop").style.top = "0px";
+	document.getElementById("shop").style.left = "0px";
 	document.getElementById("yourTimer").style.top = "20px";
 	document.getElementById("yourTimer").style.left = "560px";
 	document.getElementById("yourGold").style.top = "120px";
@@ -556,7 +621,7 @@ Crafty.scene('Phase 2', function(){
 });
 
 Crafty.scene('Phase 3', function(){
-	//document.getElementById("shop").style.display = "none";
+	document.getElementById("shop").style.display = "none";
 	document.getElementById("command").style.display = "none";
 	document.getElementById("yourGold").style.display = "none";
 	document.getElementById("yourUnit").style.display = "none";
