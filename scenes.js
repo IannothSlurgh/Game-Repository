@@ -331,7 +331,7 @@ Crafty.scene('Game', function(){
 		Crafty.trigger('ChangeTimer');
 	}, 1000);
 	
-	var time_left = 5;
+	var time_left = 45;
 	
 	//disply incorrect if over a minute
 	Crafty.e("2D, DOM, Text")
