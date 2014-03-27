@@ -183,17 +183,7 @@ Crafty.scene('Game', function(){
 	
 	socket.on('destroyMoney', function(message){
 		var money_index = message.collected_money_index;
-		var exit = false;
-		while(!exit){
-			var x = Math.floor(Math.random() * Game.map_grid.width);
-			var y = Math.floor(Math.random() * Game.map_grid.height);
-		
-			if(!this.occupied[x][y]){
-				this.occupied[x][y] = true;
-				money_list[money_index].at(x, y);
-			 	exit = true;
-			}
-		}
+		money_list[money_index].at(message.x, message.y);
 	});
 	
 	//Place money around grid
@@ -243,7 +233,7 @@ Crafty.scene('Game', function(){
 	this.add_money = this.bind('MoneyCollected', function(money){
 		var exit = false;
 		console.log(money);
-		socket.emit('CollectMoney', JSON.stringify({ collected_money_index : money.index}));
+		
 		while(!exit){
 			var x = Math.floor(Math.random() * Game.map_grid.width);
 			var y = Math.floor(Math.random() * Game.map_grid.height);
@@ -251,6 +241,7 @@ Crafty.scene('Game', function(){
 			if(!this.occupied[x][y]){
 				this.occupied[x][y] = true;
 				money.at(x, y);
+				socket.emit('CollectMoney', JSON.stringify({ collected_money_index : money.index, y : money.y, x : money.x}));
 			 	exit = true;
 			}
 		}
