@@ -93,9 +93,9 @@ Crafty.c('PlayerCharacter', {
 	collectMoney: function(data){
 		money = data[0].obj;
 		this.score += money.value;
-		money.collect();
+		
 		//send signal to the server indicating that money has been collected
-		Crafty.trigger('MoneyCollected', this);
+		Crafty.trigger('MoneyCollected', this, money);
 		Crafty.trigger('ChangeScore', this);
 	}
 });
@@ -103,6 +103,7 @@ Crafty.c('PlayerCharacter', {
 Crafty.c('Money', {
 	init: function(){
 		this.attr({
+			array_index = -1;
 			value: 10
 		});
 		this.requires('Actor, Color')

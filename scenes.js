@@ -2,121 +2,9 @@ var mazeData;
 var player_number = 0;
 var is_two_player_game = false;
 var enemy_list = new Array();
+var money_list = new Array();
 var socket;
 var player;
-
-function hasUnvisitedNeighbor(row, col, dir){
-	if(dir == 0 && (col - 2) >= 0)
-	{
-		return (mazeData[row][col - 2] == 'U');
-	}
-	else if(dir == 1 && (col + 2) < Game.map_grid.height){
-		return (mazeData[row][col + 2] == 'U');
-	}
-	else if(dir == 2 && (row - 2) >= 0){
-		return (mazeData[row - 2][col] == 'U');
-	}
-	else if(dir == 3 && (row + 2) < Game.map_grid.width){
-		return (mazeData[row + 2][col] == 'U');
-	}
-	else{;
-		return false;
-	}
-}
-
-function generateMaze(row, column){
-	mazeData[row][column] = '.';
-	
-	while(hasUnvisitedNeighbor(row, column, 0) || hasUnvisitedNeighbor(row, column, 1)
-		|| hasUnvisitedNeighbor(row, column, 2) || hasUnvisitedNeighbor(row, column, 3))
-	{
-		var direction = Math.floor(Math.random() * 4);
-		//window.alert("direction " + direction);
-		if(hasUnvisitedNeighbor(row, column, direction))
-		{	
-			//window.alert("in here");
-			switch(direction)
-			{
-				
-				case 0:
-					mazeData[row][column - 1] = '.';
-					this.generateMaze(row, column - 2);
-					break;
-				case 1:
-					mazeData[row][column + 1] = '.';
-					this.generateMaze(row, column + 2);
-					break;
-				case 2:
-					mazeData[row - 1][column] = '.';
-					this.generateMaze(row - 2, column);
-			    	break;
-				case 3:
-					mazeData[row + 1][column] = '.';
-					this.generateMaze(row + 2, column);
-					break;
-			}
-		}
-	}
-}
-
-function initialize_maze()
-{
-	for(var i = 0; i < Game.map_grid.width; i++){
-		mazeData[i] = new Array(Game.map_grid.height);
-		for(var j = 0; j < Game.map_grid.height; j++){
-			mazeData[i][j] = 'U';
-		}
-	}
-	
-	for(var x = 0; x < Game.map_grid.width; x++){
-		for(var y = 0; y < Game.map_grid.height; y++){
-			var at_edge = x == 0 || x == Game.map_grid.width - 1 ||
-				y == 0 || y == Game.map_grid.height - 1;
-				
-			var cell_num = x + (y * Game.map_grid.height);
-			
-			if(at_edge){
-				mazeData[x][y] = '#';
-			}			
-			else if(y % 2 == 0 && cell_num % 2 == 0){
-				mazeData[x][y] = '#';
-			}
-			else if(y % 2 != 0 && cell_num % 2 != 0){
-				mazeData[x][y] = '#';
-			}
-		}
-	}
-}
-
-function modify_maze()
-{
-	for(var x = 1; x < Game.map_grid.width - 1; x++){
-		mazeData[x][1] = '.';
-		if(mazeData[x][3] == '#' && Math.random() < .75)
-		{
-			mazeData[x][2] = '#';
-		}
-		mazeData[x][Game.map_grid.height - 2] = '.';
-		if(mazeData[x][Game.map_grid.height - 4] == '#' && Math.random() < .75)
-		{
-			mazeData[x][Game.map_grid.height - 3] = '#';
-		}
-	}
-	
-	for(var y = 1; y < Game.map_grid.height - 1; y++){
-		mazeData[1][y] = '.';
-		if(mazeData[3][y] == '#' && Math.random() < .75)
-		{
-			mazeData[2][y] = '#';
-		}
-		
-		mazeData[Game.map_grid.width - 2][y] = '.';
-		if(mazeData[Game.map_grid.width - 4][y] == '#' && Math.random() < .75)
-		{
-			mazeData[Game.map_grid.width - 3][y] = '#';
-		}
-	}
-}
 
 function place_player()
 {
@@ -287,6 +175,21 @@ Crafty.scene('Game', function(){
 			}
 	});
 	
+	socket.on('destroyMoney', fucntion(message){
+		var money_index = message.collected_money_index;
+		var exit = false;
+		while(!exit){
+			var x = Math.floor(Math.random() * Game.map_grid.width);
+			var y = Math.floor(Math.random() * Game.map_grid.height);
+		
+			if(!this.occupied[x][y]){
+				this.occupied[x][y] = true;
+				money_list[money_index].at(x, y);
+			 	exit = true;
+			}
+		}
+	});
+	
 	//Place money around grid
 	var max_money = 100;
 	var money_count = 0;
@@ -296,7 +199,7 @@ Crafty.scene('Game', function(){
 		
 		if(!this.occupied[x][y]){
 			this.occupied[x][y] = true;
-			Crafty.e('Money').at(x, y);
+			money_list.push(Crafty.e('Money').attr({index : money_list.length}).at(x, y));
 			money_count++;
 		}
 	}
@@ -342,15 +245,16 @@ Crafty.scene('Game', function(){
 			}
 		});
 	
-	this.add_money = this.bind('MoneyCollected', function(player){
+	this.add_money = this.bind('MoneyCollected', function(player, money){
 		var exit = false;
+		socket.emit('CollectMoney', JSON.stringify({ collected_money_index : money.index}));
 		while(!exit){
 			var x = Math.floor(Math.random() * Game.map_grid.width);
 			var y = Math.floor(Math.random() * Game.map_grid.height);
 		
 			if(!this.occupied[x][y]){
 				this.occupied[x][y] = true;
-				Crafty.e('Money').at(x, y);
+				money.at(x, y);
 			 	exit = true;
 			}
 		}
