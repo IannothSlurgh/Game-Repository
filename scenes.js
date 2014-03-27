@@ -412,14 +412,13 @@ Crafty.scene('ConnectionRoom', function(){
         $('#status').text(message);
         $('#login').attr('disabled', false);
       });
-	
+	}
 	socket.on{
-		'msg',
+		'mazeDataMsg',
 		function(message){
 			mazeData = JSON.parse(message).mazeArray;
 		});
 	}
-	
     // If a login_ok message is received, proceed to the chat section.
     socket.on(
       'login_ok',
