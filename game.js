@@ -24,7 +24,6 @@ Game = {
 		
 		Crafty.init(Game.width(), Game.height());
 		//Crafty.background('rgb(100, 100, 100)');
-		console.log('here');
 		
 		Crafty.scene('StartScreen');
 	}

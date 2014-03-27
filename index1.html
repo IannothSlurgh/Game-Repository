@@ -77,9 +77,100 @@
 		left: 723px;
 		top: 66px;
 	}
-	
-</style>
+	body {
+	  font-family: sans-serif;
+	}
 
+	#status {
+	  font-size: 14pt;
+	  color: gray;
+	  margin-top: 12px;
+	  margin-bottom: 12px;
+	}
+
+	#board {
+	  width: 800px;
+	  height: 600px;
+	  border: 1px solid gray;
+	  padding: 3px;
+	}
+
+	#board div {
+	  margin-top: 5px;
+	}
+
+	#loggedin {
+	  position: absolute;
+	  width: 200px;
+	  height: 550px;
+	  border: 1px solid gray;
+	  padding: 3px;
+	  left: 818px;
+	  top: 8px;
+	}
+
+	#loggedin div {
+	  margin-top: 5px;
+	  margin-bottom: 5px;
+	  margin-right: 5px;
+	  margin-left: 5px;
+	}
+
+	#msg {
+	  width: 740px;
+	  margin-right: 10px;
+	}
+
+	#send {
+	  width: 50px;
+	}
+
+	#login_section, #chat_section {
+	  display: none;
+	}
+
+	.user_name {
+	  font-size: 10pt;
+	  font-weight: bold;
+	  color: blue;
+	}
+
+	.says {
+	  font-size: 10pt;
+	  color: gray;
+	}
+
+	.msg {
+	  font-size: 12pt;
+	  font-family: serif;
+	}
+
+	.notification {
+	  color: green;
+	}
+</style>
+<div id="warning">
+  
+</div>
+
+<div id="login_section" >
+  <div id="status">Connecting...</div>
+  Input your user:
+  <input id="name" type="text"></input>
+  <input id="login" type="button" value="Log In" disabled="true"></input>
+</div>
+
+
+
+<div id="chat_section" style = "width:1200px">
+  <div id="board">
+  </div>
+  <div id="loggedin">
+    Users:
+  </div>
+  <input id="msg" type="text"></input>
+  <input id="send" type="button" value="Send"></input>
+</div>
 <head>
 	<style>
 	.unitlist 
@@ -96,12 +187,14 @@
 	<script src="scenes.js"></script>
 	<script src="ian_code.js"></script>
 	<script src="phase_two.js"></script>
+	<script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
 	<script>
 		window.addEventListener('load', Game.start);
 	</script>
 </head>
 <body style = "margin: 0px; font-size: 150%">
-	<img id = "grid" class = "tile" src = "grid.gif" ondragstart = "return false" ondrop = "return false"/>
+	<img id = "grid" class = "tile" type = "image/gif" src = "grid.gif" ondragstart = "return false" ondrop = "return false"/>
 	<img id = "next" class = "tile2 no_drag" src = "next.gif" ondragstart = "return false" ondrop = "return false"/>
 	<p id = "stat_player_turn class" class = "on_top stat_player_turn"> Annoth </p>
 	<p id = "stat_hp" class = "on_top stat_hp"> 10 </p>

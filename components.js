@@ -123,7 +123,7 @@ Crafty.c('2PlayerButton', {
 		})
 		.bind('Click', function(e){
 			is_two_player_game = true;
-			Crafty.scene('Game');
+			Crafty.scene('ConnectionRoom');
 		});
 	}
 	
@@ -141,7 +141,7 @@ Crafty.c('4PlayerButton', {
 		})
 		.bind('Click', function(e){
 			is_two_player_game = false;
-			Crafty.scene('Game');
+			Crafty.scene('ConnectionRoom');
 		});
 	}
 	
@@ -162,4 +162,36 @@ Crafty.c('HelpButton', {
 		});
 	}
 	
+});
+
+Crafty.c('MineCart', {
+	init: function(){
+		this.requires('2D, Canvas, Color, Tween')
+			.color('rgb(255, 128, 0)')
+			.tween({x: 880}, 10000)
+			.bind('TweenEnd', function(){
+				
+				var track_num = Math.floor(Math.random() * 3);
+				var direction = Math.round(Math.random());
+				console.log(track_num);
+				switch(track_num)
+				{
+				case 0:
+					this.y = 262; 
+					this.x = -100;
+					this.tween({x: 880}, 10000);
+					break;
+				case 1: 
+					this.y = 418; 
+					this.x = 880;
+					this.tween({x: 0 - this.w}, 10000);
+					break;
+				case 2: 
+					this.y = 574; 
+					this.x = -100;
+					this.tween({x: 880}, 10000);
+					break;
+				}
+			});
+	}
 });

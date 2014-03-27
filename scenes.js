@@ -363,10 +363,15 @@ Crafty.scene('Victory', function(){
 });
 
 Crafty.scene('StartScreen', function(){
+	
+	
 	Crafty.e('2D, Canvas, Image')
 		.attr({x: 0, y: 0})
 		.image("start_background.png");
-	
+		
+	Crafty.e('MineCart')
+		.attr({x: -100, y: 262, w: 100, h: 50});
+		
 	Crafty.e('2D, Canvas, Color')
 		.attr({x: 352, y: 40, w: 176, h: 76})
 		.color('rgb(123, 104, 238)');
@@ -379,6 +384,133 @@ Crafty.scene('StartScreen', function(){
 		
 	Crafty.e('HelpButton')
 		.attr({x: 352, y: 508, w: 176, h: 76});
+		
+	
+});
+
+Crafty.scene('ConnectionRoom', function(){
+	 $(document).ready(function() {
+    // Hide the warning section and show the login section.
+    $('#warning').css('display', 'none');
+    $('#login_section').css('display', 'block');
+
+    // Initialize socket.io.
+    // document.location.host returns the host of the current page.
+    var socket = io.connect('http://' + document.location.host);
+
+    // If a welcome message is received, it means the chat room is available.
+    // The Log In button will be then enabled.
+    socket.on(
+      'msg',
+      function(message) {
+        $('#status').text(message);
+        $('#login').attr('disabled', false);
+      });
+
+    // If a login_ok message is received, proceed to the chat section.
+    socket.on(
+      'login_ok',
+      function() {
+        $('#login_section').css('display', 'none');
+        $('#chat_section').css('display', 'block');
+        $('#status').text('Logged In.');
+      });
+
+    // If a login_failed message is received, stay in the login section but
+    // display an error message.
+    socket.on(
+      'login_failed',
+      function() {
+        $('#status').text('Failed to log in!');
+      });
+
+    // If a chat message is received, display it.
+    socket.on(
+      'chat',
+      function(message) {
+		var obj = JSON.parse(message);
+        if (obj && obj.user_name && obj.msg) {
+          var user_name = obj.user_name;
+          var msg = obj.msg;
+          // This will create a div element using the HTML code:
+          var div = $('<div></div>');
+          // Similarly, create span elements with CSS classes and corresponding
+          // contents, and append them in a row to the new div element.
+          div.append($('<span></span>').addClass('user_name').text(user_name));
+          div.append($('<span></span>').addClass('says').text(' says: '));
+          div.append($('<span></span>').addClass('msg').text(msg));
+          // Add the new div element to the chat board.
+          $('#board').append(div);
+        }
+      });
+
+	socket.on(
+	  'userlist',
+	  function(message){
+		var obj = JSON.parse(message);
+		var user_name = obj.user_name;
+	    var div = $('<div></div>');
+          div.append($('<span></span>').addClass('user_name').text(user_name));
+          $('#loggedin').append(div);
+	});
+	
+    // If a notification is received, display it.
+    socket.on(
+      'notification',
+      function(message) {
+        if (message) {
+          // Similar to the handler of 'chat' event ...
+          var div = $('<div></div>');
+          div.append($('<span></span>').addClass('notification').text(message));
+          $('#board').append(div);
+        }
+      });
+
+    // When the Log In button is clicked, the provided function will be called,
+    // which sends a login message to the server.
+    $('#login').click(function() {
+      var name = $('#name').val();
+      if (name) {
+        name = name.trim();
+        if (name.length > 0) {
+          socket.emit('login', { user_name: name });
+		  socket.emit('userlist', { user_name: name});
+        }
+      }
+      // Clear the input field.
+      $('#name').val('');
+    });
+
+    // When Enter is pressed in the name field, it should be treated as clicking
+    // on the Log In button.
+    $('#name').keyup(function(event) {
+      if (event.keyCode == 13) {
+        $('#login').click();
+      }
+    });
+
+    // When the Log In button is clicked, the provided function will be called,
+    // which sends a chat message to the server.
+    $('#send').click(function() {
+      var data = $('#msg').val();
+      if (data) {
+        data = data.trim();
+        if (data.length > 0) {
+          socket.emit('chat', { msg: data });
+        }
+      }
+      // Clear the input field.
+      $('#msg').val('');
+    });
+
+    // When Enter is pressed in the message field, it should be treated as
+    // clicking on the Send button.
+    $('#msg').keyup(function(event) {
+      if (event.keyCode == 13) {
+        $('#send').click();
+      }
+    });
+  });
 });
 
 Crafty.scene('Phase 2', function(){
@@ -401,7 +533,6 @@ Crafty.scene('Phase 2', function(){
 	document.getElementById("yourUnitList").style.left= "0px";
 	counter=setInterval(timer, 1000);
 	reset();
-	//JASON, stuff goes here
 });
 
 Crafty.scene('Phase 3', function(){
