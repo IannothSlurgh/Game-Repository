@@ -229,16 +229,18 @@ Crafty.scene('Game', function(){
 	//place character
 	place_player();
 	
-	place_enemy_player(1);
-	
-	if(!is_two_player_game)
+	for(var j = 0; j < 4; j++)
 	{
-		place_enemy_player(2);
-		place_enemy_player(3);
+		if(is_two_player_game && j > 1)
+				break;
+		if(j != player_number)
+		{
+			place_enemy_player(j);
+		}
 	}
 	
 	Crafty.bind('PlayerMoved', function(){
-		var player_info = { "index" : 1, "x" : player.x, "y": player.y };
+		var player_info = { "index" : player_number, "x" : player.x, "y": player.y };
 		socket.emit('PlayerMovement', JSON.stringify(player_info));
 	});
 	
@@ -412,6 +414,7 @@ Crafty.scene('ConnectionRoom', function(){
 		var obj = JSON.parse(message);
         if (obj && obj.user_name && obj.msg) {
           var user_name = obj.user_name;
+		  player_number = clients.indexOf(user_name);
           var msg = obj.msg;
           // This will create a div element using the HTML code:
           var div = $('<div></div>');
