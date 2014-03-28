@@ -312,6 +312,8 @@ io.sockets.on(
     client.on(
       'disconnect',
       function() {
+		client.get(
+		  'user_name',
             if (name) {
               io.sockets.emit('notification', name + ' left the room.');
 			  var index = clients.indexOf(name);
@@ -322,5 +324,7 @@ io.sockets.on(
 			  io.sockets.emit('userlist', JSON.stringify({"uniqueNames":clients, "status": clients_ready}));
             }
           });
-      });
+      );
+	});  
+	  
 

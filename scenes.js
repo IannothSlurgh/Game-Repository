@@ -541,8 +541,8 @@ Crafty.scene('Phase 2', function(){
 	document.getElementById("reset").style.display = "block";
 	document.getElementById("helpAndShop").style.top = "0px";
 	document.getElementById("helpAndShop").style.left = "0px";
-	document.getElementById("yourTimer").style.top = "20px";
-	document.getElementById("yourTimer").style.left = "560px";
+	document.getElementById("yourTimer").style.top = "10px";
+	document.getElementById("yourTimer").style.left = "540px";
 	document.getElementById("yourGold").style.top = "120px";
 	document.getElementById("yourGold").style.left = "700px";
 	document.getElementById("yourUnit").style.top = "220px";
