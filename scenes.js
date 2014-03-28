@@ -467,7 +467,7 @@ Crafty.scene('ConnectionRoom', function(){
 			document.getElementById("start_button").style.display = "none";
 			Crafty.scene('Game');
 		}
-	);
+	});
 	
     // If a notification is received, display it.
     socket.on(
