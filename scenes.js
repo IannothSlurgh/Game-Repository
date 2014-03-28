@@ -102,14 +102,93 @@ function place_enemy_player(index)
 	enemy_list.push(Crafty.e('EnemyPlayer').attr({index: index}).at(col, row));
 }
 
+//the help screen
+var whichHelpScreen = 0;
 Crafty.scene('Help', function() {
-	Crafty.e('2D, Canvas, Image')
-		.attr({x: 0, y: 0})
-		.image("help_background.gif");
-		document.getElementById("help").style.display = "block";
-		document.getElementById("next").style.display = "block";
+		/*Crafty.stage.elem.style.display = "none";
+		document.getElementById("helpAndShop").style.display = "block";
+		//nextHelpScreen();
+		document.getElementById("helpText1").style.display = "block";
+		document.getElementById("helpText2").style.display = "block";
+		document.getElementById("helpText3").style.display = "block";
+		document.getElementById("nextHelp").style.display = "block";
 		document.getElementById("back").style.display = "block";
+		document.getElementById("finish").style.display = "block";
+		document.getElementById("returnHome").style.display = "block";*/
 });
+
+/*function nextHelpScreen() {
+	whichHelpScreen++;
+	switch(whichHelpScreen) {
+	case 1:
+		document.getElementById("helpText2").style.display = "none";
+		document.getElementById("helpText3").style.display = "none";
+		document.getElementById("back").style.display = "none";
+		document.getElementById("finish").style.display = "none";
+		document.getElementById("returnHome").style.display = "block";
+		document.getElementById("returnHome").style.top = "576px"; 
+		document.getElementById("returnHome").style.left = "0px"; 
+		document.getElementById("nextHelp").style.display = "block";
+		document.getElementById("nextHelp").style.top = "576px";
+		document.getElementById("nextHelp").style.left = "761px";
+		document.getElementById("helpText1").style.display = "block";
+		document.getElementById("helpText1").style.top = "0px";
+		document.getElementById("helpText1").style.bottom = "624px";
+		document.getElementById("helpText1").style.right = "880px";
+		document.getElementById("helpText1").style.left = "0px";
+		break;
+	case 2:
+		document.getElementById("helpText1").style.display = "none";
+		document.getElementById("helpText3").style.display = "none";
+		document.getElementById("returnHome").style.display = "none";
+		document.getElementById("finish").style.display = "none";
+		document.getElementById("back").style.display = "block";
+		document.getElementById("back").style.top = "576px"; 
+		document.getElementById("back").style.left = "0px"; 
+		document.getElementById("nextHelp").style.display = "block";
+		document.getElementById("nextHelp").style.top = "576px";
+		document.getElementById("nextHelp").style.left = "761px";
+		document.getElementById("helpText2").style.display = "block";
+		document.getElementById("helpText2").style.top = "0px";
+		document.getElementById("helpText2").style.bottom = "624px";
+		document.getElementById("helpText2").style.right = "880px";
+		document.getElementById("helpText2").style.left = "0px";
+		break;
+	case 3:
+		document.getElementById("helpText1").style.display = "none";
+		document.getElementById("helpText2").style.display = "none";
+		document.getElementById("nextHelp").style.display = "none";
+		document.getElementById("returnHome").style.display = "none";
+		document.getElementById("back").style.display = "block";
+		document.getElementById("back").style.top = "576px"; 
+		document.getElementById("back").style.left = "0px"; 
+		document.getElementById("finish").style.display = "block";
+		document.getElementById("finish").style.top = "576px";
+		document.getElementById("finish").style.left = "761px";
+		document.getElementById("helpText3").style.display = "block";
+		document.getElementById("helpText3").style.top = "0px";
+		document.getElementById("helpText3").style.bottom = "624px";
+		document.getElementById("helpText3").style.right = "880px";
+		document.getElementById("helpText3").style.left = "0px";
+		break;
+	}
+}
+function previousHelpScreen() {
+	whichHelpScreen--;
+	nextHelpScreen();
+}
+function returnFromHelpScreen() {
+	whichHelpScreen = 0;
+	document.getElementById("helpAndShop").style.display = "none";
+	document.getElementById("helpText1").style.display = "none";
+	document.getElementById("helpText2").style.display = "none";
+	document.getElementById("helpText3").style.display = "none";
+	document.getElementById("nextHelp").style.display = "none";
+	document.getElementById("back").style.display = "none";
+	document.getElementById("finish").style.display = "none";
+	document.getElementById("returnHome").style.display = "none";
+	Crafty.scene('StartScreen');
+}*/
 
 Crafty.scene('Game', function(){
 	//2D array to keep track of all occupied tiles
@@ -421,7 +500,7 @@ Crafty.scene('ConnectionRoom', function(){
 
 Crafty.scene('Phase 2', function(){
 	Crafty.stage.elem.style.display = "none";
-	document.getElementById("shop").style.display = "block";
+	document.getElementById("helpAndShop").style.display = "block";
 	document.getElementById("command").style.display = "block";
 	document.getElementById("yourGold").style.display = "block";
 	document.getElementById("yourUnit").style.display = "block";
@@ -430,8 +509,8 @@ Crafty.scene('Phase 2', function(){
 	document.getElementById("yourUnitList").style.display = "block";
 	document.getElementById("ready").style.display = "block";
 	document.getElementById("reset").style.display = "block";
-	document.getElementById("shop").style.top = "0px";
-	document.getElementById("shop").style.left = "0px";
+	document.getElementById("helpAndShop").style.top = "0px";
+	document.getElementById("helpAndShop").style.left = "0px";
 	document.getElementById("yourTimer").style.top = "20px";
 	document.getElementById("yourTimer").style.left = "560px";
 	document.getElementById("yourGold").style.top = "120px";
@@ -445,7 +524,7 @@ Crafty.scene('Phase 2', function(){
 });
 
 Crafty.scene('Phase 3', function(){
-	document.getElementById("shop").style.display = "none";
+	document.getElementById("helpAndShop").style.display = "none";
 	document.getElementById("command").style.display = "none";
 	document.getElementById("yourGold").style.display = "none";
 	document.getElementById("yourUnit").style.display = "none";

@@ -158,7 +158,7 @@ Crafty.c('HelpButton', {
 			this.color('rgb(0, 255, 255)');
 		})
 		.bind('Click', function(e){
-			Crafty.scene('help');
+			Crafty.scene('Help');
 		});
 	}
 	
