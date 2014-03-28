@@ -105,19 +105,12 @@ function place_enemy_player(index)
 //the help screen
 var whichHelpScreen = 0;
 Crafty.scene('Help', function() {
-		/*Crafty.stage.elem.style.display = "none";
+		Crafty.stage.elem.style.display = "none";
 		document.getElementById("helpAndShop").style.display = "block";
-		//nextHelpScreen();
-		document.getElementById("helpText1").style.display = "block";
-		document.getElementById("helpText2").style.display = "block";
-		document.getElementById("helpText3").style.display = "block";
-		document.getElementById("nextHelp").style.display = "block";
-		document.getElementById("back").style.display = "block";
-		document.getElementById("finish").style.display = "block";
-		document.getElementById("returnHome").style.display = "block";*/
+		nextHelpScreen();
 });
 
-/*function nextHelpScreen() {
+function nextHelpScreen() {
 	whichHelpScreen++;
 	switch(whichHelpScreen) {
 	case 1:
@@ -188,7 +181,7 @@ function returnFromHelpScreen() {
 	document.getElementById("finish").style.display = "none";
 	document.getElementById("returnHome").style.display = "none";
 	Crafty.scene('StartScreen');
-}*/
+}
 
 Crafty.scene('Game', function(){
 	//2D array to keep track of all occupied tiles
