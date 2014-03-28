@@ -363,12 +363,15 @@ Crafty.scene('ConnectionRoom', function(){
     // document.location.host returns the host of the current page.
     socket = io.connect('http://' + document.location.host);
 	$('#start_button').click(function(){
+		socket.emit('userlist', { user_name: name, status: 1});
+		/*
 		document.getElementById("board").style.display = "none";
 		document.getElementById("loggedin").style.display = "none";
 		document.getElementById("msg").style.display = "none";
 		document.getElementById("send").style.display = "none";
 		document.getElementById("start_button").style.display = "none";
 		Crafty.scene('Game');
+		*/
 	 });
     // If a welcome message is received, it means the chat room is available.
     // The Log In button will be then enabled.
@@ -426,11 +429,45 @@ Crafty.scene('ConnectionRoom', function(){
 	  'userlist',
 	  function(message){
 		var obj = JSON.parse(message);
-		var user_name = obj.user_name;
-	    var div = $('<div></div>');
-          div.append($('<span></span>').addClass('user_name').text(user_name));
-          $('#loggedin').append(div);
-	});
+		var names = obj.uniqueNames;
+		var status = obj.status;
+		$('#loggedin').empty();
+		
+		var original = $('<div class = users>Users:</div>');
+		$('#loggedin').append(original);
+		
+		for(var i = 0; i < names.length; i++)
+		{	
+			var div = $('<div></div>');
+			if(status[i] == 0)
+			{
+				div.append($('<span></span>').addClass('user_name').text(names[i]));	
+			}
+			else
+			{
+				div.append($('<span></span>').addClass('user_ready').text(names[i]));
+			}
+			$('#loggedin').append(div);	
+			
+		}
+		var count = 0;
+		for(var i = 0; i < status.length; i++)
+		{
+			if((status[i] == 1))
+			{
+				count++;
+			}
+		}
+		if(count == status.length)
+		{
+			document.getElementById("board").style.display = "none";
+			document.getElementById("loggedin").style.display = "none";
+			document.getElementById("msg").style.display = "none";
+			document.getElementById("send").style.display = "none";
+			document.getElementById("start_button").style.display = "none";
+			Crafty.scene('Game');
+		}
+	);
 	
     // If a notification is received, display it.
     socket.on(
@@ -452,7 +489,7 @@ Crafty.scene('ConnectionRoom', function(){
         name = name.trim();
         if (name.length > 0) {
           socket.emit('login', { user_name: name });
-		  socket.emit('userlist', { user_name: name});
+		  socket.emit('userlist', { user_name: name, status: 0});
         }
       }
       // Clear the input field.

@@ -182,6 +182,7 @@ function mazeGenerationAlgorithm()
 mazeGenerationAlgorithm();
 //------------------------------------------------------------------------------
 var clients = [];
+var clients_ready = [];
 
 io.sockets.on(
   'connection',
@@ -199,7 +200,17 @@ io.sockets.on(
         // sends notifications to other clients.
         if (message && message.user_name) {
           client.set('user_name', message.user_name);
-		  clients.push(message.user_name);
+		  var check = false;
+		  for(var i = 0; i < clients.length; i++) {
+			if(message.user_name == clients[i])
+			{
+				check = true;
+			}
+		  }
+		  if(!check){
+			clients.push(message.user_name);
+			clients_ready.push(0);
+          }
           client.emit('login_ok');
           // client.broadcast.emits() will send to all clients except the
           // current client. See socket.io FAQ for more examples.
@@ -240,20 +251,17 @@ io.sockets.on(
             'user_name', 
             function(err, name) {
               if (!err) {
-                // io.sockets.emit() will send the message to all clients,
-                // including the current client. See socket.io FAQ for more
-                // examples.
-				var obj = { "user_name": name};
-                io.sockets.emit('userlist', JSON.stringify(obj));
-				for(var j = 0; j < clients.length; j++)
+                var status = message.status;
+				var uniqueNames = [];
+				uniqueNames = removeDuplicates(clients);
+				var index = uniqueNames.indexOf(name);
+				if(index > -1)
 				{
-					if(clients[j] != name)
-					{
-						console.log('I Entered the loop');
-						var others = { "user_name": clients[j]};
-						client.emit('userlist', JSON.stringify(others));
+					if(status > 0){
+						clients_ready[index] = status;
 					}
 				}
+				io.sockets.emit('userlist', JSON.stringify({"uniqueNames":uniqueNames, "status": clients_ready}));
               }
             });
 	});
@@ -291,11 +299,14 @@ io.sockets.on(
     client.on(
       'disconnect',
       function() {
-        client.get(
-          'user_name',
-          function(err, name) {
             if (name) {
               io.sockets.emit('notification', name + ' left the room.');
+			  var index = clients.indexOf(name);
+			  if(index > -1){
+				clients.splice(index, 1);
+				clients_ready.splice(index, 1);
+			  }
+			  io.sockets.emit('userlist', JSON.stringify({"uniqueNames":clients, "status": clients_ready}));
             }
           });
       });
