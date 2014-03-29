@@ -6,6 +6,7 @@ var money_list = new Array();
 var socket;
 var player;
 var user_str;
+var list_of_users;
 
 function place_player()
 {
@@ -52,7 +53,7 @@ function place_player()
 	
 	var player_text = Crafty.e("2D, DOM, Text")
 		.attr({x: col * 16 - 8, y: row * 16 - 15, w: 75})
-		.text("Player");
+		.text(list_of_users[player_number]);
 		
 	player = Crafty.e('PlayerCharacter').at(col, row).attach(player_text);
 }
@@ -99,6 +100,11 @@ function place_enemy_player(index)
 		row = 21;
 		break;
 	}
+	
+	//need to change width and x position based on user_name
+	var enemy_text = Crafty.e("2D, DOM, Text")
+		.attr({x: col * 16, y: row * 16 - 15, w: 75})
+		.text(list_of_users[index]);
 	
 	enemy_list.push(Crafty.e('EnemyPlayer').attr({index: index}).at(col, row));
 }
@@ -436,6 +442,7 @@ Crafty.scene('ConnectionRoom', function(){
 		var obj = JSON.parse(message);
 		var names = obj.uniqueNames;
 		var status = obj.status;
+		list_of_users = names;
 		player_number = names.indexOf(user_str);
 		console.log("Player_number = " + player_number);
 		$('#loggedin').empty();
@@ -487,6 +494,13 @@ Crafty.scene('ConnectionRoom', function(){
           $('#board').append(div);
         }
       });
+	  
+	socket.on(
+		'emptyChat',
+		function(){
+			$('#board').empty();
+		}
+	);
 
     // When the Log In button is clicked, the provided function will be called,
     // which sends a login message to the server.
