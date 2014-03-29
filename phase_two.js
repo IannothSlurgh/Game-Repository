@@ -78,18 +78,15 @@ function ready()
 	//Crafty.scene('Phase 3');
 }
 
-var count=120;
+var count=60;
 var counter;//runs timer() every second
 
 function timer()
 {
- document.getElementById("timer").innerHTML=count + " secs";
- count=count-1;
- console.log("Timer is running...");
+ document.getElementById("timer").innerHTML=count + " seconds";
+ count = count - 1;
  if (count < 0)
  {
 	ready();
-	
-
  }
 }

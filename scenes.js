@@ -114,10 +114,11 @@ var whichHelpScreen = 0;
 Crafty.scene('Help', function() {
 	Crafty.stage.elem.style.display = "none";
 	document.getElementById("helpAndShop").style.display = "block";
-	nextHelpScreen(0);
+	nextHelpScreen();
 });
-function nextHelpScreen(var incrementer) {
-	whichHelpScreen = whichHelpScreen + incrementer;
+function nextHelpScreen() {
+	whichHelpScreen = whichHelpScreen + 1;
+	console.log("Running nextHelpScreen()");
 	console.log(whichHelpScreen);
 	switch(whichHelpScreen) {
 	case 1:
@@ -161,8 +162,11 @@ function nextHelpScreen(var incrementer) {
 		break;
 	}
 }
-function previousHelpScreen() {;
-	nextHelpScreen(-1);
+function previousHelpScreen() {
+	whichHelpScreen = whichHelpScreen - 1;
+	console.log("Running previousHelpScreen()");
+	console.log(whichHelpScreen);
+	nextHelpScreen();
 }
 function returnFromHelpScreen() {
 	whichHelpScreen = 0;
