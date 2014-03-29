@@ -119,6 +119,7 @@ Crafty.scene('Help', function() {
 
 function nextHelpScreen() {
 	whichHelpScreen++;
+	console.log(whichHelpScreen);
 	switch(whichHelpScreen) {
 	case 1:
 		document.getElementById("helpText2").style.display = "none";
@@ -132,10 +133,6 @@ function nextHelpScreen() {
 		document.getElementById("nextHelp").style.top = "576px";
 		document.getElementById("nextHelp").style.left = "761px";
 		document.getElementById("helpText1").style.display = "block";
-		document.getElementById("helpText1").style.top = "0px";
-		document.getElementById("helpText1").style.bottom = "624px";
-		document.getElementById("helpText1").style.right = "880px";
-		document.getElementById("helpText1").style.left = "0px";
 		break;
 	case 2:
 		document.getElementById("helpText1").style.display = "none";
@@ -149,10 +146,6 @@ function nextHelpScreen() {
 		document.getElementById("nextHelp").style.top = "576px";
 		document.getElementById("nextHelp").style.left = "761px";
 		document.getElementById("helpText2").style.display = "block";
-		document.getElementById("helpText2").style.top = "0px";
-		document.getElementById("helpText2").style.bottom = "624px";
-		document.getElementById("helpText2").style.right = "880px";
-		document.getElementById("helpText2").style.left = "0px";
 		break;
 	case 3:
 		document.getElementById("helpText1").style.display = "none";
@@ -166,13 +159,10 @@ function nextHelpScreen() {
 		document.getElementById("finish").style.top = "576px";
 		document.getElementById("finish").style.left = "761px";
 		document.getElementById("helpText3").style.display = "block";
-		document.getElementById("helpText3").style.top = "0px";
-		document.getElementById("helpText3").style.bottom = "624px";
-		document.getElementById("helpText3").style.right = "880px";
-		document.getElementById("helpText3").style.left = "0px";
 		break;
 	}
 }
+
 function previousHelpScreen() {
 	whichHelpScreen--;
 	nextHelpScreen();

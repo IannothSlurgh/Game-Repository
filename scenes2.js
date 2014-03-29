@@ -103,6 +103,7 @@ function place_enemy_player(index)
 }
 
 //the help screen
+//the help screen
 var whichHelpScreen = 0;
 Crafty.scene('Help', function() {
 		Crafty.stage.elem.style.display = "none";
