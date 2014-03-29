@@ -415,6 +415,7 @@ Crafty.scene('ConnectionRoom', function(){
         if (obj && obj.user_name && obj.msg) {
           var user_name = obj.user_name;
 		  player_number = clients.indexOf(user_name);
+		  console.log("Player_number = " + player_number);
           var msg = obj.msg;
           // This will create a div element using the HTML code:
           var div = $('<div></div>');
