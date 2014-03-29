@@ -5,6 +5,7 @@ var enemy_list = new Array();
 var money_list = new Array();
 var socket;
 var player;
+var user_name;
 
 function place_player()
 {
@@ -408,14 +409,14 @@ Crafty.scene('ConnectionRoom', function(){
       });
 
     // If a chat message is received, display it.
+	
     socket.on(
       'chat',
       function(message) {
 		var obj = JSON.parse(message);
         if (obj && obj.user_name && obj.msg) {
-          var user_name = obj.user_name;
-		  player_number = clients.indexOf(user_name);
-		  console.log("Player_number = " + player_number);
+          user_name = obj.user_name;
+		  
           var msg = obj.msg;
           // This will create a div element using the HTML code:
           var div = $('<div></div>');
@@ -435,6 +436,8 @@ Crafty.scene('ConnectionRoom', function(){
 		var obj = JSON.parse(message);
 		var names = obj.uniqueNames;
 		var status = obj.status;
+		player_number = clients.indexOf(user_name);
+		console.log("Player_number = " + player_number);
 		$('#loggedin').empty();
 		
 		var original = $('<div class = users>Users:</div>');
