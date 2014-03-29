@@ -106,7 +106,7 @@ function place_enemy_player(index)
 		.attr({x: col * 16, y: row * 16 - 15, w: 75})
 		.text(list_of_users[index]);
 	
-	enemy_list.push(Crafty.e('EnemyPlayer').attr({index: index}).at(col, row));
+	enemy_list.push(Crafty.e('EnemyPlayer').attr({index: index}).at(col, row).attach(enemy_text));
 }
 
 //the help screen
