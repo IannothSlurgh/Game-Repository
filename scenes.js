@@ -162,7 +162,7 @@ function nextHelpScreen() {
 	}
 }
 function previousHelpScreen() {
-	whichHelpScreen--;
+	whichHelpScreen = whichHelpScreen - 1;
 	nextHelpScreen();
 }
 function returnFromHelpScreen() {
@@ -325,6 +325,7 @@ Crafty.scene('Game', function(){
 Crafty.scene('StartScreen', function(){
 	
 	console.log('This is working.');
+	Crafty.stage.elem.style.display = "block";
 	Crafty.e('2D, Canvas, Image')
 		.attr({x: 0, y: 0})
 		.image("https://raw.githubusercontent.com/IannothSlurgh/Game-Repository/master/start_background.png");
