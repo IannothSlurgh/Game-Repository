@@ -52,7 +52,7 @@ function place_player()
 	}
 	
 	var player_text = Crafty.e("2D, DOM, Text")
-		.attr({x: col * 16 - 8, y: row * 16 - 15, w: 75})
+		.attr({x: col * 16, y: row * 16 - 15, w: 75})
 		.text(list_of_users[player_number]);
 		
 	player = Crafty.e('PlayerCharacter').at(col, row).attach(player_text);
@@ -472,7 +472,7 @@ Crafty.scene('ConnectionRoom', function(){
 				count++;
 			}
 		}
-		if(count == status.length)
+		if(count == status.length && ((is_two_player_game && status.length == 2) || (!is_two_player_game && status.length == 4)))
 		{
 			document.getElementById("board").style.display = "none";
 			document.getElementById("loggedin").style.display = "none";
