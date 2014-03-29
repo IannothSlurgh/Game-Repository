@@ -1,5 +1,5 @@
 //
-var money=2000; //dummy value
+var money;
 var units=new Array();
 var unitCount = 0;
 function printUnitList() {
@@ -16,7 +16,7 @@ function printUnitList() {
 }
 
 function updateResources() {
- document.getElementById("money").innerHTML=money + "/2000";
+ document.getElementById("money").innerHTML=money + "/" + player.score;
  document.getElementById("counter").innerHTML=unitCount + "/8";
 }
 
