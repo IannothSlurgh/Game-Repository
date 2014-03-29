@@ -118,8 +118,6 @@ Crafty.scene('Help', function() {
 });
 function nextHelpScreen() {
 	whichHelpScreen = whichHelpScreen + 1;
-	console.log("Running nextHelpScreen()");
-	console.log(whichHelpScreen);
 	switch(whichHelpScreen) {
 	case 1:
 		document.getElementById("helpText2").style.display = "none";
@@ -163,9 +161,7 @@ function nextHelpScreen() {
 	}
 }
 function previousHelpScreen() {
-	whichHelpScreen = whichHelpScreen - 1;
-	console.log("Running previousHelpScreen()");
-	console.log(whichHelpScreen);
+	whichHelpScreen = whichHelpScreen - 2;
 	nextHelpScreen();
 }
 function returnFromHelpScreen() {
@@ -178,6 +174,7 @@ function returnFromHelpScreen() {
 	document.getElementById("back").style.display = "none";
 	document.getElementById("finish").style.display = "none";
 	document.getElementById("returnHome").style.display = "none";
+	Crafty.stage.elem.style.display = "none";
 	Crafty.scene('StartScreen');
 }
 
@@ -329,25 +326,25 @@ Crafty.scene('StartScreen', function(){
 	
 	console.log('This is working.');
 	Crafty.e('2D, Canvas, Image')
-		.attr({x: 0, y: 0, visable: true})
+		.attr({x: 0, y: 0})
 		.image("https://raw.githubusercontent.com/IannothSlurgh/Game-Repository/master/start_background.png");
 		
 	console.log('This is working.');
 	Crafty.e('MineCart')
-		.attr({x: -100, y: 262, w: 100, h: 50, visable: true});
+		.attr({x: -100, y: 262, w: 100, h: 50});
 		
 	Crafty.e('2D, Canvas, Color')
-		.attr({x: 352, y: 40, w: 176, h: 76, visable: true})
+		.attr({x: 352, y: 40, w: 176, h: 76})
 		.color('rgb(123, 104, 238)');
 	
 	Crafty.e('2PlayerButton')
-		.attr({x: 352, y: 196, w: 176, h: 76, visable: true});
+		.attr({x: 352, y: 196, w: 176, h: 76});
 		
 	Crafty.e('4PlayerButton')
-		.attr({x: 352, y: 352, w: 176, h: 76, visable: true});
+		.attr({x: 352, y: 352, w: 176, h: 76});
 		
 	Crafty.e('HelpButton')
-		.attr({x: 352, y: 508, w: 176, h: 76, visable: true});
+		.attr({x: 352, y: 508, w: 176, h: 76});
 		
 	
 });
