@@ -41,12 +41,12 @@ function place_player()
 		
 		break;
 	case 2:
-		col = 25;
-		row = 27;
+		col = 29;
+		row = 19;
 		break;
 	case 3:
 		col = 27;
-		row = 27;
+		row = 21;
 		break;
 	}
 	
