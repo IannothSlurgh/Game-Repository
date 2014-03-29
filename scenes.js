@@ -111,13 +111,18 @@ function place_enemy_player(index)
 
 //the help screen
 var whichHelpScreen = 0;
+//the next 3 functions, and Craft.scene('Help', function()) written by Jason Sitzman
+//all illustrations inside the help menu produced by Jason Sitzman
 Crafty.scene('Help', function() {
 	Crafty.stage.elem.style.display = "none";
 	document.getElementById("helpAndShop").style.display = "block";
-	nextHelpScreen();
+	nextHelpScreen(); //display the first help screen
 });
-function nextHelpScreen() {
+
+//determines the next help screen to be displayed
+function nextHelpScreen() { 
 	whichHelpScreen = whichHelpScreen + 1;
+	//determines which help screen the client is wanting to view
 	switch(whichHelpScreen) {
 	case 1:
 		document.getElementById("helpText2").style.display = "none";
@@ -127,11 +132,11 @@ function nextHelpScreen() {
 		document.getElementById("returnHome").style.display = "block";
 		document.getElementById("returnHome").style.top = "576px"; 
 		document.getElementById("returnHome").style.left = "0px";
-		document.getElementById("returnHome").style.z-index = "2"; 
+		document.getElementById("returnHome").style.z-index = 2; 
 		document.getElementById("nextHelp").style.display = "block";
 		document.getElementById("nextHelp").style.top = "576px";
 		document.getElementById("nextHelp").style.left = "761px";
-		document.getElementById("nextHelp").style.z-index = "2";
+		document.getElementById("nextHelp").style.z-index = 2;
 		document.getElementById("helpText1").style.display = "block";
 		break;
 	case 2:
@@ -142,11 +147,11 @@ function nextHelpScreen() {
 		document.getElementById("back").style.display = "block";
 		document.getElementById("back").style.top = "576px"; 
 		document.getElementById("back").style.left = "0px"; 
-		document.getElementById("back").style.z-index = "2"; 
+		document.getElementById("back").style.z-index = 2; 
 		document.getElementById("nextHelp").style.display = "block";
 		document.getElementById("nextHelp").style.top = "576px";
 		document.getElementById("nextHelp").style.left = "761px";
-		document.getElementById("nextHelp").style.z-index = "2";
+		document.getElementById("nextHelp").style.z-index = 2;
 		document.getElementById("helpText2").style.display = "block";
 		break;
 	case 3:
@@ -157,19 +162,21 @@ function nextHelpScreen() {
 		document.getElementById("back").style.display = "block";
 		document.getElementById("back").style.top = "576px"; 
 		document.getElementById("back").style.left = "0px";
-		document.getElementById("back").style.z-index = "2"; 
+		document.getElementById("back").style.z-index = 2; 
 		document.getElementById("finish").style.display = "block";
 		document.getElementById("finish").style.top = "576px";
 		document.getElementById("finish").style.left = "761px";
-		document.getElementById("finish").style.z-index = "2";
+		document.getElementById("finish").style.z-index = 2;
 		document.getElementById("helpText3").style.display = "block";
 		break;
 	}
 }
+//goes back 1 help screen
 function previousHelpScreen() {
 	whichHelpScreen = whichHelpScreen - 2;
 	nextHelpScreen();
 }
+//exits the help menu
 function returnFromHelpScreen() {
 	whichHelpScreen = 0;
 	document.getElementById("helpAndShop").style.display = "none";
@@ -545,6 +552,7 @@ Crafty.scene('ConnectionRoom', function(){
   });
 });
 
+//Craft.scene('Phase 2', function()) written by Jason Sitzman
 Crafty.scene('Phase 2', function(){
 	Crafty.stage.elem.style.display = "none";
 	document.getElementById("helpAndShop").style.display = "block";
