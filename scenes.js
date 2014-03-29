@@ -306,7 +306,6 @@ Crafty.scene('Game', function(){
 	
 	this.add_money = this.bind('MoneyCollected', function(money){
 		var exit = false;
-		console.log(money);
 		
 		while(!exit){
 			var x = Math.floor(Math.random() * Game.map_grid.width);

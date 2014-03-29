@@ -66,7 +66,7 @@ function selectGoblin()
 
 function reset()
 {
- money = 2000; //dummy value
+ money = player.score; //dummy value
  units.length = 0;
  unitCount = 0;
  updateResources();
