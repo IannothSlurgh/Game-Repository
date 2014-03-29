@@ -174,7 +174,7 @@ function returnFromHelpScreen() {
 	document.getElementById("back").style.display = "none";
 	document.getElementById("finish").style.display = "none";
 	document.getElementById("returnHome").style.display = "none";
-	Crafty.stage.elem.style.display = "none";
+	Crafty.stage.elem.style.display = "block";
 	Crafty.scene('StartScreen');
 }
 
