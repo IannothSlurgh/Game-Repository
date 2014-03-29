@@ -436,7 +436,7 @@ Crafty.scene('ConnectionRoom', function(){
 		var obj = JSON.parse(message);
 		var names = obj.uniqueNames;
 		var status = obj.status;
-		player_number = clients.indexOf(user_name);
+		player_number = names.indexOf(user_name);
 		console.log("Player_number = " + player_number);
 		$('#loggedin').empty();
 		
