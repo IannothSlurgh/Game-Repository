@@ -112,8 +112,8 @@ Crafty.scene('Help', function() {
 
 function nextHelpScreen() {
 	whichHelpScreen++;
-	switch(whichHelpScreen) {
 	console.log(whichHelpScreen);
+	switch(whichHelpScreen) {
 	case 1:
 		document.getElementById("helpText2").style.display = "none";
 		document.getElementById("helpText3").style.display = "none";
