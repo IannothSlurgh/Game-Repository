@@ -116,6 +116,7 @@ var whichHelpScreen = 0;
 Crafty.scene('Help', function() {
 	Crafty.stage.elem.style.display = "none";
 	document.getElementById("helpAndShop").style.display = "block";
+	document.getElementById("helpAndShop").style.zIndex = "-1";
 	nextHelpScreen(); //display the first help screen
 });
 
@@ -132,12 +133,13 @@ function nextHelpScreen() {
 		document.getElementById("returnHome").style.display = "block";
 		document.getElementById("returnHome").style.top = "576px"; 
 		document.getElementById("returnHome").style.left = "0px";
-		document.getElementById("returnHome").style.z-index = 2; 
+		document.getElementById("returnHome").style.zIndex = "2"; 
 		document.getElementById("nextHelp").style.display = "block";
 		document.getElementById("nextHelp").style.top = "576px";
 		document.getElementById("nextHelp").style.left = "761px";
-		document.getElementById("nextHelp").style.z-index = 2;
+		document.getElementById("nextHelp").style.zIndex = "2";
 		document.getElementById("helpText1").style.display = "block";
+		document.getElementById("helpText1").style.zIndex = "0";
 		break;
 	case 2:
 		document.getElementById("helpText1").style.display = "none";
@@ -147,12 +149,13 @@ function nextHelpScreen() {
 		document.getElementById("back").style.display = "block";
 		document.getElementById("back").style.top = "576px"; 
 		document.getElementById("back").style.left = "0px"; 
-		document.getElementById("back").style.z-index = 2; 
+		document.getElementById("back").style.zIndex = "2"; 
 		document.getElementById("nextHelp").style.display = "block";
 		document.getElementById("nextHelp").style.top = "576px";
 		document.getElementById("nextHelp").style.left = "761px";
-		document.getElementById("nextHelp").style.z-index = 2;
+		document.getElementById("nextHelp").style.zIndex = "2";
 		document.getElementById("helpText2").style.display = "block";
+		document.getElementById("helpText2").style.zIndex = "0";
 		break;
 	case 3:
 		document.getElementById("helpText1").style.display = "none";
@@ -162,12 +165,13 @@ function nextHelpScreen() {
 		document.getElementById("back").style.display = "block";
 		document.getElementById("back").style.top = "576px"; 
 		document.getElementById("back").style.left = "0px";
-		document.getElementById("back").style.z-index = 2; 
+		document.getElementById("back").style.zIndex = "2"; 
 		document.getElementById("finish").style.display = "block";
 		document.getElementById("finish").style.top = "576px";
 		document.getElementById("finish").style.left = "761px";
-		document.getElementById("finish").style.z-index = 2;
+		document.getElementById("finish").style.zIndex = "2";
 		document.getElementById("helpText3").style.display = "block";
+		document.getElementById("helpText3").style.zIndex = "0";
 		break;
 	}
 }
