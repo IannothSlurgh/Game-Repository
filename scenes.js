@@ -125,7 +125,7 @@ function nextHelpScreen() {
 		document.getElementById("back").style.display = "none";
 		document.getElementById("finish").style.display = "none";
 		document.getElementById("returnHome").style.display = "block";
-		document.getElementById("returnHome").style.top = "676px"; 
+		document.getElementById("returnHome").style.top = "576px"; 
 		document.getElementById("returnHome").style.left = "0px"; 
 		document.getElementById("nextHelp").style.display = "block";
 		document.getElementById("nextHelp").style.top = "576px";
@@ -154,7 +154,7 @@ function nextHelpScreen() {
 		document.getElementById("back").style.top = "576px"; 
 		document.getElementById("back").style.left = "0px"; 
 		document.getElementById("finish").style.display = "block";
-		document.getElementById("finish").style.top = "676px";
+		document.getElementById("finish").style.top = "576px";
 		document.getElementById("finish").style.left = "761px";
 		document.getElementById("helpText3").style.display = "block";
 		break;
