@@ -66,11 +66,12 @@ function selectGoblin()
 
 function reset()
 {
- money = player.score; //dummy value
+console.log("hi");
+ /*money = player.score; //dummy value
  units.length = 0;
  unitCount = 0;
  updateResources();
- printUnitList();
+ printUnitList();*/
 }
 function ready()
 {
