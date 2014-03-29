@@ -213,32 +213,9 @@
 	<input type="image" id="back" src="https://rawgithub.com/IannothSlurgh/Game-Repository/master/Back.gif" onclick="previousHelpScreen()" style="position: absolute; top: 576px; left: 0px; display:none;">
 	<input type="image" id="finish" src="https://rawgithub.com/IannothSlurgh/Game-Repository/master/Finish.gif" onclick="returnFromHelpScreen()" style="position: absolute; top: 576px; left: 761px; display:none;">
 	<input type="image" id="returnHome" src="https://rawgithub.com/IannothSlurgh/Game-Repository/master/Return.gif" onclick="returnFromHelpScreen()" style="position: absolute; top: 576px; left: 0px; display:none;">
-	<p id = "helpText1" style="position: absolute; top: 0px; left: 0px; bottom: 624px; right: 880px; display:none">Phase 1: THE MAZE<br />During this part of
-	the game, you will control a single unit (player 1 = blue, player 2 = white, player 3 = red, player 4 = gray), moving it with the “w, a, s, and d” keys
-	(forward, left, down and right respectively). The goal is to collect as many gold icons (yellow) as possible within the allotted time of 2 minutes 
-	by navigating through the maze. Units can stand on top of each other and they cannot go through the walls of the maze. A base amount of ??? gold is given 
-	to you at the start of this phase, and the more gold you get, the more units you will be able to purchase for combat later in the game.</p>
-	<p id = "helpText2" style="position: absolute; top: 0px; left: 0px; bottom: 624px; right: 880px; display:none">Phase 2: THE STORE<br />During this part of 
-	the game, you may purchase units to use in combat by spending the gold you got from phase 1. A total of 8 units may be purchased, and are purchased by 
-	double clicking on the unit’s row in the scroll bar. Should you be unhappy with any selection you make, you may reset your selections by clicking the reset 
-	button, giving you all your gold back and making it so you have 0 units selected. Be careful though, this part of the game is also timed and you are given
-	2 minutes to determine what you will use for combat (note: a player is given a goblin at the start of the next phase if they do not purchase any units). 
-	When you are finished making your purchases, click the ready button, or wait for time to expire. Nothing will happen until everyone has either clicked 
-	ready, or 2 minutes has passed. Your current and personal maximum resources are also displayed on this screen. The units that you can choose from are 
-	listed below.<br /><img type="image" id="fakeStore" src="fakeShop.gif"><br /><img type="image" id="symbols" src="symbols.gif"></p>
-	<p id = "helpText3" style="position: absolute; top: 0px; left: 0px; bottom: 624px; right: 880px; display:none">Phase 3: THE BATTLEFIELD<br />
-	This is where all the battling takes place, and in order to be victorious, you must be the last player on the map with units remaining. First, you must 
-	place the units in the order in which you purchased them by left clicking on empty tiles in your starting zone (Player 1 = bottom left, Player 2 = upper 
-	right, Player 3 = upper left, Player 4 = lower right). Once all your units have been placed,  the player with the lowest gathered resources begins the 
-	game by left clicking a single unit and then clicking again somewhere on the game board. If the player right clicks on an opponent’s unit’s space, 
-	then an attack will be made against that unit. If that enemy’s unit was adjacent to your attacking unit, (left, right, forward, or backwards, not 
-	diagonally) then that enemy’s unit will retaliate, dealing damage to the attacking unit equal to 50% of the enemy unit’s attack/damage (warrior retaliates
-	for 2 damage, rogue retaliates for 2 damage). If the enemy’s unit is not adjacent to your attacking unit, then no retaliation will occur (0 damage dealt 
-	to the attacker). If that “somewhere on the game board” left click is on an open space, and your unit’s movement/speed is greater than or equal to the 
-	number of squares required to reach that spot, your unit will move to that location. Units may move through other friendly units while moving and may 
-	attack through units in order to hit opponents units. After moving your unit, you may then make an attack with that unit (note: you do not have to move 
-	in order to make an attack). You will also see an information box on the right hand side of your screen during this phase. This information box contains 
-	the left clicked unit’s information, and also contains a button in order to end your turn (End Turn).</p>
+	<img id = "helpText1" type="image" src="https://rawgithub.com/IannothSlurgh/Game-Repository/master/helpText1.gif" style="position: absolute; top: 0px; left: 0px; display:none">
+	<img id = "helpText2" type="image" src="https://rawgithub.com/IannothSlurgh/Game-Repository/master/helpText2.gif" style="position: absolute; top: 0px; left: 0px; display:none">
+	<img id = "helpText3" type="image" src="https://rawgithub.com/IannothSlurgh/Game-Repository/master/helpText3.gif" style="position: absolute; top: 0px; left: 0px; display:none">
 	
 	
 	
@@ -255,10 +232,7 @@
 	
 	<div id="div_tiles"> </div>
   <p id="command" style = "display: none;">
-  Click the button of the unit you wish to purchase.
-  </p>
-  <p id="yourTimer" style="position: absolute; top: 20; left:800; display:none;">
-   The fight will begin in: <span id="timer"></span>
+  Click the button of the unit you wish to purchase. The fight will begin in:<span id="timer"></span>
   </p>
   <p id="yourGold" style="position: absolute; top: 120; left:800; display:none;">
    Gold: <span id="money"></span>
@@ -271,8 +245,8 @@
    Your Units: <span id="theUnits"></span>
   </p>
   <p style ="margin: 0px;">
-   <input type="image" src="https://raw.githubusercontent.com/IannothSlurgh/Game-Repository/master/Reset.gif"  onclick="reset()" id="reset" style="position: absolute; top: 400px; left: 800px; display:none;">
-   <input type="image" src="https://raw.githubusercontent.com/IannothSlurgh/Game-Repository/master/Ready.gif"  onclick="ready()" id="ready" style="position: absolute; top: 500px; left: 800px; display:none;">
+   <input type="image" src="https://raw.githubusercontent.com/IannothSlurgh/Game-Repository/master/Reset.gif"  onclick="reset()" id="reset" style="position: absolute; top: 400px; left: 700px; display:none;">
+   <input type="image" src="https://raw.githubusercontent.com/IannothSlurgh/Game-Repository/master/Ready.gif"  onclick="ready()" id="ready" style="position: absolute; top: 500px; left: 700px; display:none;">
   </p>
  </body>
  <div id="scrollbar" class="unitlist" style = "display: none;">
