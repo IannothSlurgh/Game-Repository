@@ -126,10 +126,12 @@ function nextHelpScreen() {
 		document.getElementById("finish").style.display = "none";
 		document.getElementById("returnHome").style.display = "block";
 		document.getElementById("returnHome").style.top = "576px"; 
-		document.getElementById("returnHome").style.left = "0px"; 
+		document.getElementById("returnHome").style.left = "0px";
+		document.getElementById("returnHome").style.z-index = "2"; 
 		document.getElementById("nextHelp").style.display = "block";
 		document.getElementById("nextHelp").style.top = "576px";
 		document.getElementById("nextHelp").style.left = "761px";
+		document.getElementById("nextHelp").style.z-index = "2";
 		document.getElementById("helpText1").style.display = "block";
 		break;
 	case 2:
@@ -140,9 +142,11 @@ function nextHelpScreen() {
 		document.getElementById("back").style.display = "block";
 		document.getElementById("back").style.top = "576px"; 
 		document.getElementById("back").style.left = "0px"; 
+		document.getElementById("back").style.z-index = "2"; 
 		document.getElementById("nextHelp").style.display = "block";
 		document.getElementById("nextHelp").style.top = "576px";
 		document.getElementById("nextHelp").style.left = "761px";
+		document.getElementById("nextHelp").style.z-index = "2";
 		document.getElementById("helpText2").style.display = "block";
 		break;
 	case 3:
@@ -152,10 +156,12 @@ function nextHelpScreen() {
 		document.getElementById("returnHome").style.display = "none";
 		document.getElementById("back").style.display = "block";
 		document.getElementById("back").style.top = "576px"; 
-		document.getElementById("back").style.left = "0px"; 
+		document.getElementById("back").style.left = "0px";
+		document.getElementById("back").style.z-index = "2"; 
 		document.getElementById("finish").style.display = "block";
 		document.getElementById("finish").style.top = "576px";
 		document.getElementById("finish").style.left = "761px";
+		document.getElementById("finish").style.z-index = "2";
 		document.getElementById("helpText3").style.display = "block";
 		break;
 	}
