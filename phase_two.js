@@ -99,10 +99,6 @@ function ready_method()
 	socket.emit('SetStatusReady', JSON.stringify({user_name: user_str, player_units: units, player_score : money}));
 }
 
-socket.on('moveToPhase3', function(){
-	Crafty.scene('Phase 3');
-});
-
 //timer function (1 tick per second)
 var count=60;
 var counter;//runs timer() every second

@@ -577,4 +577,8 @@ Crafty.scene('Phase 2', function(){
 	document.getElementById("yourUnitList").style.left= "0px";
 	counter=setInterval(timer, 1000);
 	reset();
+	
+	socket.on('moveToPhase3', function(){
+		Crafty.scene('Phase 3');
+	});
 });
