@@ -1,6 +1,6 @@
-	 var this_player_name = null;
+var this_player_name = null;
 	 
-	Crafty.scene('Phase 3', function(){
+Crafty.scene('Phase 3', function(){
   $(document).ready(function() {
 
 
@@ -541,5 +541,5 @@
 	}
 	socket.on('Testing', Testing);
   });
-  
+  init();
  });

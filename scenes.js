@@ -578,28 +578,3 @@ Crafty.scene('Phase 2', function(){
 	counter=setInterval(timer, 1000);
 	reset();
 });
-
-Crafty.scene('Phase 3', function(){
-	//-----------------------------------------------------
-	
-	document.getElementById("stat_hp").style.display = "block";
-	document.getElementById("stat_damage").style.display = "block";
-	document.getElementById("stat_movement").style.display = "block";
-	document.getElementById("stat_range").style.display = "block";
-	document.getElementById("stat_ability").style.display = "block";
-	document.getElementById("stat_log").style.display = "block";
-	document.getElementById("stat_icon").style.display = "block";
-	document.getElementById("grid").style.display = "block";
-	document.getElementById("next").style.display = "block";
-	document.getElementById("stat_player_turn class").style.display = "block";
-	
-	for(var i = 0; i<14; ++i)
-	{
-		for(var j = 0; j<14; ++j)
-		{
-			addTile(i,j);
-		}
-	}
-
-	//place(0,0,"Annoth",0);
-});

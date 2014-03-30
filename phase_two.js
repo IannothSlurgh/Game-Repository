@@ -96,6 +96,7 @@ function ready_method()
 {
 	ready = true;
 	clearInterval(counter);
+	console.log('Entering phase tree...');
 	Crafty.scene('Phase 3');
 }
 
