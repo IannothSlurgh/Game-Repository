@@ -111,15 +111,19 @@ function place_enemy_player(index)
 
 //the help screen
 var whichHelpScreen = 0;
+//the next 3 functions, and Craft.scene('Help', function()) written by Jason Sitzman
+//all illustrations inside the help menu produced by Jason Sitzman
 Crafty.scene('Help', function() {
-		Crafty.stage.elem.style.display = "none";
-		document.getElementById("helpAndShop").style.display = "block";
-		nextHelpScreen();
+	Crafty.stage.elem.style.display = "none";
+	document.getElementById("helpAndShop").style.display = "block";
+	document.getElementById("helpAndShop").style.zIndex = "-1";
+	nextHelpScreen(); //display the first help screen
 });
 
-function nextHelpScreen() {
-	whichHelpScreen++;
-	console.log(whichHelpScreen);
+//determines the next help screen to be displayed
+function nextHelpScreen() { 
+	whichHelpScreen = whichHelpScreen + 1;
+	//determines which help screen the client is wanting to view
 	switch(whichHelpScreen) {
 	case 1:
 		document.getElementById("helpText2").style.display = "none";
@@ -128,11 +132,14 @@ function nextHelpScreen() {
 		document.getElementById("finish").style.display = "none";
 		document.getElementById("returnHome").style.display = "block";
 		document.getElementById("returnHome").style.top = "576px"; 
-		document.getElementById("returnHome").style.left = "0px"; 
+		document.getElementById("returnHome").style.left = "0px";
+		document.getElementById("returnHome").style.zIndex = "2"; 
 		document.getElementById("nextHelp").style.display = "block";
 		document.getElementById("nextHelp").style.top = "576px";
 		document.getElementById("nextHelp").style.left = "761px";
+		document.getElementById("nextHelp").style.zIndex = "2";
 		document.getElementById("helpText1").style.display = "block";
+		document.getElementById("helpText1").style.zIndex = "0";
 		break;
 	case 2:
 		document.getElementById("helpText1").style.display = "none";
@@ -142,10 +149,13 @@ function nextHelpScreen() {
 		document.getElementById("back").style.display = "block";
 		document.getElementById("back").style.top = "576px"; 
 		document.getElementById("back").style.left = "0px"; 
+		document.getElementById("back").style.zIndex = "2"; 
 		document.getElementById("nextHelp").style.display = "block";
 		document.getElementById("nextHelp").style.top = "576px";
 		document.getElementById("nextHelp").style.left = "761px";
+		document.getElementById("nextHelp").style.zIndex = "2";
 		document.getElementById("helpText2").style.display = "block";
+		document.getElementById("helpText2").style.zIndex = "0";
 		break;
 	case 3:
 		document.getElementById("helpText1").style.display = "none";
@@ -154,19 +164,23 @@ function nextHelpScreen() {
 		document.getElementById("returnHome").style.display = "none";
 		document.getElementById("back").style.display = "block";
 		document.getElementById("back").style.top = "576px"; 
-		document.getElementById("back").style.left = "0px"; 
+		document.getElementById("back").style.left = "0px";
+		document.getElementById("back").style.zIndex = "2"; 
 		document.getElementById("finish").style.display = "block";
 		document.getElementById("finish").style.top = "576px";
 		document.getElementById("finish").style.left = "761px";
+		document.getElementById("finish").style.zIndex = "2";
 		document.getElementById("helpText3").style.display = "block";
+		document.getElementById("helpText3").style.zIndex = "0";
 		break;
 	}
 }
-
+//goes back 1 help screen
 function previousHelpScreen() {
-	whichHelpScreen--;
+	whichHelpScreen = whichHelpScreen - 2;
 	nextHelpScreen();
 }
+//exits the help menu
 function returnFromHelpScreen() {
 	whichHelpScreen = 0;
 	document.getElementById("helpAndShop").style.display = "none";
@@ -177,6 +191,7 @@ function returnFromHelpScreen() {
 	document.getElementById("back").style.display = "none";
 	document.getElementById("finish").style.display = "none";
 	document.getElementById("returnHome").style.display = "none";
+	Crafty.stage.elem.style.display = "block";
 	Crafty.scene('StartScreen');
 }
 
@@ -330,6 +345,7 @@ Crafty.scene('StartScreen', function(){
 	Crafty.e('2D, Canvas, Image')
 		.attr({x: 0, y: 0})
 		.image("https://raw.githubusercontent.com/IannothSlurgh/Game-Repository/master/start_background.png");
+		
 	console.log('This is working.');
 	Crafty.e('MineCart')
 		.attr({x: -100, y: 262, w: 100, h: 50});
@@ -540,6 +556,7 @@ Crafty.scene('ConnectionRoom', function(){
   });
 });
 
+//Craft.scene('Phase 2', function()) written by Jason Sitzman
 Crafty.scene('Phase 2', function(){
 	Crafty.stage.elem.style.display = "none";
 	document.getElementById("helpAndShop").style.display = "block";
