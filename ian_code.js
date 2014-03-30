@@ -166,10 +166,10 @@ Crafty.scene('Phase 3', function(){
 	function findUnitList(player_name)
 	{
 		var unit_list;
-		console.log("player1.name = " + player1.name);
-		console.log("player2.name = " + player2.name);
-		console.log("player3.name = " + player3.name);
-		console.log("player4.name = " + player4.name);
+		console.log("player_1.name = " + player_1.name);
+		console.log("player_2.name = " + player_2.name);
+		console.log("player_3.name = " + player_3.name);
+		console.log("player_4.name = " + player_4.name);
 	
 		if(player_name==player_1.name)
 		{
