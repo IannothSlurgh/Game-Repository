@@ -96,7 +96,7 @@ function ready()
 {
 	ready = true;
 	clearInterval(counter);
-	//Crafty.scene('Phase 3');
+	Crafty.scene('Phase 3');
 }
 
 //timer function (1 tick per second)
