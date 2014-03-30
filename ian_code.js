@@ -540,6 +540,7 @@ Crafty.scene('Phase 3', function(){
 		console.log(message);
 	}
 	socket.on('Testing', Testing);
+	
+	init();
   });
-  init();
  });
