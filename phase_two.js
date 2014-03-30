@@ -96,8 +96,7 @@ function ready_method()
 {
 	ready = true;
 	clearInterval(counter);
-	console.log('Entering phase tree...');
-	Crafty.scene('Phase 3');
+	socket.emit('SetStatusReady', JSON.stringify({user_name: user_str, player_units: units, player_score : money}));
 }
 
 //timer function (1 tick per second)

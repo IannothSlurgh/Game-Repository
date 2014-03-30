@@ -43,6 +43,22 @@ Crafty.scene('Phase 3', function(){
 		arr_index:null
 	};
 	
+	socket.on('SetPlayerOneUnitList', function(message){
+		player_1.unit_list = JSON.parse(message).unit_list;
+	});
+	
+	socket.on('SetPlayerTwoUnitList', function(message){
+		player_2.unit_list = JSON.parse(message).unit_list;
+	});
+	
+	socket.on('SetPlayerThreeUnitList', function(message){
+		player_3.unit_list = JSON.parse(message).unit_list;
+	});
+	
+	socket.on('SetPlayerFourUnitList', function(message){
+		player_4.unit_list = JSON.parse(message).unit_list;
+	});
+	
 	function getPlayer(player_name)
 	{
 		var player = null;
@@ -521,17 +537,16 @@ Crafty.scene('Phase 3', function(){
 			
 			document.getElementById("stat_player_turn").innerHTML = "Place Phase";
 			
-			player_1.unit_list.push({src:"http://i.imgur.com/5SeUpMM.png", xcoor:null, ycoor:null, health:6, damage:2, range:1, movement:4, can_move:true, can_attack:true, arr_index:0});
-			player_1.unit_list.push({src:"http://i.imgur.com/5SeUpMM.png", xcoor:null, ycoor:null, health:6, damage:2, range:1, movement:4, can_move:true, can_attack:true, arr_index:1});
-			player_1.name = "Annoth";
-			player_2.unit_list.push({src:"http://i.imgur.com/5SeUpMM.png", xcoor:null, ycoor:null, health:6, damage:2, range:1, movement:4, can_move:true, can_attack:true, arr_index:0});
-			player_2.unit_list.push({src:"http://i.imgur.com/5SeUpMM.png", xcoor:null, ycoor:null, health:6, damage:2, range:1, movement:4, can_move:true, can_attack:true, arr_index:1});
-			player_2.name = "Pyrosox";
+			this_player_name = user_str;
 			
-			//place(0,0,"Annoth",0);
-			//place(1,1,"Annoth",1);
-			//place(13,13,"Pyrosox",0);
-			//place(12,12,"Pyrosox",1);
+			player_1.name = list_of_users[0];
+			player_2.name = list_of_users[1];
+			
+			if(!is_two_player_game)
+			{
+				player_3.name = list_of_users[2];
+				player_4.name = list_of_users[3];
+			}
 			
 			socket.emit('Testing', "Hello");
 		}
