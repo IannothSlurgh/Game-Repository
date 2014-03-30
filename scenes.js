@@ -563,15 +563,6 @@ Crafty.scene('Phase 2', function(){
 });
 
 Crafty.scene('Phase 3', function(){
-	document.getElementById("helpAndShop").style.display = "none";
-	document.getElementById("command").style.display = "none";
-	document.getElementById("yourGold").style.display = "none";
-	document.getElementById("yourUnit").style.display = "none";
-	document.getElementById("scrollbar").style.display = "none";
-	document.getElementById("yourUnitList").style.display = "none";
-	document.getElementById("ready").style.display = "none";
-	document.getElementById("reset").style.display = "none";
-	
 	//-----------------------------------------------------
 	
 	document.getElementById("stat_hp").style.display = "block";
