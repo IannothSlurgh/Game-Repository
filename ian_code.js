@@ -78,6 +78,7 @@ Crafty.scene('Phase 3', function(){
 		{
 			player = player_4;
 		}
+		console.log("in getPlayer, player = " + player_name);
 		return player;
 	}
 	
@@ -186,6 +187,7 @@ Crafty.scene('Phase 3', function(){
 	
 	function findUnit(player_name, xcoor, ycoor)
 	{
+		console.log("player_name (ian_code) = " + player_name);
 		var unit_list = findUnitList(player_name);
 		for(var i = 0; i<unit_list.length; ++i)
 		{
@@ -296,7 +298,9 @@ Crafty.scene('Phase 3', function(){
 	
 	function place(xcoor, ycoor, player_name, nth_unit)
 	{
+		console.log("in place(), player_name = " + player_name);
 		var unit_list = findUnitList(player_name);
+		console.log("unit_list = " + unit_list);
 		unit_list[nth_unit].xcoor = xcoor;
 		unit_list[nth_unit].ycoor = ycoor;
 		var tile = document.getElementById("X"+xcoor.toString()+"Y"+ycoor.toString());
