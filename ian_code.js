@@ -1,11 +1,5 @@
 var this_player_name = null;
-	 
-Crafty.scene('Phase 3', function(){
-  $(document).ready(function() {
-
-
-	var events_locked = false;
-	var player_1 =
+var player_1 =
 	{
 		unit_list:[],
 		name:null,
@@ -29,6 +23,31 @@ Crafty.scene('Phase 3', function(){
 		name:null,
 		unit_to_place:0
 	};
+
+	socket.on('SetPlayerOneUnitList', function(message){
+		player_1.unit_list = JSON.parse(message).unit_list;
+		console.log(player_1.unit_list);
+	});
+	
+	socket.on('SetPlayerTwoUnitList', function(message){
+		player_2.unit_list = JSON.parse(message).unit_list;
+		console.log(player_2.unit_list);
+	});
+	
+	socket.on('SetPlayerThreeUnitList', function(message){
+		player_3.unit_list = JSON.parse(message).unit_list;
+	});
+	
+	socket.on('SetPlayerFourUnitList', function(message){
+		player_4.unit_list = JSON.parse(message).unit_list;
+	});
+	
+Crafty.scene('Phase 3', function(){
+  $(document).ready(function() {
+
+
+	var events_locked = false;
+	
 	var last_event =
 	{
 		type:null,
@@ -42,26 +61,6 @@ Crafty.scene('Phase 3', function(){
 		owner:null,
 		arr_index:null
 	};
-	
-	socket.on('SetPlayerOneUnitList', function(message){
-		console.log(message);
-		player_1.unit_list = JSON.parse(message).unit_list;
-		console.log(player_1.unit_list);
-	});
-	
-	socket.on('SetPlayerTwoUnitList', function(message){
-		console.log(message);
-		player_2.unit_list = JSON.parse(message).unit_list;
-		console.log(player_2.unit_list);
-	});
-	
-	socket.on('SetPlayerThreeUnitList', function(message){
-		player_3.unit_list = JSON.parse(message).unit_list;
-	});
-	
-	socket.on('SetPlayerFourUnitList', function(message){
-		player_4.unit_list = JSON.parse(message).unit_list;
-	});
 	
 	function getPlayer(player_name)
 	{
