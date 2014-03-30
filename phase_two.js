@@ -92,7 +92,7 @@ function reset()
 }
 
 //indicates that the client is ready to proceed to phase 3
-function ready()
+function ready_method()
 {
 	ready = true;
 	clearInterval(counter);
@@ -107,6 +107,6 @@ function timer()
 	count = count - 1;
 	document.getElementById("timer").innerHTML=count + " seconds";
 	if (count < 0) {
-		ready();
+		ready_method();
 	}
 }
