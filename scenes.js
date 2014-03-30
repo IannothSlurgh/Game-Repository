@@ -578,6 +578,24 @@ Crafty.scene('Phase 2', function(){
 	counter=setInterval(timer, 1000);
 	reset();
 	
+	socket.on('SetPlayerOneUnitList', function(message){
+		player_1.unit_list = JSON.parse(message).unit_list;
+		console.log(player_1.unit_list);
+	});
+	
+	socket.on('SetPlayerTwoUnitList', function(message){
+		player_2.unit_list = JSON.parse(message).unit_list;
+		console.log(player_2.unit_list);
+	});
+	
+	socket.on('SetPlayerThreeUnitList', function(message){
+		player_3.unit_list = JSON.parse(message).unit_list;
+	});
+	
+	socket.on('SetPlayerFourUnitList', function(message){
+		player_4.unit_list = JSON.parse(message).unit_list;
+	});
+	
 	socket.on('moveToPhase3', function(){
 		Crafty.scene('Phase 3');
 	});

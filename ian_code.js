@@ -23,24 +23,6 @@ var player_1 =
 		name:null,
 		unit_to_place:0
 	};
-
-	socket.on('SetPlayerOneUnitList', function(message){
-		player_1.unit_list = JSON.parse(message).unit_list;
-		console.log(player_1.unit_list);
-	});
-	
-	socket.on('SetPlayerTwoUnitList', function(message){
-		player_2.unit_list = JSON.parse(message).unit_list;
-		console.log(player_2.unit_list);
-	});
-	
-	socket.on('SetPlayerThreeUnitList', function(message){
-		player_3.unit_list = JSON.parse(message).unit_list;
-	});
-	
-	socket.on('SetPlayerFourUnitList', function(message){
-		player_4.unit_list = JSON.parse(message).unit_list;
-	});
 	
 Crafty.scene('Phase 3', function(){
   $(document).ready(function() {
