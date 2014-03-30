@@ -166,6 +166,11 @@ Crafty.scene('Phase 3', function(){
 	function findUnitList(player_name)
 	{
 		var unit_list;
+		console.log("player1.name = " + player1.name);
+		console.log("player2.name = " + player2.name);
+		console.log("player3.name = " + player3.name);
+		console.log("player4.name = " + player4.name);
+	
 		if(player_name==player_1.name)
 		{
 			unit_list = player_1.unit_list;
@@ -182,12 +187,15 @@ Crafty.scene('Phase 3', function(){
 		{
 			unit_list = player_4.unit_list;
 		}
+		else
+		{
+			console.log("default");
+		}
 		return unit_list;
 	}
 	
 	function findUnit(player_name, xcoor, ycoor)
 	{
-		console.log("player_name (ian_code) = " + player_name);
 		var unit_list = findUnitList(player_name);
 		for(var i = 0; i<unit_list.length; ++i)
 		{
