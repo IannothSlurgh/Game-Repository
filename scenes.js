@@ -352,7 +352,7 @@ Crafty.scene('StartScreen', function(){
 		
 	Crafty.e('2D, Canvas, Image')
 		.attr({x: 352, y: 40, w: 176, h: 76});
-		.image("https://rawgithub.com/IannothSlurgh/Game-Repository/master/title_img.png");
+		.image("https://raw.githubusercontent.com/IannothSlurgh/Game-Repository/master/title_img.png");
 	
 	Crafty.e('2PlayerButton')
 		.attr({x: 352, y: 196, w: 176, h: 76});

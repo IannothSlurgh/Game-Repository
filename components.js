@@ -114,12 +114,12 @@ Crafty.c('Money', {
 Crafty.c('2PlayerButton', {
 	init: function(){
 		this.requires('2D, Canvas, Image, Mouse')
-		.image("https://rawgithub.com/IannothSlurgh/Game-Repository/master/2_player_unselected.png")
+		.image("https://raw.githubusercontent.com/IannothSlurgh/Game-Repository/master/2_player_unselected.png")
 		.bind('MouseOver', function(e){
-			this.image("https://rawgithub.com/IannothSlurgh/Game-Repository/master/2_player_unselected.png");
+			this.image("https://raw.githubusercontent.com/IannothSlurgh/Game-Repository/master/2_player_unselected.png");
 		})
 		.bind('MouseOut', function(e){
-			this.image("https://rawgithub.com/IannothSlurgh/Game-Repository/master/2_player_unselected.png");
+			this.image("https://raw.githubusercontent.com/IannothSlurgh/Game-Repository/master/2_player_unselected.png");
 		})
 		.bind('Click', function(e){
 			is_two_player_game = true;
@@ -132,12 +132,12 @@ Crafty.c('2PlayerButton', {
 Crafty.c('4PlayerButton', {
 	init: function(){
 		this.requires('2D, Canvas, Image, Mouse')
-		.image("https://rawgithub.com/IannothSlurgh/Game-Repository/master/4_player_unselected.png")
+		.image("https://raw.githubusercontent.com/IannothSlurgh/Game-Repository/master/4_player_unselected.png")
 		.bind('MouseOver', function(e){
-			this.image("https://rawgithub.com/IannothSlurgh/Game-Repository/master/4_player_selected.png")
+			this.image("https://raw.githubusercontent.com/IannothSlurgh/Game-Repository/master/4_player_selected.png")
 		})
 		.bind('MouseOut', function(e){
-			this.image("https://rawgithub.com/IannothSlurgh/Game-Repository/master/4_player_unselected.png");
+			this.image("https://raw.githubusercontent.com/IannothSlurgh/Game-Repository/master/4_player_unselected.png");
 		})
 		.bind('Click', function(e){
 			is_two_player_game = false;
@@ -150,12 +150,12 @@ Crafty.c('4PlayerButton', {
 Crafty.c('HelpButton', {
 	init: function(){
 		this.requires('2D, Canvas, Image, Mouse')
-		.image("https://rawgithub.com/IannothSlurgh/Game-Repository/master/help_button_unselected.png")
+		.image("https://raw.githubusercontent.com/IannothSlurgh/Game-Repository/master/help_button_unselected.png")
 		.bind('MouseOver', function(e){
-			this.image("https://rawgithub.com/IannothSlurgh/Game-Repository/master/help_button_selected.png")
+			this.image("https://raw.githubusercontent.com/IannothSlurgh/Game-Repository/master/help_button_selected.png")
 		})
 		.bind('MouseOut', function(e){
-			this.image("https://rawgithub.com/IannothSlurgh/Game-Repository/master/help_button_unselected.png");
+			this.image("https://raw.githubusercontent.com/IannothSlurgh/Game-Repository/master/help_button_unselected.png");
 		})
 		.bind('Click', function(e){
 			Crafty.scene('Help');
@@ -167,7 +167,7 @@ Crafty.c('HelpButton', {
 Crafty.c('MineCart', {
 	init: function(){
 		this.requires('2D, Canvas, Image, Tween')
-			.image("https://rawgithub.com/IannothSlurgh/Game-Repository/master/new_creepy_cart.png")
+			.image("https://raw.githubusercontent.com/IannothSlurgh/Game-Repository/master/new_creepy_cart.png")
 			.tween({x: 880}, 10000)
 			.bind('TweenEnd', function(){
 				
