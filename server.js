@@ -17,7 +17,7 @@ function handler(request, response) {
   // argument) to process the content of the file.
   // __dirname is a preset variable pointing to the folder of this file.
   fs.readFile(
-    __dirname + '/index1.html',
+    __dirname + '/index.html',
     function(err, content) {
       if (err) {
         // If an error happened when loading 'index.html', return a 500 error.

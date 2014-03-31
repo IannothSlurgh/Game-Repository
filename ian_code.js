@@ -1,42 +1,47 @@
+
+//Global scope variables associated with phase III that are set before 
 var this_player_name = null;
+//Player objects contain their unit objects, the player name, and the current unit in the array to place.
 var player_1 =
-	{
-		unit_list:[],
-		name:null,
-		unit_to_place:0
-	};
-	var player_2 =
-	{
-		unit_list:[],
-		name:null,
-		unit_to_place:0
-	};
-	var player_3 =
-	{
-		unit_list:[],
-		name:null,
-		unit_to_place:0
-	};
-	var player_4 =
-	{
-		unit_list:[],
-		name:null,
-		unit_to_place:0
-	};
-	
+{
+	unit_list:[],
+	name:null,
+	unit_to_place:0
+};
+var player_2 =
+{
+	unit_list:[],
+	name:null,
+	unit_to_place:0
+};
+var player_3 =
+{
+	unit_list:[],
+	name:null,
+	unit_to_place:0
+};
+var player_4 =
+{
+	unit_list:[],
+	name:null,
+	unit_to_place:0
+};
+
+//Phase III functions and variables that do not require modification by Phase II	
 Crafty.scene('Phase 3', function(){
   $(document).ready(function() {
 
-
+	//Once client sends an event to server, the client cannot send any more until the server sends a confirmation to the client.
 	var events_locked = false;
 	
-	//Makes finding selected unit easier.
+	//Makes finding selected unit easier for modifying attacker and modifying selected unit location.
 	var selected_unit =
 	{
 		owner:null,
 		arr_index:null
 	};
 	
+	//Simple helper function for finding player object based on a string name. Returns null if no such player. (Modify to switch self)
 	function getPlayer(player_name)
 	{
 		var player = null;
@@ -59,6 +64,8 @@ Crafty.scene('Phase 3', function(){
 		return player;
 	}
 	
+	//Return a string of player-color based on if the given string equals a particular player name. (important for finding team_color elements)
+	//(Switchify self)
 	function getTeamColor(player_name)
 	{
 		if(player_name == player_1.name)
@@ -79,11 +86,14 @@ Crafty.scene('Phase 3', function(){
 		}
 	}
 	
+	//Take integer value 0 to 13 inclusive and give pixel value for where a tile is. Ex 0,0 is 23 top, 23 left.
 	function getAbsoluteFromGrid(coor)
 	{
 		return 23+43*coor;
 	}
 	
+	//Paint a tile for the combat grid at particular x and y where the coordinates are 0 to 13 inclusive.
+	//Set its event handlers.
 	function addTile(xcoor, ycoor)
 	{
 		var id = "X"+xcoor.toString()+"Y"+ycoor.toString();
@@ -99,6 +109,7 @@ Crafty.scene('Phase 3', function(){
 		}
 	}
 	
+	//Generalized function to add a new image with id, src, left, top, zindex, width, height attributes specified. Disable drag-drop and add to div_tiles
 	function addImage(id, src, left, top, z, width, height)
 	{
 		try
@@ -124,6 +135,7 @@ Crafty.scene('Phase 3', function(){
 		}
 	}
 	
+	//If selection box not created, create at x,y pair (0 to 13 inclusive), if not move the existing selection box to the spot.
 	function moveSelectionBox(xcoor, ycoor)
 	{
 		var border_width = 3;
@@ -140,6 +152,8 @@ Crafty.scene('Phase 3', function(){
 		}
 	}
 	
+	//Helper function- given a string player_name, return the unit_list of the player object.
+	//(Switchify self)
 	function findUnitList(player_name)
 	{
 		var unit_list;
@@ -163,6 +177,7 @@ Crafty.scene('Phase 3', function(){
 		return unit_list;
 	}
 	
+	//Helper function that finds the unit object of a player at xcoor,ycoor. If no such unit, return false.
 	function findUnit(player_name, xcoor, ycoor)
 	{
 		var unit_list = findUnitList(player_name);
@@ -179,6 +194,7 @@ Crafty.scene('Phase 3', function(){
 		return null;
 	}
 	
+	//Clears selected_unit, stats, and hides selection box.
 	function clearSelection()
 	{
 		selected_unit.owner = null;
@@ -196,6 +212,7 @@ Crafty.scene('Phase 3', function(){
 		}
 	}
 	
+	//Sets the stats to those indicated in a stats object. (has src, health, damage, range, and movement)
 	function changeStatsGraphical(stats)
 	{
 		if(stats.src!=null)
@@ -220,6 +237,7 @@ Crafty.scene('Phase 3', function(){
 		}
 	}
 	
+	//Handles the case that the client successfully selects a unit.
 	function select(xcoor, ycoor, unit_owner)
 	{
 		var src = "";
