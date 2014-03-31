@@ -105,7 +105,7 @@ var counter;//runs timer() every second
 function timer()
 {
 	count = count - 1;
-	document.getElementById("timer").innerHTML=count + " seconds";
+	document.getElementById("timer").innerHTML=count + " sec";
 	if (count < 0) {
 		ready_method();
 	}
