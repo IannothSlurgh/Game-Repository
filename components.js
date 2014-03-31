@@ -116,7 +116,7 @@ Crafty.c('2PlayerButton', {
 		this.requires('2D, Canvas, Image, Mouse')
 		.image("https://raw.githubusercontent.com/IannothSlurgh/Game-Repository/master/2_player_unselected.png")
 		.bind('MouseOver', function(e){
-			this.image("https://raw.githubusercontent.com/IannothSlurgh/Game-Repository/master/2_player_unselected.png");
+			this.image("https://raw.githubusercontent.com/IannothSlurgh/Game-Repository/master/2_player_selected.png");
 		})
 		.bind('MouseOut', function(e){
 			this.image("https://raw.githubusercontent.com/IannothSlurgh/Game-Repository/master/2_player_unselected.png");
@@ -177,17 +177,17 @@ Crafty.c('MineCart', {
 				switch(track_num)
 				{
 				case 0:
-					this.y = 262; 
+					this.y = 186; 
 					this.x = -100;
 					this.tween({x: 880}, 10000);
 					break;
 				case 1: 
-					this.y = 418; 
+					this.y = 342; 
 					this.x = 880;
-					this.tween({x: 0 - this.w}, 10000);
+					this.tween({x: 0 - 111}, 10000);
 					break;
 				case 2: 
-					this.y = 574; 
+					this.y = 498; 
 					this.x = -100;
 					this.tween({x: 880}, 10000);
 					break;

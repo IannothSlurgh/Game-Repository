@@ -348,20 +348,20 @@ Crafty.scene('StartScreen', function(){
 		
 	console.log('This is working.');
 	Crafty.e('MineCart')
-		.attr({x: -100, y: 262, w: 100, h: 50});
+		.attr({x: -100, y: 186});
 		
 	Crafty.e('2D, Canvas, Image')
-		.attr({x: 352, y: 40, w: 176, h: 76})
+		.attr({x: 200, y: 40})
 		.image("https://raw.githubusercontent.com/IannothSlurgh/Game-Repository/master/title_img.png");
 	
 	Crafty.e('2PlayerButton')
-		.attr({x: 352, y: 196, w: 176, h: 76});
+		.attr({x: 317, y: 196});
 		
 	Crafty.e('4PlayerButton')
-		.attr({x: 352, y: 352, w: 176, h: 76});
+		.attr({x: 317, y: 352});
 		
 	Crafty.e('HelpButton')
-		.attr({x: 352, y: 508, w: 176, h: 76});
+		.attr({x: 317, y: 508});
 		
 	
 });
