@@ -168,7 +168,7 @@ Crafty.c('MineCart', {
 	init: function(){
 		this.requires('2D, Canvas, Image, Tween')
 			.image("https://raw.githubusercontent.com/IannothSlurgh/Game-Repository/master/new_creepy_cart.png")
-			.tween({x: 880}, 10000)
+			.tween({x: 880}, 5000)
 			.bind('TweenEnd', function(){
 				
 				var track_num = Math.floor(Math.random() * 3);
@@ -177,19 +177,19 @@ Crafty.c('MineCart', {
 				switch(track_num)
 				{
 				case 0:
-					this.y = 186; 
+					this.y = 201; 
 					this.x = -100;
-					this.tween({x: 880}, 10000);
+					this.tween({x: 880}, 5000);
 					break;
 				case 1: 
-					this.y = 342; 
+					this.y = 357; 
 					this.x = 880;
-					this.tween({x: 0 - 111}, 10000);
+					this.tween({x: 0 - 126}, 5000);
 					break;
 				case 2: 
-					this.y = 498; 
+					this.y = 513; 
 					this.x = -100;
-					this.tween({x: 880}, 10000);
+					this.tween({x: 880}, 5000);
 					break;
 				}
 			});
