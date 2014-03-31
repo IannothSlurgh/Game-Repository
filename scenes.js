@@ -350,9 +350,9 @@ Crafty.scene('StartScreen', function(){
 	Crafty.e('MineCart')
 		.attr({x: -100, y: 262, w: 100, h: 50});
 		
-	Crafty.e('2D, Canvas, Color')
-		.attr({x: 352, y: 40, w: 176, h: 76})
-		.color('rgb(123, 104, 238)');
+	Crafty.e('2D, Canvas, Image')
+		.attr({x: 352, y: 40, w: 176, h: 76});
+		.image("https://rawgithub.com/IannothSlurgh/Game-Repository/master/title_img.png");
 	
 	Crafty.e('2PlayerButton')
 		.attr({x: 352, y: 196, w: 176, h: 76});
