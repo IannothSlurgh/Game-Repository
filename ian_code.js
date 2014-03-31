@@ -30,13 +30,6 @@ Crafty.scene('Phase 3', function(){
 
 	var events_locked = false;
 	
-	var last_event =
-	{
-		type:null,
-		action:null,
-		xcoor:null,
-		ycoor:null
-	};		
 	//Makes finding selected unit easier.
 	var selected_unit =
 	{
@@ -63,7 +56,6 @@ Crafty.scene('Phase 3', function(){
 		{
 			player = player_4;
 		}
-		console.log("in getPlayer, player = " + player_name);
 		return player;
 	}
 	
@@ -151,10 +143,6 @@ Crafty.scene('Phase 3', function(){
 	function findUnitList(player_name)
 	{
 		var unit_list;
-		console.log("player_1.name = " + player_1.name);
-		console.log("player_2.name = " + player_2.name);
-		console.log("player_3.name = " + player_3.name);
-		console.log("player_4.name = " + player_4.name);
 	
 		if(player_name==player_1.name)
 		{
@@ -171,10 +159,6 @@ Crafty.scene('Phase 3', function(){
 		else if(player_name==player_4.name)
 		{
 			unit_list = player_4.unit_list;
-		}
-		else
-		{
-			console.log("default");
 		}
 		return unit_list;
 	}
@@ -276,7 +260,6 @@ Crafty.scene('Phase 3', function(){
 	
 	function endTurn(nextPlayer)
 	{
-		console.log(this_player_name);
 		if(nextPlayer == this_player_name)
 		{
 			events_locked = false;
@@ -291,9 +274,7 @@ Crafty.scene('Phase 3', function(){
 	
 	function place(xcoor, ycoor, player_name, nth_unit)
 	{
-		console.log("in place(), player_name = " + player_name);
 		var unit_list = findUnitList(player_name);
-		console.log("unit_list = " + unit_list);
 		unit_list[nth_unit].xcoor = xcoor;
 		unit_list[nth_unit].ycoor = ycoor;
 		var tile = document.getElementById("X"+xcoor.toString()+"Y"+ycoor.toString());
@@ -399,13 +380,6 @@ Crafty.scene('Phase 3', function(){
 					"who":this_player_name
 				};
 				socket.emit('Event_received', JSON.stringify(client_event));
-				if(! action == "Exit")
-				{
-					last_event.type="Event";
-					last_event.action=action;
-					last_event.xcoor=xcoor;
-					last_event.ycoor=ycoor;
-				}
 			}
 			catch(err)
 			{
@@ -418,10 +392,6 @@ Crafty.scene('Phase 3', function(){
 	function translateServerMessage(message)
 	{
 			var decrypted = JSON.parse(message);
-			console.log("###");
-			console.log(decrypted.type);
-			console.log(decrypted.action);
-			console.log("###");
 			if(decrypted.type == "Confirmation")
 			{
 				if(decrypted.success)
@@ -451,9 +421,8 @@ Crafty.scene('Phase 3', function(){
 					{
 						place(decrypted.xcoor, decrypted.ycoor, this_player_name, getPlayer(this_player_name).unit_to_place);
 						getPlayer(this_player_name).unit_to_place+=1;
-						console.log("---");
-						console.log(decrypted.starting_player);
 						endTurn(decrypted.starting_player);
+						document.getElementById("stat_log").innerHTML = "";
 					}
 				}
 				if(decrypted.action != "Endturn" && decrypted.action != "PlaceDone")
@@ -488,9 +457,8 @@ Crafty.scene('Phase 3', function(){
 				{
 					place(decrypted.xcoor, decrypted.ycoor, decrypted.who, getPlayer(decrypted.who).unit_to_place);
 					getPlayer(decrypted.who).unit_to_place+=1;
-					console.log("---");
-					console.log(decrypted.starting_player);
 					endTurn(decrypted.starting_player);
+					document.getElementById("stat_log").innerHTML = "";
 				}
 			}
 	}		
@@ -544,7 +512,7 @@ Crafty.scene('Phase 3', function(){
 				player_3.name = list_of_users[2];
 				player_4.name = list_of_users[3];
 			}
-			
+			document.getElementById("stat_log").innerHTML = "Place your units in your camp.";
 			socket.emit('Testing', "Hello");
 		}
 	function Testing(message)
