@@ -1,6 +1,6 @@
 Instructions to run the game "Miner's Quarrel":
   1. Download the Zip file
-  2. Enter the directory of the zip file using "cd Function-Prototype-1"
+  2. Enter the directory of the zip file using "cd Functional-Prototype-1"
   3. Run "make"
   4. On your favorite web browser, visit compute.cse.tamu.edu:16384
   5. Enjoy
