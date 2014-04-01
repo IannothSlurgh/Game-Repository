@@ -562,9 +562,22 @@ Crafty.scene('Phase 3', function()
 			}
 		}
 		
+		//Unit camp element's onclick function that transports events to tiles beneath the element.
 		function unitCampOnClick(mouse_event)
 		{
-			
+			var unit_camp = document.getElementById("unit_camp");
+			//Get place clicked.
+			var xcoor = mouse_event.clientX;
+			var ycoor = mouse_event.clientY;
+			//Hide unit camp element so elementFromPoint will return a tile, not unit camp element.
+			unit_camp.style.visibility = "hidden";
+			var found_element = document.elementFromPoint(xcoor, ycoor);
+			unit_camp.style.visibility = "visible";
+			//If the click was aimed at a tile, make it happen.
+			if(found_element != null)
+			{
+				found_element.onclick();
+			}
 		}
 		
 		//Place player-camp affordance based on which player this client is.
