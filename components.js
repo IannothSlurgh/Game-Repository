@@ -167,7 +167,7 @@ Crafty.c('HelpButton', {
 Crafty.c('MineCart', {
 	init: function(){
 		this.requires('2D, Canvas, Image, Tween')
-			.image("https://raw.githubusercontent.com/IannothSlurgh/Game-Repository/master/new_creepy_cart.png")
+			.image("http://i.imgur.com/K00JnU4.png")
 			.tween({x: 880}, 5000)
 			.bind('TweenEnd', function(){
 				
