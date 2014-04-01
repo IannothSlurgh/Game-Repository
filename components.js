@@ -6,7 +6,7 @@ Crafty.c('Grid', {
 			h: Game.map_grid.tile.height
 		});
 	},
-
+	
 	//Locate this entity at the given position on grid
 	at: function(x, y){
 		if(x === undefined && y === undefined){
@@ -36,19 +36,17 @@ Crafty.c('Wall', {
 	},
 });
 
-//A dummy image which represents another client playing the game
 Crafty.c('EnemyPlayer', {
 	init: function() {
 		this.attr({
 			index: undefined
 		});
-
+		
 		this.requires('Actor, Color')
 			.color('rgb(223, 0, 255)');
 	},
 });
 
-//the part of the grid which the players can move across
 Crafty.c('Path', {
 	init: function(){
 		this.requires('Actor, Color')
@@ -56,14 +54,15 @@ Crafty.c('Path', {
 	},
 });
 
-//the sprite that the client controls using WASD
+
+
 Crafty.c('PlayerCharacter', {
 	init: function(){
 		this.attr({
 			score: 0,
 			index: player_number
 		});
-
+		
 		this.requires('Actor, Fourway, Color, Collision')
 			.fourway(4)
 			.color('rgb(20, 75, 40)')
@@ -74,14 +73,14 @@ Crafty.c('PlayerCharacter', {
 				Crafty.trigger('PlayerMoved');
 			});
 	},
-
+	
 	//registers a stop-movement when entity hits an entity
 	//with the "Solid" component
 	stopOnSolids: function() {
 		this.onHit('Solid', this.stopMovement);
 		return this;
 	},
-
+	
 	//stops movement
 	stopMovement: function(){
 		this._speed = 0;
@@ -94,14 +93,13 @@ Crafty.c('PlayerCharacter', {
 	collectMoney: function(data){
 		var money = data[0].obj;
 		this.score += money.value;
-
+		
 		//send signal to the server indicating that money has been collected
 		Crafty.trigger('MoneyCollected', money);
 		Crafty.trigger('ChangeScore', this);
 	}
 });
 
-//the money on the grid which stores a value and an index in the array which stores all money
 Crafty.c('Money', {
 	init: function(){
 		this.attr({
@@ -113,70 +111,66 @@ Crafty.c('Money', {
 	}
 });
 
-//button which transfers game to ConnectionRoom and sets the game to 2 player mode
 Crafty.c('2PlayerButton', {
 	init: function(){
 		this.requires('2D, Canvas, Image, Mouse')
-		.image("https://raw.githubusercontent.com/IannothSlurgh/Game-Repository/master/2_player_unselected.png")
+		.image("http://i.imgur.com/v7ODQeq.png")
 		.bind('MouseOver', function(e){
-			this.image("https://raw.githubusercontent.com/IannothSlurgh/Game-Repository/master/2_player_selected.png");
+			this.image("http://i.imgur.com/brO6x5C.png");
 		})
 		.bind('MouseOut', function(e){
-			this.image("https://raw.githubusercontent.com/IannothSlurgh/Game-Repository/master/2_player_unselected.png");
+			this.image("http://i.imgur.com/v7ODQeq.png");
 		})
 		.bind('Click', function(e){
 			is_two_player_game = true;
 			Crafty.scene('ConnectionRoom');
 		});
 	}
-
+	
 });
 
-//button which transfers game to ConnectionRoom and sets the game to 4 player mode
 Crafty.c('4PlayerButton', {
 	init: function(){
 		this.requires('2D, Canvas, Image, Mouse')
-		.image("https://raw.githubusercontent.com/IannothSlurgh/Game-Repository/master/4_player_unselected.png")
+		.image("http://i.imgur.com/bH9mClg.png")
 		.bind('MouseOver', function(e){
-			this.image("https://raw.githubusercontent.com/IannothSlurgh/Game-Repository/master/4_player_selected.png")
+			this.image("http://i.imgur.com/DUkyEO7.png")
 		})
 		.bind('MouseOut', function(e){
-			this.image("https://raw.githubusercontent.com/IannothSlurgh/Game-Repository/master/4_player_unselected.png");
+			this.image("http://i.imgur.com/bH9mClg.png");
 		})
 		.bind('Click', function(e){
 			is_two_player_game = false;
 			Crafty.scene('ConnectionRoom');
 		});
 	}
-
+	
 });
 
-//button which transfers game to the help screen
 Crafty.c('HelpButton', {
 	init: function(){
 		this.requires('2D, Canvas, Image, Mouse')
-		.image("https://raw.githubusercontent.com/IannothSlurgh/Game-Repository/master/help_button_unselected.png")
+		.image("http://i.imgur.com/paoEBwZ.png")
 		.bind('MouseOver', function(e){
-			this.image("https://raw.githubusercontent.com/IannothSlurgh/Game-Repository/master/help_button_selected.png")
+			this.image("http://i.imgur.com/lxZmpCM.png")
 		})
 		.bind('MouseOut', function(e){
-			this.image("https://raw.githubusercontent.com/IannothSlurgh/Game-Repository/master/help_button_unselected.png");
+			this.image("http://i.imgur.com/paoEBwZ.png");
 		})
 		.bind('Click', function(e){
 			Crafty.scene('Help');
 		});
 	}
-
+	
 });
 
-//the image which moves across the screen during the start screen
 Crafty.c('MineCart', {
 	init: function(){
 		this.requires('2D, Canvas, Image, Tween')
 			.image("https://raw.githubusercontent.com/IannothSlurgh/Game-Repository/master/new_creepy_cart.png")
 			.tween({x: 880}, 5000)
 			.bind('TweenEnd', function(){
-
+				
 				var track_num = Math.floor(Math.random() * 3);
 				var direction = Math.round(Math.random());
 				console.log(track_num);
@@ -202,7 +196,6 @@ Crafty.c('MineCart', {
 	}
 });
 
-//temperary, only meant to be used as an example
 Crafty.c('StartButton', {
 	init: function(){
 		this.requires('2D, Canvas, Color, Mouse')
@@ -217,5 +210,5 @@ Crafty.c('StartButton', {
 			//To Be Implemented
 		});
 	}
-
+	
 });
