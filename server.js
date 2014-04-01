@@ -182,6 +182,7 @@ function mazeGenerationAlgorithm()
 mazeGenerationAlgorithm();
 //------------------------------------------------------------------------------
 
+// Player Objects
 var player_1 =
 {
 	name:null,
@@ -211,14 +212,14 @@ var player_4 =
 	unit_to_place:0,
 	is_alive:false
 }
-
+// Object for selecting units
 var selected_unit =
 {
 	xcoor:null,
 	ycoor:null,
 	owner:null
 }
-
+// Phase for translating different messages
 var phase = 3;
 var place_phase = true;
 var ability_toggle = false;
@@ -231,6 +232,9 @@ var score_list = [-1, -1];
 var current_turn = 0;
 
 //------------------------------------------------------------------------------
+
+// Clients array for storing the username of each client. The clients_ready array
+// Stores the amount of clients that are currently ready in each phase.
 var clients = [];
 var clients_ready = [];
 
@@ -339,7 +343,7 @@ io.sockets.on(
               }
             });
 	});
-	
+	// This function handles the player movement in the maze of phase one
 	client.on(
 		'PlayerMovement',
 		function(message){
@@ -349,7 +353,7 @@ io.sockets.on(
 				client.broadcast.emit('updateEnemyPlayer', obj);
 			}
 	});
-	
+	// This function destroys the money the is picked up in phase one
 	client.on(
 		'CollectMoney',
 		function(message){
@@ -359,7 +363,7 @@ io.sockets.on(
 				client.broadcast.emit('destroyMoney', obj);
 			}
 	});
-	
+	// The following function is used to get the username of the current client
 	client.on(
 		'getusername',
 		function(message){
@@ -392,7 +396,7 @@ io.sockets.on(
 		}
 		return unit_list;	
 	}
-	
+	// This function sorts the scores of players in phase one to determine turn order in phase three
 	function sort_scores()
 	{
 		for(var i = 1; i < turn_order.length; ++i)
@@ -410,7 +414,7 @@ io.sockets.on(
 			}
 		}
 	}
-	
+	// This function sets the status of players as ready as they have pressed the ready button. Allows for moving between phases
 	client.on(
 		'SetStatusReady',
 		function(message){
@@ -481,7 +485,7 @@ io.sockets.on(
 			}
 		}
 	);
-	
+	// Generic translate message between client and server
 	function translateMessage(message)
 	{
 		switch(phase)
@@ -499,7 +503,7 @@ io.sockets.on(
 	}
 	
 	client.on('Event_received', translateMessage);
-	
+	// Translates any message in phase three
 	function translateMessagePhaseIII(message)
 	{
 		var decrypted = JSON.parse(message);
@@ -660,7 +664,7 @@ io.sockets.on(
 			client.emit('phaseIIIservermessage', JSON.stringify(confirmation));
 		}
 	}
-	
+	// Testing function that we use to call during bug testing. Allows us to know if we are connecting to the server correctly
 	client.on(
 		'Testing',
 		function(message) {
@@ -688,7 +692,7 @@ io.sockets.on(
 	});
 
 //---------------------------------------------------------------------------------------------------------
-
+// Finds the unit as specified by findUnit
 function findUnitHelp(xcoor, ycoor, player)
 {
 	var unit = null;
@@ -708,7 +712,7 @@ function findUnitHelp(xcoor, ycoor, player)
 	}
 	return unit;
 }
-
+// Gets the specfic unit and calls findUnitHelp for each player
 function findUnit(xcoor, ycoor)
 {
 	var unit = findUnitHelp(xcoor, ycoor, player_1);
@@ -726,7 +730,7 @@ function findUnit(xcoor, ycoor)
 	}
 	return unit;
 }
-
+// Gets the specific player and returns the player object
 function getPlayer(player_name)
 {
 	var player = null;
@@ -754,7 +758,7 @@ function getPlayer(player_name)
 	}
 	return player;
 }
-
+// Gets the player occupying a specific space on the grid in phase three
 function getPlayerOccupying(xcoor, ycoor)
 {
 	var unit = findUnitHelp(xcoor, ycoor, player_1);
@@ -779,7 +783,7 @@ function getPlayerOccupying(xcoor, ycoor)
 	}
 	return null;
 }
-
+// Checks if a player still has any units left alive
 function checkPlayerAlive(player_name)
 {
 	var player = getPlayer(player_name);
@@ -794,7 +798,7 @@ function checkPlayerAlive(player_name)
 	player.is_alive = false;
 	return false;
 }
-
+// Checks and returns the decision of an attack based on a range check
 function checkRange(xcoor, ycoor)
 {
 	var unit_one = findUnit(selected_unit.xcoor, selected_unit.ycoor);
@@ -826,19 +830,19 @@ function checkRange(xcoor, ycoor)
 	unit_two.health = obj_one.unit_two;
 	return obj_one;
 }
-
+// Returns the new unit's HP
 function returnNewUnitHP(health, damage_taken)
 {
 	return health - damage_taken;
 }
-
+// Used to select a unit on the board
 function select(xcoor, ycoor)
 {
 	selected_unit.xcoor = xcoor;
 	selected_unit.ycoor = ycoor;
 	selected_unit.owner = getPlayerOccupying(xcoor, ycoor);
 }
-
+// Specifys the rules of moving a player
 function move(xcoor, ycoor)
 {
 	var unit = findUnit(selected_unit.xcoor, selected_unit.ycoor);
@@ -854,7 +858,7 @@ function move(xcoor, ycoor)
 	unit.can_move = false;
 	return true;
 }
-
+// Function that allows the places the units down
 function place(xcoor, ycoor, player_name)
 {
 	var player = getPlayer(player_name);
@@ -899,7 +903,7 @@ function place(xcoor, ycoor, player_name)
 	}
 	return success;
 }
-
+// Returns whether or not a space is currently occupied
 function isOccupied(xcoor, ycoor)
 {
 	if(findUnit(xcoor, ycoor) == null)
@@ -908,7 +912,7 @@ function isOccupied(xcoor, ycoor)
 	}
 	return true;
 }
-
+// Gives the rules for how a turn is ended when a player clicks the end turn button
 function endturn()
 {
 	selected_unit.xcoor = null;
