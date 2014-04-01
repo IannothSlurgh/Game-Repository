@@ -54,7 +54,7 @@ Code:
     please visit http://craftyjs.com/
 
 - game.js
-  - Ask Steven later
+  - Stores the tiles for the grid in phase I
 
 - ian_code.js
   - Contains global variables which are set in phase II (and used throughout phase III).
