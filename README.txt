@@ -57,7 +57,14 @@ Code:
   - Ask Steven later
 
 - ian_code.js
-  - 
+  - Contains global variables which are set in phase II (and used throughout phase III).
+  - Reveals several pre-created html elements, creates a bunch of tiles that when clicked send events to the
+	  server (handled in server.js).
+  - Handles server responses to events (known as confirmations) and server notifications (which are sent to
+	  clients informing them about the activities of other clients)
+  - Uses DOM to alter text elements, alter the image source of the unit that is selected, etc.
+  - Alters its own gamestate (which can potentially be different from the server gamestate) by changing unit
+	  health values.
 
 - index.html 
   - This is the file that server.js calls and can be viewed with the "f12" key once the webpage has opened. 
