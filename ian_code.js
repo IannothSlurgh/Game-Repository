@@ -515,6 +515,9 @@ Crafty.scene('Phase 3', function()
 						getPlayer(this_player_name).unit_to_place+=1;
 						endTurn(decrypted.starting_player);
 						document.getElementById("stat_log").innerHTML = "";
+						var div_tiles = document.getElementById("div_tiles");
+						var unit_camp = document.getElementById("unit_camp");
+						div_tiles.removeChild(unit_camp);
 					}
 				} //Except in special situations, it remains your turn and you can go ahead and send more events.
 				if(decrypted.action != "Endturn" && decrypted.action != "PlaceDone")
@@ -552,9 +555,49 @@ Crafty.scene('Phase 3', function()
 					getPlayer(decrypted.who).unit_to_place+=1;
 					endTurn(decrypted.starting_player);
 					document.getElementById("stat_log").innerHTML = "";
+					var div_tiles = document.getElementById("div_tiles");
+					var unit_camp = document.getElementById("unit_camp");
+					div_tiles.removeChild(unit_camp);
 				}
 			}
-		}	
+		}
+		
+		function unitCampOnClick(mouse_event)
+		{
+			
+		}
+		
+		//Place player-camp affordance based on which player this client is.
+		function placePlayerCamp()
+		{
+			var xcoor;
+			var ycoor;
+			switch(this_player_name)
+			{
+				case player_1.name:
+					xcoor = 0;
+					ycoor = 0;
+					break;
+				case player_2.name:
+					xcoor = 10;
+					ycoor = 10;
+					break;
+				case player_3.name:
+					xcoor = 0;
+					ycoor = 10;
+					break;
+				case player_4.name:
+					xcoor = 10;
+					ycoor = 0;
+					break;
+			}
+			xcoor = getAbsoluteFromGrid(xcoor);
+			ycoor = getAbsoluteFromGrid(ycoor);
+			//Add the big green square.
+			addImage("unit_camp", "http://imgur.com/VSv5AOI.png", xcoor, ycoor, 2, 184, 184);
+			//Set transport layer for the green square.
+			document.getElementById("unit_camp").onclick = unitCampOnClick;
+		}
 		//Sets up phase 3 elements.
 		function init()
 		{
@@ -617,6 +660,7 @@ Crafty.scene('Phase 3', function()
 
 			}
 			document.getElementById("stat_log").innerHTML = "Place your units in your camp.";
+			placePlayerCamp();
 			socket.emit('Testing', "Hello");
 		}
 		
