@@ -14,11 +14,8 @@ Crafty.c('Grid',
 	{
 		if(x === undefined && y === undefined)
 		{
-			return 
-			{
-				x: this.x/Game.map_grid.tile.width,
-				y: this.y/Game.map_grid.tile.height
-			};
+			return {x: this.x/Game.map_grid.tile.width,
+				y: this.y/Game.map_grid.tile.height};
 		}
 		else
 		{
