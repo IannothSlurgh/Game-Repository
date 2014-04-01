@@ -240,6 +240,7 @@ Crafty.scene('Phase 3', function(){
 	//Handles the case that the client successfully selects a unit.
 	function select(xcoor, ycoor, unit_owner)
 	{
+		//Default cases
 		var src = "";
 		var health = 0;
 		var movement = 0;
@@ -256,6 +257,7 @@ Crafty.scene('Phase 3', function(){
 		};
 		selected_unit.owner = unit_owner;
 		unit_list = findUnitList(unit_owner);
+		//Old style findUnit- fix later.
 		for(var i = 0; i < unit_list.length; ++i)
 		{
 			if(unit_list[i].xcoor == xcoor)
@@ -272,12 +274,16 @@ Crafty.scene('Phase 3', function(){
 				}
 			}
 		}
+		//Set the stat boards with the stats of the found unit
 		changeStatsGraphical(stats);
+		//Either create selection box, or move it to the newly selected unit.
 		moveSelectionBox(xcoor, ycoor);
 	}
 	
+	//Handler for endturn. Also called when a player dies on his own turn.
 	function endTurn(nextPlayer)
 	{
+		//If it is your turn, unlock events- otherwise, lock events.
 		if(nextPlayer == this_player_name)
 		{
 			events_locked = false;
@@ -292,11 +298,14 @@ Crafty.scene('Phase 3', function(){
 	
 	function place(xcoor, ycoor, player_name, nth_unit)
 	{
+		//Set unit (nth_unit in the unit_list) location attributes
 		var unit_list = findUnitList(player_name);
 		unit_list[nth_unit].xcoor = xcoor;
 		unit_list[nth_unit].ycoor = ycoor;
+		//Change src of appropriate tile.
 		var tile = document.getElementById("X"+xcoor.toString()+"Y"+ycoor.toString());
 		tile.src = unit_list[nth_unit].src;
+		//Add teamcolor underneath placed unit.
 		var color = getTeamColor(player_name);
 		if(color == "blue")
 		{
@@ -316,6 +325,7 @@ Crafty.scene('Phase 3', function(){
 		}	
 	}
 	
+	//helper function that moves team color element of selected unit.
 	function moveTeamColor(xcoor, ycoor)
 	{
 		var color = getTeamColor(selected_unit.owner);
@@ -324,8 +334,10 @@ Crafty.scene('Phase 3', function(){
 		team_color.style.left = getAbsoluteFromGrid(xcoor).toString()+"px";
 	}
 	
+	//Movement handler
 	function move(xcoor, ycoor)
 	{
+		//change selected unit's xcoor-ycoor
 		var unit_list = findUnitList(selected_unit.owner);
 		var original_xcoor = unit_list[selected_unit.arr_index].xcoor;
 		var original_ycoor = unit_list[selected_unit.arr_index].ycoor;
@@ -333,6 +345,7 @@ Crafty.scene('Phase 3', function(){
 		var new_tile = document.getElementById("X"+xcoor+"Y"+ycoor);
 		unit_list[selected_unit.arr_index].xcoor = xcoor;
 		unit_list[selected_unit.arr_index].ycoor = ycoor;
+		//Shift images on grid.
 		original_tile.src="http://i.imgur.com/ubwIthk.gif";
 		new_tile.src = unit_list[selected_unit.arr_index].src;
 		moveSelectionBox(xcoor, ycoor);
@@ -341,10 +354,15 @@ Crafty.scene('Phase 3', function(){
 	
 	function attack(xcoor, ycoor, secondary_player, attacker_health, defender_health)
 	{
+		//Get related unit objects.
+		var attacker = findUnitList(selected_unit.owner)[selected_unit.arr_index];
+		var defender = findUnit(secondary_player, xcoor, ycoor);
+		//If this client loses its last unit during its turn, immediately end turn for this player.
 		if(attacker_health == "Playerdead" && selected_unit.owner == this_player_name)
 		{
 			sendEvent("Endturn", null, null);
 		}
+		//Change value to a numerical value.
 		if(attacker_health == "Playerdead")
 		{
 			attacker_health = 0;
@@ -353,12 +371,13 @@ Crafty.scene('Phase 3', function(){
 		{
 			defender_health = 0;
 		}
-		var attacker = findUnitList(selected_unit.owner)[selected_unit.arr_index];
-		var defender = findUnit(secondary_player, xcoor, ycoor);
 		var div_tiles = document.getElementById("div_tiles");
+		//Set to health values given by server.
 		defender.health = defender_health;
 		attacker.health = attacker_health;
+		//Fix selected unit's hp
 		document.getElementById("stat_hp").innerHTML=attacker_health.toString();
+		//If defender dead, dislocate it, delete team-color, and make tile be dirt again
 		if(defender_health <= 0)
 		{
 			var defender_tile = document.getElementById("X"+xcoor+"Y"+ycoor);
@@ -369,6 +388,7 @@ Crafty.scene('Phase 3', function(){
 			defender.xcoor = null;
 			defender.ycoor = null;
 		}
+		//Same as defender death, but clear stat board.
 		if(attacker_health <= 0)
 		{
 			var attacker_tile = document.getElementById("X"+attacker.xcoor+"Y"+attacker.ycoor);
@@ -382,13 +402,18 @@ Crafty.scene('Phase 3', function(){
 		}
 		
 	}
+	
+	//Pass data to server based on player click. Called by the tiles onclick and oncontextmenu
 	function sendEvent(action, xcoor, ycoor)
 	{
-		if(! events_locked || action == "Exit" )
+		//If its your turn and you are not waiting on a server response already.
+		if(! events_locked )
 		{
+			//Then prevent new events until server response (confirmation) and...
 			events_locked = true;
 			try
 			{
+				//Send event to server with the parameters.
 				var client_event = 
 				{
 					"type":"Event",
@@ -406,14 +431,17 @@ Crafty.scene('Phase 3', function(){
 		}
 	}
 	
+	//Called when server sends a confirmation (responding to a client activity) or a notification (telling other clients of that activity)
 	socket.on('phaseIIIservermessage', translateServerMessage);
 	function translateServerMessage(message)
 	{
 			var decrypted = JSON.parse(message);
 			if(decrypted.type == "Confirmation")
 			{
+				//If the action made sense and followed the rules, the confirmation will have a success of true.
 				if(decrypted.success)
 				{
+					//Call appropriate handler
 					if(decrypted.action == "Select")
 					{
 						select(decrypted.xcoor, decrypted.ycoor, decrypted.who);
@@ -433,23 +461,26 @@ Crafty.scene('Phase 3', function(){
 					else if(decrypted.action == "Place")
 					{
 						place(decrypted.xcoor, decrypted.ycoor, this_player_name, getPlayer(this_player_name).unit_to_place);
+						//Next unit in unit_list.
 						getPlayer(this_player_name).unit_to_place+=1;
 					}
 					else if(decrypted.action == "PlaceDone")
 					{
+						//The last place of the place phase sets whose turn it is and event-locks everyone else.
 						place(decrypted.xcoor, decrypted.ycoor, this_player_name, getPlayer(this_player_name).unit_to_place);
 						getPlayer(this_player_name).unit_to_place+=1;
 						endTurn(decrypted.starting_player);
 						document.getElementById("stat_log").innerHTML = "";
 					}
-				}
+				} //Except in special situations, it remains your turn and you can go ahead and send more events.
 				if(decrypted.action != "Endturn" && decrypted.action != "PlaceDone")
 				{
 					events_locked = false;
 				}
-			}
+			} //What did the other clients do?
 			else if(decrypted.type == "Notification")
 			{
+				//Call appropriate handler (mostly alike confirmation)
 				if(decrypted.action == "Select")
 				{
 					select(decrypted.xcoor, decrypted.ycoor, decrypted.who);
@@ -479,66 +510,73 @@ Crafty.scene('Phase 3', function(){
 					document.getElementById("stat_log").innerHTML = "";
 				}
 			}
-	}		
-		function init()
+	}	
+	//Sets up phase 3 elements.
+	function init()
+	{
+		//Hide phase 2
+		document.getElementById("helpAndShop").style.display = "none";
+		document.getElementById("command").style.display = "none";
+		document.getElementById("yourGold").style.display = "none";
+		document.getElementById("yourUnit").style.display = "none";
+		document.getElementById("scrollbar").style.display = "none";
+		document.getElementById("yourUnitList").style.display = "none";
+		document.getElementById("ready").style.display = "none";
+		document.getElementById("reset").style.display = "none";
+		
+		//Generate tiles on grid.
+		for(var i = 0; i<14; ++i)
 		{
-			document.getElementById("helpAndShop").style.display = "none";
-			document.getElementById("command").style.display = "none";
-			document.getElementById("yourGold").style.display = "none";
-			document.getElementById("yourUnit").style.display = "none";
-			document.getElementById("scrollbar").style.display = "none";
-			document.getElementById("yourUnitList").style.display = "none";
-			document.getElementById("ready").style.display = "none";
-			document.getElementById("reset").style.display = "none";
-			
-			for(var i = 0; i<14; ++i)
+			for(var j = 0; j<14; ++j)
 			{
-				for(var j = 0; j<14; ++j)
-				{
-					addTile(i,j);
-				}
+				addTile(i,j);
 			}
-			document.getElementById("stat_end_turn").onclick = function(){ sendEvent("Endturn", null, null); };
-			document.getElementById("stat_end_turn").style.display = "block";
-			document.getElementById("stat_hp").style.display = "block";
-			document.getElementById("stat_damage").style.display = "block";
-			document.getElementById("stat_movement").style.display = "block";
-			document.getElementById("stat_range").style.display = "block";
-			document.getElementById("stat_icon").style.display = "block";
-			document.getElementById("stat_log").style.display = "block";
-			document.getElementById("stat_ability").style.display = "block";
-			document.getElementById("stat_player_turn").style.display = "block";
-			document.getElementById("grid").style.display = "block";
-			document.getElementById("next").style.display = "block";
-			
-			//Hide
-			document.getElementById("loggedin").style.display = "none";
-			document.getElementById("board").style.display = "none";
-			document.getElementById("msg").style.display = "none";
-			document.getElementById("send").style.display = "none";
-			document.getElementById("start_button").style.display = "none";
-			
-			document.getElementById("stat_player_turn").innerHTML = "Place Phase";
-			
-			this_player_name = user_str;
-			
-			player_1.name = list_of_users[0];
-			player_2.name = list_of_users[1];
-			
-			if(!is_two_player_game)
-			{
-				player_3.name = list_of_users[2];
-				player_4.name = list_of_users[3];
-			}
-			document.getElementById("stat_log").innerHTML = "Place your units in your camp.";
-			socket.emit('Testing', "Hello");
 		}
+		//Reveal phase 3 elements.
+		document.getElementById("stat_end_turn").onclick = function(){ sendEvent("Endturn", null, null); };
+		document.getElementById("stat_end_turn").style.display = "block";
+		document.getElementById("stat_hp").style.display = "block";
+		document.getElementById("stat_damage").style.display = "block";
+		document.getElementById("stat_movement").style.display = "block";
+		document.getElementById("stat_range").style.display = "block";
+		document.getElementById("stat_icon").style.display = "block";
+		document.getElementById("stat_log").style.display = "block";
+		document.getElementById("stat_ability").style.display = "block";
+		document.getElementById("stat_player_turn").style.display = "block";
+		document.getElementById("grid").style.display = "block";
+		document.getElementById("next").style.display = "block";
+		
+		//old Hide- probably delete
+		document.getElementById("loggedin").style.display = "none";
+		document.getElementById("board").style.display = "none";
+		document.getElementById("msg").style.display = "none";
+		document.getElementById("send").style.display = "none";
+		document.getElementById("start_button").style.display = "none";
+		
+		document.getElementById("stat_player_turn").innerHTML = "Place Phase";
+		
+		//Set names of player objects.
+		this_player_name = user_str;
+		
+		player_1.name = list_of_users[0];
+		player_2.name = list_of_users[1];
+		
+		if(!is_two_player_game)
+		{
+			player_3.name = list_of_users[2];
+			player_4.name = list_of_users[3];
+		}
+		document.getElementById("stat_log").innerHTML = "Place your units in your camp.";
+		socket.emit('Testing', "Hello");
+	}
+	//Old testing function. Probably delete.
 	function Testing(message)
 	{
 		console.log(message);
 	}
 	socket.on('Testing', Testing);
 	
+	//Finish constructing phase 3.
 	init();
   });
  });
