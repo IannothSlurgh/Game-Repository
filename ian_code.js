@@ -6,25 +6,29 @@ var player_1 =
 {
 	unit_list:[],
 	name:null,
-	unit_to_place:0
+	unit_to_place:0,
+	is_alive:false
 };
 var player_2 =
 {
 	unit_list:[],
 	name:null,
-	unit_to_place:0
+	unit_to_place:0,
+	is_alive:false
 };
 var player_3 =
 {
 	unit_list:[],
 	name:null,
-	unit_to_place:0
+	unit_to_place:0,
+	is_alive:false
 };
 var player_4 =
 {
 	unit_list:[],
 	name:null,
-	unit_to_place:0
+	unit_to_place:0,
+	is_alive:false
 };
 
 //Phase III functions and variables that do not require modification by Phase II	
@@ -42,7 +46,43 @@ Crafty.scene('Phase 3', function()
 			owner:null,
 			arr_index:null
 		};
-	
+
+		//Yes. It is an xor.
+		function xor(bool_1, bool_2)
+		{
+			return (bool_1 && !bool_2) || (!bool_1 && bool_2);
+		}
+		
+		function checkVictory()
+		{
+			//Check to see that only one player lives
+			var one_and_two = xor(player_1.is_alive, player_2.is_alive);
+			var three_and_four = xor(player_3.is_alive, player_4.is_alive);
+			var result = xor (one_and_two, three_and_four);
+			var name;
+			if(result)
+			{
+				//Put the live player's name in victory alert.
+				if(player_1.is_alive)
+				{
+					name = player_1.name;
+				}
+				else if(player_2.is_alive)
+				{
+					name = player_2.name;
+				}
+				else if(player_3.is_alive)
+				{
+					name = player_3.name;
+				}
+				else if(player_4.is_alive)
+				{
+					name = player_4.name
+				}
+				alert(name + " wins the game.");
+			}
+		}
+		
 		//Simple helper function for finding player object based on a string name. Returns null if no such player. (Modify to switch self)
 		function getPlayer(player_name)
 		{
@@ -368,10 +408,12 @@ Crafty.scene('Phase 3', function()
 			if(attacker_health == "Playerdead")
 			{
 				attacker_health = 0;
+				getPlayer(selected_unit.owner).is_alive = false;
 			}
 			if(defender_health == "Playerdead")
 			{
 				defender_health = 0;
+				getPlayer(secondary_player).is_alive = false;
 			}
 			var div_tiles = document.getElementById("div_tiles");
 			//Set to health values given by server.
@@ -402,6 +444,7 @@ Crafty.scene('Phase 3', function()
 				attacker.ycoor = null;
 				clearSelection();
 			}
+			checkVictory();
 		}
 	
 		//Pass data to server based on player click. Called by the tiles onclick and oncontextmenu
@@ -437,51 +480,12 @@ Crafty.scene('Phase 3', function()
 		function translateServerMessage(message)
 		{
 				var decrypted = JSON.parse(message);
-				if(decrypted.type == "Confirmation")
+			if(decrypted.type == "Confirmation")
+			{
+				//If the action made sense and followed the rules, the confirmation will have a success of true.
+				if(decrypted.success)
 				{
-					//If the action made sense and followed the rules, the confirmation will have a success of true.
-					if(decrypted.success)
-					{
-						//Call appropriate handler
-						if(decrypted.action == "Select")
-						{
-							select(decrypted.xcoor, decrypted.ycoor, decrypted.who);
-						}
-						else if(decrypted.action == "Endturn")
-						{
-							endTurn(decrypted.who);
-						}
-						else if(decrypted.action == "Move")
-						{
-							move(decrypted.xcoor, decrypted.ycoor);
-						}
-						else if(decrypted.action == "Attack")
-						{
-							attack(decrypted.xcoor, decrypted.ycoor, decrypted.who, decrypted.healthSelf, decrypted.healthTarget);
-						}
-						else if(decrypted.action == "Place")
-						{
-							place(decrypted.xcoor, decrypted.ycoor, this_player_name, getPlayer(this_player_name).unit_to_place);
-							//Next unit in unit_list.
-							getPlayer(this_player_name).unit_to_place+=1;
-						}
-						else if(decrypted.action == "PlaceDone")
-						{
-							//The last place of the place phase sets whose turn it is and event-locks everyone else.
-							place(decrypted.xcoor, decrypted.ycoor, this_player_name, getPlayer(this_player_name).unit_to_place);
-							getPlayer(this_player_name).unit_to_place+=1;
-							endTurn(decrypted.starting_player);
-							document.getElementById("stat_log").innerHTML = "";
-						}
-					} //Except in special situations, it remains your turn and you can go ahead and send more events.
-					if(decrypted.action != "Endturn" && decrypted.action != "PlaceDone")
-					{
-						events_locked = false;
-					}
-				} //What did the other clients do?
-				else if(decrypted.type == "Notification")
-				{
-					//Call appropriate handler (mostly alike confirmation)
+					//Call appropriate handler
 					if(decrypted.action == "Select")
 					{
 						select(decrypted.xcoor, decrypted.ycoor, decrypted.who);
@@ -500,17 +504,56 @@ Crafty.scene('Phase 3', function()
 					}
 					else if(decrypted.action == "Place")
 					{
-						place(decrypted.xcoor, decrypted.ycoor, decrypted.who, getPlayer(decrypted.who).unit_to_place);
-						getPlayer(decrypted.who).unit_to_place+=1;
+						place(decrypted.xcoor, decrypted.ycoor, this_player_name, getPlayer(this_player_name).unit_to_place);
+						//Next unit in unit_list.
+						getPlayer(this_player_name).unit_to_place+=1;
 					}
 					else if(decrypted.action == "PlaceDone")
 					{
-						place(decrypted.xcoor, decrypted.ycoor, decrypted.who, getPlayer(decrypted.who).unit_to_place);
-						getPlayer(decrypted.who).unit_to_place+=1;
+						//The last place of the place phase sets whose turn it is and event-locks everyone else.
+						place(decrypted.xcoor, decrypted.ycoor, this_player_name, getPlayer(this_player_name).unit_to_place);
+						getPlayer(this_player_name).unit_to_place+=1;
 						endTurn(decrypted.starting_player);
 						document.getElementById("stat_log").innerHTML = "";
 					}
+				} //Except in special situations, it remains your turn and you can go ahead and send more events.
+				if(decrypted.action != "Endturn" && decrypted.action != "PlaceDone")
+				{
+					events_locked = false;
 				}
+			} //What did the other clients do?
+			else if(decrypted.type == "Notification")
+			{
+				//Call appropriate handler (mostly alike confirmation)
+				if(decrypted.action == "Select")
+				{
+					select(decrypted.xcoor, decrypted.ycoor, decrypted.who);
+				}
+				else if(decrypted.action == "Endturn")
+				{
+					endTurn(decrypted.who);
+				}
+				else if(decrypted.action == "Move")
+				{
+					move(decrypted.xcoor, decrypted.ycoor);
+				}
+				else if(decrypted.action == "Attack")
+				{
+					attack(decrypted.xcoor, decrypted.ycoor, decrypted.who, decrypted.healthSelf, decrypted.healthTarget);
+				}
+				else if(decrypted.action == "Place")
+				{
+					place(decrypted.xcoor, decrypted.ycoor, decrypted.who, getPlayer(decrypted.who).unit_to_place);
+					getPlayer(decrypted.who).unit_to_place+=1;
+				}
+				else if(decrypted.action == "PlaceDone")
+				{
+					place(decrypted.xcoor, decrypted.ycoor, decrypted.who, getPlayer(decrypted.who).unit_to_place);
+					getPlayer(decrypted.who).unit_to_place+=1;
+					endTurn(decrypted.starting_player);
+					document.getElementById("stat_log").innerHTML = "";
+				}
+			}
 		}	
 		//Sets up phase 3 elements.
 		function init()
@@ -562,10 +605,16 @@ Crafty.scene('Phase 3', function()
 			player_1.name = list_of_users[0];
 			player_2.name = list_of_users[1];
 			
+			player_1.is_alive = true;
+			player_2.is_alive = true;
+			
 			if(!is_two_player_game)
 			{
 				player_3.name = list_of_users[2];
 				player_4.name = list_of_users[3];
+				player_3.is_alive = true;
+				player_4.is_alive = true;
+
 			}
 			document.getElementById("stat_log").innerHTML = "Place your units in your camp.";
 			socket.emit('Testing', "Hello");
