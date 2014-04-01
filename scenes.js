@@ -1,13 +1,23 @@
+//stores the maze to be draw in the format of an array of strings
 var maze_data;
+//the position of the player relative to the other clients
 var player_number = 0;
+//determines whether the game is in two player mode or four player mode
 var is_two_player_game = false;
+//stores a list of enemy players which represent the other clients playing the game
 var enemy_list = new Array();
+//stores all the money that are on the grid
 var money_list = new Array();
+//the connection where the client communicates with the server
 var socket;
+//stores an instance of the client's player object
 var player;
+//stores the name that the player entered during the log in screen
 var user_str;
+//stores a list of all client names
 var list_of_users;
 
+//places the client player into its corresponding spot in the center of the maze
 function place_player()
 {
 	var col;
@@ -58,6 +68,7 @@ function place_player()
 	player = Crafty.e('PlayerCharacter').at(col, row).attach(player_text);
 }
 
+//places an enemy player in the center of the grid which will represent another client
 function place_enemy_player(index)
 {
 	var col;
@@ -200,6 +211,8 @@ function returnFromHelpScreen()
 	Crafty.scene('StartScreen');
 }
 
+//Contains the initialization of the maze phase of the game
+//Places money, players, and enemy players on the grid
 Crafty.scene('Game', function()
 {
 	//2D array to keep track of all occupied tiles
@@ -265,6 +278,7 @@ Crafty.scene('Game', function()
 		}
 	}
 	
+	//sends info to the server whenever the player moves
 	Crafty.bind('PlayerMoved', function()
 	{
 		var player_info = 
@@ -276,6 +290,7 @@ Crafty.scene('Game', function()
 		socket.emit('PlayerMovement', JSON.stringify(player_info));
 	});
 	
+	//updates the position of an enemy player
 	socket.on('updateEnemyPlayer', function(message)
 	{
 		var enemy_index = message.index;
@@ -289,6 +304,7 @@ Crafty.scene('Game', function()
 		}
 	});
 	
+	//send message to server to indicate that one of the players has collided with a piece of money
 	socket.on('destroyMoney', function(message)
 	{
 		var money_index = message.collected_money_index;
@@ -296,9 +312,9 @@ Crafty.scene('Game', function()
 		money_list[money_index].y = message.y;
 	});
 	
-	//Place money around grid
 	
 	
+	//displays the score of the client player
 	Crafty.e("2D, DOM, Text")
 		.attr({x: 0, y: 0, w: 75})
 		.text("Score: 0")
@@ -308,6 +324,7 @@ Crafty.scene('Game', function()
 			this.text('Score: ' + player.score);
 		});
 	
+	//sends an event to update the maze timer
 	setTimeout (function()
 	{
 		Crafty.trigger('ChangeTimer');
@@ -315,7 +332,7 @@ Crafty.scene('Game', function()
 	
 	var time_left = 45;
 	
-	//disply incorrect if over a minute
+	//displays the timer on the screen
 	Crafty.e("2D, DOM, Text")
 		.attr({x: 100, y: 0, w: 100})
 		.text("Time = " + Math.floor(time_left/60) + ":"+(time_left%60))
@@ -344,6 +361,7 @@ Crafty.scene('Game', function()
 			}
 		});
 	
+	//redistributes money on the screen
 	this.add_money = this.bind('MoneyCollected', function(money)
 	{
 		var exit = false;
@@ -367,6 +385,7 @@ Crafty.scene('Game', function()
 	this.unbind('MoneyCollected', this.add_money);
 });
 
+//draws the buttons and images of the start screen
 Crafty.scene('StartScreen', function()
 {
 	

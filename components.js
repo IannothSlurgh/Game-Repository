@@ -36,6 +36,7 @@ Crafty.c('Wall', {
 	},
 });
 
+//A dummy image which represents another client playing the game
 Crafty.c('EnemyPlayer', {
 	init: function() {
 		this.attr({
@@ -47,6 +48,7 @@ Crafty.c('EnemyPlayer', {
 	},
 });
 
+//the part of the grid which the players can move across
 Crafty.c('Path', {
 	init: function(){
 		this.requires('Actor, Color')
@@ -54,8 +56,7 @@ Crafty.c('Path', {
 	},
 });
 
-
-
+//the sprite that the client controls using WASD
 Crafty.c('PlayerCharacter', {
 	init: function(){
 		this.attr({
@@ -89,7 +90,7 @@ Crafty.c('PlayerCharacter', {
 			this.y -= this._movement.y;
 		}
 	},
-
+	
 	collectMoney: function(data){
 		var money = data[0].obj;
 		this.score += money.value;
@@ -100,6 +101,7 @@ Crafty.c('PlayerCharacter', {
 	}
 });
 
+//the money on the grid which stores a value and an index in the array which stores all money
 Crafty.c('Money', {
 	init: function(){
 		this.attr({
@@ -111,6 +113,7 @@ Crafty.c('Money', {
 	}
 });
 
+//button which transfers game to ConnectionRoom and sets the game to 2 player mode
 Crafty.c('2PlayerButton', {
 	init: function(){
 		this.requires('2D, Canvas, Image, Mouse')
@@ -129,6 +132,7 @@ Crafty.c('2PlayerButton', {
 
 });
 
+//button which transfers game to ConnectionRoom and sets the game to 4 player mode
 Crafty.c('4PlayerButton', {
 	init: function(){
 		this.requires('2D, Canvas, Image, Mouse')
@@ -147,6 +151,7 @@ Crafty.c('4PlayerButton', {
 
 });
 
+//button which transfers game to the help screen
 Crafty.c('HelpButton', {
 	init: function(){
 		this.requires('2D, Canvas, Image, Mouse')
@@ -164,6 +169,7 @@ Crafty.c('HelpButton', {
 
 });
 
+//the image which moves across the screen during the start screen
 Crafty.c('MineCart', {
 	init: function(){
 		this.requires('2D, Canvas, Image, Tween')
@@ -196,6 +202,7 @@ Crafty.c('MineCart', {
 	}
 });
 
+//temperary, only meant to be used as an example
 Crafty.c('StartButton', {
 	init: function(){
 		this.requires('2D, Canvas, Color, Mouse')

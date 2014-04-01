@@ -33,8 +33,10 @@ function handler(request, response)
 }
 
 //---------------Maze Algorithm--------------------------------------------------------------
+//stores the maze for phase one in an array of strings
 var maze_data = new Array(55);
 
+//determines whether a cell has been visited already by the algorithm
 function hasUnvisitedNeighbor(row, col, dir)
 {
 	if(dir == 0 && (col - 2) >= 0)
@@ -55,6 +57,7 @@ function hasUnvisitedNeighbor(row, col, dir)
 	}
 }
 
+//recursive function which performs a depth-first search, picking a random direction until it reaches a dead end
 function generateMaze(row, column)
 {
 	maze_data[row][column] = '.';
@@ -92,6 +95,7 @@ function generateMaze(row, column)
 	}
 }
 
+//makes the maze into a checkered board
 function initializeMaze()
 {
 	for(var i = 0; i < 55; i++)
@@ -131,6 +135,7 @@ function initializeMaze()
 	}
 }
 
+//modifies the maze to make it look consistent overall
 function modifyMaze()
 {
 	for(var x = 1; x < 55 - 1; x++)
@@ -167,6 +172,7 @@ function modifyMaze()
 	}
 }
 
+//puts all the above function together
 function mazeGenerationAlgorithm()
 {
 	//initialize grid
@@ -190,6 +196,7 @@ function mazeGenerationAlgorithm()
 	
 	modifyMaze();
 	
+	//distributes the money around the board
 	var max_money = 100;
 	var money_count = 0;
 	while(money_count < max_money)
