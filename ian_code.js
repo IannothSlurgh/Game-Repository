@@ -1,4 +1,3 @@
-
 //Global scope variables associated with phase III that are set before 
 var this_player_name = null;
 //Player objects contain their unit objects, the player name, and the current unit in the array to place.
@@ -576,7 +575,11 @@ Crafty.scene('Phase 3', function()
 			//If the click was aimed at a tile, make it happen.
 			if(found_element != null)
 			{
-				found_element.onclick();
+				//If no onclick, not the element we want.
+				if(typeof found_element.onclick == "function")
+				{
+					found_element.onclick();
+				}
 			}
 		}
 		
