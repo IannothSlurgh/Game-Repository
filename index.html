@@ -219,27 +219,27 @@
 	<script type = "image/png" src="http://i.imgur.com/bH9mClg.png"></script> <!--4player_unselected-->
 	<script type = "image/png" src="http://i.imgur.com/lxZmpCM.png"></script> <!--help_selected-->
 	<script type = "image/png" src="http://i.imgur.com/paoEBwZ.png"></script> <!--help_unselected-->
-	<script type = "image/png" src="https://rawgithub.com/IannothSlurgh/Game-Repository/master/new_creepy_cart.png"></script>
-	<script type = "image/png" src="https://rawgithub.com/IannothSlurgh/Game-Repository/master/title_img.png"></script>
+	<script type = "image/png" src="http://i.imgur.com/K00JnU4.png"></script> <!--Creepy-cart-->
+	<script type = "image/png" src="http://i.imgur.com/RBga4F9.png"></script> <!--miner's quarrel title-->
 	<script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
 
 <body style = "margin: 0px; font-size: 150%">
 	
 	
-	<img id = "helpAndShop" src = "https://rawgithub.com/IannothSlurgh/Game-Repository/master/Background.gif" style="position: absolute; top: 0px; left: 0px; display = none; z-index: -1;"/>
-	<input type="image" id="nextHelp" src="https://rawgithub.com/IannothSlurgh/Game-Repository/master/NextHelp.gif" onclick="nextHelpScreen()" style="position: absolute; top: 576px; left: 761px; display:none;">
-	<input type="image" id="back" src="https://rawgithub.com/IannothSlurgh/Game-Repository/master/Back.gif" onclick="previousHelpScreen()" style="position: absolute; top: 576px; left: 0px; display:none;">
-	<input type="image" id="finish" src="https://rawgithub.com/IannothSlurgh/Game-Repository/master/Finish.gif" onclick="returnFromHelpScreen()" style="position: absolute; top: 576px; left: 761px; display:none;">
-	<input type="image" id="returnHome" src="https://rawgithub.com/IannothSlurgh/Game-Repository/master/Return.gif" onclick="returnFromHelpScreen()" style="position: absolute; top: 576px; left: 0px; display:none;">
-	<img id = "helpText1" type="image" src="https://rawgithub.com/IannothSlurgh/Game-Repository/master/helpText1.gif" style="position: absolute; top: 0px; left: 0px; display:none">
-	<img id = "helpText2" type="image" src="https://rawgithub.com/IannothSlurgh/Game-Repository/master/helpText2.gif" style="position: absolute; top: 0px; left: 0px; display:none">
-	<img id = "helpText3" type="image" src="https://rawgithub.com/IannothSlurgh/Game-Repository/master/helpText3.gif" style="position: absolute; top: 0px; left: 0px; display:none">
+	<img id = "helpAndShop" src = "http://i.imgur.com/hgp8dFQ.gif" style="position: absolute; top: 0px; left: 0px; display = none; z-index: -1;"/> <!--background-->
+	<input type="image" id="nextHelp" src="http://i.imgur.com/5gbW93j.gif" onclick="nextHelpScreen()" style="position: absolute; top: 576px; left: 761px; display:none;"> <!--nextHelp-->
+	<input type="image" id="back" src="http://i.imgur.com/NlWjySu.gif" onclick="previousHelpScreen()" style="position: absolute; top: 576px; left: 0px; display:none;"> <!--backtomenu-->
+	<input type="image" id="finish" src="http://i.imgur.com/bkJWemK.gif" onclick="returnFromHelpScreen()" style="position: absolute; top: 576px; left: 761px; display:none;"> <!--finish-->
+	<input type="image" id="returnHome" src="http://imgur.com/odInZKM.gif" onclick="returnFromHelpScreen()" style="position: absolute; top: 576px; left: 0px; display:none;"> <!--return_home-->
+	<img id = "helpText1" type="image" src="http://i.imgur.com/rCHvPhA.gif" style="position: absolute; top: 0px; left: 0px; display:none"> <!--help_1-->
+	<img id = "helpText2" type="image" src="http://i.imgur.com/TcTKoTp.gif" style="position: absolute; top: 0px; left: 0px; display:none"> <!--help_2-->
+	<img id = "helpText3" type="image" src="http://i.imgur.com/TQUKq1H.gif" style="position: absolute; top: 0px; left: 0px; display:none"> <!--help_3-->
 	
 	
 	
-	<img id = "grid" class = "tile"  src = "https://rawgithub.com/IannothSlurgh/Game-Repository/master/grid.gif" oncontextmenu = "return false" ondragstart = "return false" ondrop = "return false"/>
-	<img id = "next" class = "tile2 no_drag" src = "https://rawgithub.com/IannothSlurgh/Game-Repository/master/next.gif" oncontextmenu = "return false" ondragstart = "return false" ondrop = "return false"/>
+	<img id = "grid" class = "tile"  src = "http://imgur.com/c4Z5Xrs.gif" oncontextmenu = "return false" ondragstart = "return false" ondrop = "return false"/> <!--grid-->
+	<img id = "next" class = "tile2 no_drag" src = "http://imgur.com/Zq1dW0Snext.gif" oncontextmenu = "return false" ondragstart = "return false" ondrop = "return false"/> <!--next (stat_board)-->
 	<p id = "stat_player_turn" class = "on_top stat_player_turn"> </p>
 	<p id = "stat_hp" class = "on_top stat_hp"></p>
 	<p id = "stat_damage" class = "on_top stat_damage"></p>
@@ -247,8 +247,8 @@
 	<p id = "stat_range" class = "on_top stat_range"></p>
 	<p id = "stat_ability" class = "on_top stat_ability"> </p>
 	<p id = "stat_log" class = "on_top stat_log"></p>
-	<img id = "stat_icon" class = "on_top stat_icon" type = "image/gif" src = "https://raw.githubusercontent.com/IannothSlurgh/Game-Repository/master/test2.gif" oncontextmenu = "return false" ondragstart = "return false" ondrop = "return false" />
-	<img id = "stat_end_turn" class = "on_top stat_end_turn" src = "http://imgur.com/AEI8M7q.png" ondragstart = "return false" ondrop = "return false" oncontextmenu = "return false" />
+	<img id = "stat_icon" class = "on_top stat_icon" type = "image/gif" src = "http://imgur.com/q0pHXZ1.gif" oncontextmenu = "return false" ondragstart = "return false" ondrop = "return false" /> <!--test2-->
+	<img id = "stat_end_turn" class = "on_top stat_end_turn" src = "http://i.imgur.com/AEI8M7q.png" ondragstart = "return false" ondrop = "return false" oncontextmenu = "return false" /> <!--endturn-->
 	
 	<div id="div_tiles"> </div>
   <p id="command" style = "display: none;">
@@ -265,15 +265,15 @@
    Your Units: <span id="theUnits"></span>
   </p>
   <p style ="margin: 0px;">
-   <input type="image" src="https://raw.githubusercontent.com/IannothSlurgh/Game-Repository/master/Reset.gif"  onclick="reset()" id="reset" style="position: absolute; top: 400px; left: 700px; display:none;">
-   <input type="image" src="https://raw.githubusercontent.com/IannothSlurgh/Game-Repository/master/Ready.gif"  onclick="ready_method()" id="ready" style="position: absolute; top: 500px; left: 700px; display:none;">
+   <input type="image" src="http://i.imgur.com/47NbZRR.gif"  onclick="reset()" id="reset" style="position: absolute; top: 400px; left: 700px; display:none;"> <!--reset-->
+   <input type="image" src="http://i.imgur.com/odInZKM.gif"  onclick="ready_method()" id="ready" style="position: absolute; top: 500px; left: 700px; display:none;"> <!--ready-->
   </p>
  </body>
  <div id="scrollbar" class="unitlist" style = "display: none;">
-    <input type="image" src="https://raw.githubusercontent.com/IannothSlurgh/Game-Repository/master/Warrior.gif" onclick="selectWarrior()">
-    <br /> <input type="image" src="https://raw.githubusercontent.com/IannothSlurgh/Game-Repository/master/Hunter.gif" onclick="selectHunter()">
-    <br /> <input type="image" src="https://raw.githubusercontent.com/IannothSlurgh/Game-Repository/master/Rogue.gif" onclick="selectRogue()">
-    <br /> <input type="image" src="https://raw.githubusercontent.com/IannothSlurgh/Game-Repository/master/Goblin.gif" onclick="selectGoblin()">
+    <input type="image" src="http://i.imgur.com/cEZWULH.gif" onclick="selectWarrior()"> <!--Warrior-->
+    <br /> <input type="image" src="http://i.imgur.com/UmAL6RJ.gif" onclick="selectHunter()"> <!--Hunter-->
+    <br /> <input type="image" src="http://i.imgur.com/ZxvubkH.gif" onclick="selectRogue()"> <!--Rogue-->
+    <br /> <input type="image" src="http://i.imgur.com/fB6tZMv.gif" onclick="selectGoblin()"> <!--Goblin-->
   </div>
 </html>
 
