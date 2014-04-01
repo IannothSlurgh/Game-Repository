@@ -100,13 +100,13 @@ function ready_method()
 }
 
 //timer function (1 tick per second)
-var count=60;
-var counter;//runs timer() every second
+var count = 60;
+var counter; //runs timer() every second
 function timer()
 {
 	count = count - 1;
 	document.getElementById("timer").innerHTML=count + " sec";
-	if (count < 0) {
+	if (count <= 0) {
 		ready_method();
 	}
 }
