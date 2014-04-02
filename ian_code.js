@@ -45,40 +45,34 @@ Crafty.scene('Phase 3', function()
 			owner:null,
 			arr_index:null
 		};
-
-		//Yes. It is an xor.
-		function xor(bool_1, bool_2)
-		{
-			return (bool_1 && !bool_2) || (!bool_1 && bool_2);
-		}
 		
 		function checkVictory()
 		{
 			//Check to see that only one player lives
-			var one_and_two = xor(player_1.is_alive, player_2.is_alive);
-			var three_and_four = xor(player_3.is_alive, player_4.is_alive);
-			var result = xor (one_and_two, three_and_four);
-			var name;
-			if(result)
+			var num_alive = player_1.is_alive + player_2.is_alive + player_3.is_alive + player_4.is_alive;
+			if(num_alive == 1)
 			{
 				//Put the live player's name in victory alert.
-				if(player_1.is_alive)
+				switch(true)
 				{
-					name = player_1.name;
-				}
-				else if(player_2.is_alive)
-				{
-					name = player_2.name;
-				}
-				else if(player_3.is_alive)
-				{
-					name = player_3.name;
-				}
-				else if(player_4.is_alive)
-				{
-					name = player_4.name
+					case player_1.is_alive:
+						name = player_1.name;
+					break;
+					case player_2.is_alive:
+						name = player_2.name;
+					break;
+					case player_3.is_alive:
+						name = player_3.name;
+					break;
+					case player_3.is_alive:
+						name = player_4.name;
+					break;					
 				}
 				alert(name + " wins the game.");
+			}
+			if(num_alive == 0)
+			{
+				alert("There has been a tie.");
 			}
 		}
 		
