@@ -5,28 +5,24 @@ var player_1 =
 {
 	unit_list:[],
 	name:null,
-	unit_to_place:0,
 	is_alive:false
 };
 var player_2 =
 {
 	unit_list:[],
 	name:null,
-	unit_to_place:0,
 	is_alive:false
 };
 var player_3 =
 {
 	unit_list:[],
 	name:null,
-	unit_to_place:0,
 	is_alive:false
 };
 var player_4 =
 {
 	unit_list:[],
 	name:null,
-	unit_to_place:0,
 	is_alive:false
 };
 
@@ -510,13 +506,11 @@ Crafty.scene('Phase 3', function()
 					{
 						place(decrypted.xcoor, decrypted.ycoor, this_player_name, decrypted.dragged_num);
 						//Next unit in unit_list.
-						getPlayer(this_player_name).unit_to_place+=1;
 					}
 					else if(decrypted.action == "PlaceDone")
 					{
 						//The last place of the place phase sets whose turn it is and event-locks everyone else.
 						place(decrypted.xcoor, decrypted.ycoor, this_player_name, decrypted.dragged_num);
-						getPlayer(this_player_name).unit_to_place+=1;
 						endTurn(decrypted.starting_player);
 						document.getElementById("stat_log").innerHTML = "";
 						var div_tiles = document.getElementById("div_tiles");
@@ -550,13 +544,11 @@ Crafty.scene('Phase 3', function()
 				}
 				else if(decrypted.action == "Place")
 				{
-					place(decrypted.xcoor, decrypted.ycoor, decrypted.who, getPlayer(decrypted.who).unit_to_place);
-					getPlayer(decrypted.who).unit_to_place+=1;
+					place(decrypted.xcoor, decrypted.ycoor, decrypted.who, decrypted.dragged_num);
 				}
 				else if(decrypted.action == "PlaceDone")
 				{
-					place(decrypted.xcoor, decrypted.ycoor, decrypted.who, getPlayer(decrypted.who).unit_to_place);
-					getPlayer(decrypted.who).unit_to_place+=1;
+					place(decrypted.xcoor, decrypted.ycoor, decrypted.who, decrypted.dragged_num);
 					endTurn(decrypted.starting_player);
 					document.getElementById("stat_log").innerHTML = "";
 					var div_tiles = document.getElementById("div_tiles");
