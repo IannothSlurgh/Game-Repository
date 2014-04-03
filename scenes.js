@@ -129,72 +129,81 @@ Crafty.scene('Help', function()
 	Crafty.stage.elem.style.display = "none";
 	document.getElementById("helpAndShop").style.display = "block";
 	document.getElementById("helpAndShop").style.zIndex = "-1";
-	nextHelpScreen(); //display the first help screen
+	back();
 });
 
-//determines the next help screen to be displayed
-function nextHelpScreen() 
-{ 
-	whichHelpScreen = whichHelpScreen + 1;
-	//determines which help screen the client is wanting to view
-	switch(whichHelpScreen) 
-	{
-		case 1:
-			document.getElementById("helpText2").style.display = "none";
-			document.getElementById("helpText3").style.display = "none";
-			document.getElementById("back").style.display = "none";
-			document.getElementById("finish").style.display = "none";
-			document.getElementById("returnHome").style.display = "block";
-			document.getElementById("returnHome").style.top = "576px"; 
-			document.getElementById("returnHome").style.left = "0px";
-			document.getElementById("returnHome").style.zIndex = "2"; 
-			document.getElementById("nextHelp").style.display = "block";
-			document.getElementById("nextHelp").style.top = "576px";
-			document.getElementById("nextHelp").style.left = "761px";
-			document.getElementById("nextHelp").style.zIndex = "2";
-			document.getElementById("helpText1").style.display = "block";
-			document.getElementById("helpText1").style.zIndex = "0";
-			break;
-		case 2:
-			document.getElementById("helpText1").style.display = "none";
-			document.getElementById("helpText3").style.display = "none";
-			document.getElementById("returnHome").style.display = "none";
-			document.getElementById("finish").style.display = "none";
-			document.getElementById("back").style.display = "block";
-			document.getElementById("back").style.top = "576px"; 
-			document.getElementById("back").style.left = "0px"; 
-			document.getElementById("back").style.zIndex = "2"; 
-			document.getElementById("nextHelp").style.display = "block";
-			document.getElementById("nextHelp").style.top = "576px";
-			document.getElementById("nextHelp").style.left = "761px";
-			document.getElementById("nextHelp").style.zIndex = "2";
-			document.getElementById("helpText2").style.display = "block";
-			document.getElementById("helpText2").style.zIndex = "0";
-			break;
-		case 3:
-			document.getElementById("helpText1").style.display = "none";
-			document.getElementById("helpText2").style.display = "none";
-			document.getElementById("nextHelp").style.display = "none";
-			document.getElementById("returnHome").style.display = "none";
-			document.getElementById("back").style.display = "block";
-			document.getElementById("back").style.top = "576px"; 
-			document.getElementById("back").style.left = "0px";
-			document.getElementById("back").style.zIndex = "2"; 
-			document.getElementById("finish").style.display = "block";
-			document.getElementById("finish").style.top = "576px";
-			document.getElementById("finish").style.left = "761px";
-			document.getElementById("finish").style.zIndex = "2";
-			document.getElementById("helpText3").style.display = "block";
-			document.getElementById("helpText3").style.zIndex = "0";
-			break;
-	}
+function phase_one() {
+	document.getElementById("helpText2").style.display = "none";
+	document.getElementById("helpText3").style.display = "none";
+	document.getElementById("toTitle").style.display = "none";
+	document.getElementById("phase2").style.display = "none";
+	document.getElementById("phase3").style.display = "none";
+	document.getElementById("phase1").style.display = "none"; 
+	document.getElementById("toHelp").style.display = "block";
+	document.getElementById("toHelp").style.top = "576px";
+	document.getElementById("toHelp").style.left = "761px";
+	document.getElementById("toHelp").style.zIndex = "2";
+	document.getElementById("helpText1").style.display = "block";
+	document.getElementById("helpText1").style.zIndex = "0";
 }
-//goes back 1 help screen
-function previousHelpScreen() 
-{
-	whichHelpScreen = whichHelpScreen - 2;
-	nextHelpScreen();
+
+function phase_two() {
+	document.getElementById("helpText1").style.display = "none";
+	document.getElementById("helpText3").style.display = "none";
+	document.getElementById("toTitle").style.display = "none";
+	document.getElementById("phase2").style.display = "none";
+	document.getElementById("phase3").style.display = "none";
+	document.getElementById("phase1").style.display = "none"; 
+	document.getElementById("toHelp").style.display = "block";
+	document.getElementById("toHelp").style.top = "576px";
+	document.getElementById("toHelp").style.left = "761px";
+	document.getElementById("toHelp").style.zIndex = "2";
+	document.getElementById("helpText2").style.display = "block";
+	document.getElementById("helpText2").style.zIndex = "0";
 }
+
+function phase_three() {
+	document.getElementById("helpText2").style.display = "none";
+	document.getElementById("helpText1").style.display = "none";
+	document.getElementById("toTitle").style.display = "none";
+	document.getElementById("phase2").style.display = "none";
+	document.getElementById("phase3").style.display = "none";
+	document.getElementById("phase1").style.display = "none"; 
+	document.getElementById("toHelp").style.display = "block";
+	document.getElementById("toHelp").style.top = "576px";
+	document.getElementById("toHelp").style.left = "761px";
+	document.getElementById("toHelp").style.zIndex = "2";
+	document.getElementById("helpText3").style.display = "block";
+	document.getElementById("helpText3").style.zIndex = "0";
+}
+
+function back() {
+	document.getElementById("helpText1").style.display = "none";
+	document.getElementById("helpText2").style.display = "none";
+	document.getElementById("helpText3").style.display = "none";
+	document.getElementById("toHelp").style.display = "none";
+	
+	document.getElementById("toTitle").style.display = "block";
+	document.getElementById("toTitle").style.top = "490px";
+	document.getElementById("toTitle").style.left = "380px";
+	document.getElementById("toTitle").style.zIndex = "2";
+	
+	document.getElementById("phase2").style.display = "block";
+	document.getElementById("phase2").style.top = "221px";
+	document.getElementById("phase2").style.left = "380px";
+	document.getElementById("phase2").style.zIndex = "2";
+	
+	document.getElementById("phase3").style.display = "block";
+	document.getElementById("phase3").style.top = "355px";
+	document.getElementById("phase3").style.left = "380px";
+	document.getElementById("phase3").style.zIndex = "2";
+	
+	document.getElementById("phase1").style.display = "block"; 
+	document.getElementById("phase1").style.top = "86px";
+	document.getElementById("phase1").style.left = "380px";
+	document.getElementById("phase1").style.zIndex = "2";
+}
+
 //exits the help menu
 function returnFromHelpScreen() 
 {
