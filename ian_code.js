@@ -623,11 +623,13 @@ Crafty.scene('Phase 3', function()
 			function(mouse_event)
 			{
 				mouse_event.preventDefault();
+				return false;
 			}
 			unit_camp.dragenter =
 			function(mouse_event)
 			{
 				mouse_event.preventDefault();
+				return false;
 			}			
 		}
 		
