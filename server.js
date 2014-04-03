@@ -615,8 +615,8 @@ io.sockets.on(
 								notification.starting_player = confirmation.starting_player;
 							}
 							confirmation.who = decrypted.who;
-							confirmation.dragged_num = decypted.dragged_num;
-							notification.dragged_num = decypted.dragged_num;
+							confirmation.dragged_num = decrypted.dragged_num;
+							notification.dragged_num = decrypted.dragged_num;
 					}
 					else
 					{
