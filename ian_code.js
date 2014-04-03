@@ -46,6 +46,9 @@ Crafty.scene('Phase 3', function()
 			arr_index:null
 		};
 		
+		//Used for place phase with unit-inventory to determine the index of the client's unit_list which is being dragged.
+		var inventory_dragged_unit = null;
+		
 		function checkVictory()
 		{
 			//Check to see that only one player lives
@@ -357,7 +360,14 @@ Crafty.scene('Phase 3', function()
 			if(color == "purple")
 			{
 				addImage(color+nth_unit.toString(), "http://imgur.com/USo1Ce6.png", getAbsoluteFromGrid(xcoor), getAbsoluteFromGrid(ycoor), 0, 40, 40);
-			}	
+			}
+			//Remove placed unit from your inventory if the placed unit was your unit.
+			if(player_name == this_player_name)
+			{
+				var div_tiles = document.getElementById("div_tiles");
+				var inventory_unit = document.getElementById("inventory_unit"+nth_unit);
+				div_tiles.removeChild(inventory_unit);
+			}			
 		}
 	
 		//helper function that moves team color element of selected unit.
@@ -457,7 +467,8 @@ Crafty.scene('Phase 3', function()
 						"action":action,
 						"xcoor":xcoor,
 						"ycoor":ycoor,
-						"who":this_player_name
+						"who":this_player_name,
+						"dragged_num":inventory_dragged_unit
 					};
 					socket.emit('Event_received', JSON.stringify(client_event));
 				}
@@ -472,7 +483,7 @@ Crafty.scene('Phase 3', function()
 		socket.on('phaseIIIservermessage', translateServerMessage);
 		function translateServerMessage(message)
 		{
-				var decrypted = JSON.parse(message);
+			var decrypted = JSON.parse(message);
 			if(decrypted.type == "Confirmation")
 			{
 				//If the action made sense and followed the rules, the confirmation will have a success of true.
@@ -497,14 +508,14 @@ Crafty.scene('Phase 3', function()
 					}
 					else if(decrypted.action == "Place")
 					{
-						place(decrypted.xcoor, decrypted.ycoor, this_player_name, getPlayer(this_player_name).unit_to_place);
+						place(decrypted.xcoor, decrypted.ycoor, this_player_name, decrypted.dragged_num);
 						//Next unit in unit_list.
 						getPlayer(this_player_name).unit_to_place+=1;
 					}
 					else if(decrypted.action == "PlaceDone")
 					{
 						//The last place of the place phase sets whose turn it is and event-locks everyone else.
-						place(decrypted.xcoor, decrypted.ycoor, this_player_name, getPlayer(this_player_name).unit_to_place);
+						place(decrypted.xcoor, decrypted.ycoor, this_player_name, decrypted.dragged_num);
 						getPlayer(this_player_name).unit_to_place+=1;
 						endTurn(decrypted.starting_player);
 						document.getElementById("stat_log").innerHTML = "";
@@ -606,8 +617,93 @@ Crafty.scene('Phase 3', function()
 			//Add the big green square.
 			addImage("unit_camp", "http://imgur.com/VSv5AOI.png", xcoor, ycoor, 2, 184, 184);
 			//Set transport layer for the green square.
-			document.getElementById("unit_camp").onclick = unitCampOnClick;
+			var unit_camp = document.getElementById("unit_camp");
+			unit_camp.onclick = unitCampOnClick;
+			unit_camp.dragover =
+			function(mouse_event)
+			{
+				mouse_event.preventDefault();
+			}
+			unit_camp.dragenter =
+			function(mouse_event)
+			{
+				mouse_event.preventDefault();
+			}			
 		}
+		
+	function paintInventory(unit_list)
+	{
+		//Create unit inventory back-drop
+		addImage("unit_inventory", "http://i.imgur.com/xOprkXs.png", 685, 500, 0, 176, 124);
+		var inventory = document.getElementById("unit_inventory");
+		inventory.ondragstart = 
+		function()
+		{
+			return false;
+		}
+		inventory.ondrop = 
+		function()
+		{
+			return false;
+		}		
+		//Paint inventory slots
+		for(var i = 0; i < 8; ++i)
+		{
+			var square_id = "inventory_square"+i;
+			//Paint squares left to right, after first row, do second.
+			var square_left = 685+(43*(i%4));
+			var square_top = 533+43*(i>3);
+			addImage(square_id, "http://i.imgur.com/Uka6Tb2.png", square_left, square_top, 1, 46, 46);
+			var square = document.getElementById(square_id);
+			square.oncontextmenu = 
+			function()
+			{
+				return false;
+			};
+			//Paint unit icons in the slots.
+			if(i < unit_list.length)
+			{
+				var unit_id = "inventory_unit"+i;
+				//Paint icons on squares in same order as the squares were painted.
+				var unit_left = 688+(43*(i%4));
+				var unit_top = 536+(43*(i>3));
+				addImage(unit_id, unit_list[i].src, unit_left, unit_top, 2, 40, 40);
+				var unit = document.getElementById(unit_id);
+				unit.oncontextmenu = 
+				function()
+				{
+					return false;
+				};
+				unit.ondragstart =
+				(function(unit)
+				{
+					return function()
+					{
+						//Set global variable telling the index of the dragged unit.
+						inventory_dragged_unit = parseInt(unit.id.substring(14));
+					}
+				})(unit);
+				
+				unit.ondragend = 
+				function(mouse_event)
+				{
+					var xcoor = mouse_event.clientX;
+					var ycoor = mouse_event.clientY;
+					var found_element = document.elementFromPoint(xcoor, ycoor);
+					if(found_element != null)
+					{
+						//If no onclick, not the element we want.
+						if(typeof found_element.onclick == "function")
+						{
+							found_element.onclick();
+						}
+					}
+					inventory_dragged_unit = null;
+				}
+			}
+		}
+	}
+		
 		//Sets up phase 3 elements.
 		function init()
 		{
@@ -671,6 +767,7 @@ Crafty.scene('Phase 3', function()
 			}
 			document.getElementById("stat_log").innerHTML = "Place your units in your camp.";
 			placePlayerCamp();
+			paintInventory(getPlayer(this_player_name).unit_list);
 			socket.emit('Testing', "Hello");
 		}
 		

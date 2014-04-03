@@ -220,28 +220,28 @@ var player_1 =
 {
 	name:null,
 	unit_list:[],
-	unit_to_place:0,
+	units_placed:0,
 	is_alive:false
 }
 var player_2 =
 {
 	name:null,
 	unit_list:[],
-	unit_to_place:0,
+	units_placed:0,
 	is_alive:false
 }
 var player_3 =
 {
 	name:null,
 	unit_list:[],
-	unit_to_place:0,
+	units_placed:0,
 	is_alive:false
 }
 var player_4 =
 {
 	name:null,
 	unit_list:[],
-	unit_to_place:0,
+	units_placed:0,
 	is_alive:false
 }
 
@@ -440,16 +440,16 @@ io.sockets.on(
 				switch(name_list[i])
 				{
 					case "warrior":
-						unit_list.push({src:"http://imgur.com/LnfGPbm.png", xcoor:null, ycoor:null, health:16, damage:4, range:1, movement:2, can_move:true, can_attack:true, is_dead:false, arr_index:i});
+						unit_list.push({src:"http://imgur.com/LnfGPbm.png", xcoor:null, ycoor:null, health:16, damage:4, range:1, movement:2, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i});
 						break;
 					case "rogue":
-						unit_list.push({src:"http://imgur.com/WNL0znA.png", xcoor:null, ycoor:null, health:10, damage:3, range:1, movement:2, can_move:true, can_attack:true, is_dead:false, arr_index:i});
+						unit_list.push({src:"http://imgur.com/WNL0znA.png", xcoor:null, ycoor:null, health:10, damage:3, range:1, movement:2, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i});
 						break;
 					case "goblin":
-						unit_list.push({src:"http://i.imgur.com/5SeUpMM.png", xcoor:null, ycoor:null, health:6, damage:2, range:1, movement:4, can_move:true, can_attack:true, is_dead:false, arr_index:i});
+						unit_list.push({src:"http://i.imgur.com/5SeUpMM.png", xcoor:null, ycoor:null, health:6, damage:2, range:1, movement:4, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i});
 						break;
 					case "hunter":
-						unit_list.push({src:"http://imgur.com/Hc0Hcyp.png", xcoor:null, ycoor:null, health:8, damage:2, range:5, movement:1, can_move:true, can_attack:true, is_dead:false, arr_index:i});
+						unit_list.push({src:"http://imgur.com/Hc0Hcyp.png", xcoor:null, ycoor:null, health:8, damage:2, range:5, movement:1, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i});
 						break;
 				}
 			}
@@ -580,7 +580,8 @@ io.sockets.on(
 				"ycoor":decrypted.ycoor,
 				"success":null,
 				"healthSelf":null,
-				"healthTarget":null
+				"healthTarget":null,
+				"dragged_num":null
 			};
 		
 			var notification =
@@ -591,7 +592,8 @@ io.sockets.on(
 				"ycoor":decrypted.ycoor,
 				"who":null,
 				"healthSelf":null,
-				"healthTarget":null
+				"healthTarget":null,
+				"dragged_num":null
 			};
 		
 			switch(decrypted.action)
@@ -601,11 +603,11 @@ io.sockets.on(
 					{
 						console.log(decrypted);
 						confirmation.action = "Place";
-						confirmation.success = place(decrypted.xcoor, decrypted.ycoor, decrypted.who); 
-						if(player_1.unit_to_place == player_1.unit_list.length 
-							&& player_2.unit_to_place == player_2.unit_list.length 
-							&& player_3.unit_to_place == player_3.unit_list.length 
-							&& player_4.unit_to_place == player_4.unit_list.length)
+						confirmation.success = place(decrypted.xcoor, decrypted.ycoor, decrypted.who, decrypted.dragged_num); 
+						if(player_1.units_placed == player_1.unit_list.length 
+							&& player_2.units_placed == player_2.unit_list.length 
+							&& player_3.units_placed == player_3.unit_list.length 
+							&& player_4.units_placed == player_4.unit_list.length)
 							{
 								place_phase = false;
 								confirmation.action = "PlaceDone";
@@ -613,6 +615,8 @@ io.sockets.on(
 								notification.starting_player = confirmation.starting_player;
 							}
 							confirmation.who = decrypted.who;
+							confirmation.dragged_num = decypted.dragged_num;
+							notification.dragged_num = decypted.dragged_num;
 					}
 					else
 					{
@@ -931,8 +935,12 @@ function move(xcoor, ycoor)
 	return true;
 }
 // Function that allows the places the units down
-function place(xcoor, ycoor, player_name)
+function place(xcoor, ycoor, player_name, unit_to_place)
 {
+	if(unit_to_place == null)
+	{
+		return false;
+	}
 	var player = getPlayer(player_name);
 	var success = true;
 	if(player_name == player_1.name)
@@ -963,15 +971,16 @@ function place(xcoor, ycoor, player_name)
 			return false;
 		}
 	}
-	if(isOccupied(xcoor, ycoor) || player.unit_to_place >= player.unit_list.length)
+	if(isOccupied(xcoor, ycoor) || unit_to_place >= player.unit_list.length || player.unit_list[unit_to_place].has_been_placed)
 	{
 		success = false;
 	}
 	if(success)
 	{
-		player.unit_list[player.unit_to_place].xcoor = xcoor;
-		player.unit_list[player.unit_to_place].ycoor = ycoor;
-		player.unit_to_place += 1;
+		player.unit_list[unit_to_place].xcoor = xcoor;
+		player.unit_list[unit_to_place].ycoor = ycoor;
+		player.unit_list[unit_to_place].has_been_placed = true;
+		player.units_placed += 1;
 	}
 	return success;
 }
