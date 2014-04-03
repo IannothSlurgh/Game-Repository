@@ -619,17 +619,15 @@ Crafty.scene('Phase 3', function()
 			//Set transport layer for the green square.
 			var unit_camp = document.getElementById("unit_camp");
 			unit_camp.onclick = unitCampOnClick;
-			unit_camp.dragover =
+			unit_camp.ondragover =
 			function(mouse_event)
 			{
 				mouse_event.preventDefault();
-				return false;
 			}
-			unit_camp.dragenter =
+			unit_camp.ondragenter =
 			function(mouse_event)
 			{
 				mouse_event.preventDefault();
-				return false;
 			}			
 		}
 		
