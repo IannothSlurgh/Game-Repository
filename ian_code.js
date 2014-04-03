@@ -695,7 +695,7 @@ Crafty.scene('Phase 3', function()
 						//If no onclick, not the element we want.
 						if(typeof found_element.onclick == "function")
 						{
-							found_element.onclick(mouse_end);
+							found_element.onclick(mouse_event);
 						}
 					}
 					inventory_dragged_unit = null;
