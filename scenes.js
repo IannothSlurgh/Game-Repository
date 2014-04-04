@@ -141,7 +141,7 @@ function phase_one() {
 	document.getElementById("phase1").style.display = "none"; 
 	document.getElementById("toHelp").style.display = "block";
 	document.getElementById("toHelp").style.top = "528px";
-	document.getElementById("toHelp").style.left = "652px";
+	document.getElementById("toHelp").style.left = "640px";
 	document.getElementById("toHelp").style.zIndex = "2";
 	document.getElementById("toHelp").alt.width="228px";
 	document.getElementById("toHelp").alt.height="96px";
@@ -159,7 +159,7 @@ function phase_two() {
 	document.getElementById("phase1").style.display = "none"; 
 	document.getElementById("toHelp").style.display = "block";
 	document.getElementById("toHelp").style.top = "528px";
-	document.getElementById("toHelp").style.left = "652px";
+	document.getElementById("toHelp").style.left = "640px";
 	document.getElementById("toHelp").style.zIndex = "2";
 	document.getElementById("toHelp").alt.width="228px";
 	document.getElementById("toHelp").alt.height="96px";
@@ -176,7 +176,7 @@ function phase_three() {
 	document.getElementById("phase1").style.display = "none"; 
 	document.getElementById("toHelp").style.display = "block";
 	document.getElementById("toHelp").style.top = "528px";
-	document.getElementById("toHelp").style.left = "652px";
+	document.getElementById("toHelp").style.left = "640px";
 	document.getElementById("toHelp").style.zIndex = "2";
 	document.getElementById("toHelp").alt.width="228px";
 	document.getElementById("toHelp").alt.height="96px";
@@ -191,28 +191,28 @@ function back() {
 	document.getElementById("toHelp").style.display = "none";
 	document.getElementById("toTitle").style.display = "block";
 	document.getElementById("toTitle").style.top = "480px";
-	document.getElementById("toTitle").style.left = "326px";
+	document.getElementById("toTitle").style.left = "320px";
 	document.getElementById("toTitle").style.zIndex = "2";
 	document.getElementById("toTitle").alt.width="228px";
 	document.getElementById("toTitle").alt.height="96px";
 	
 	document.getElementById("phase2").style.display = "block";
 	document.getElementById("phase2").style.top = "192px";
-	document.getElementById("phase2").style.left = "326px";
+	document.getElementById("phase2").style.left = "320px";
 	document.getElementById("phase2").style.zIndex = "2";
 	document.getElementById("phase2").alt.width="228px";
 	document.getElementById("phase2").alt.height="96px";
 	
 	document.getElementById("phase3").style.display = "block";
 	document.getElementById("phase3").style.top = "336px";
-	document.getElementById("phase3").style.left = "326px";
+	document.getElementById("phase3").style.left = "320px";
 	document.getElementById("phase3").style.zIndex = "2";
 	document.getElementById("phase3").alt.width="228px";
 	document.getElementById("phase3").alt.height="96px";
 	
 	document.getElementById("phase1").style.display = "block"; 
 	document.getElementById("phase1").style.top = "48px";
-	document.getElementById("phase1").style.left = "326px";
+	document.getElementById("phase1").style.left = "320px";
 	document.getElementById("phase1").style.zIndex = "2";
 	document.getElementById("phase1").alt.width="228px";
 	document.getElementById("phase1").alt.height="96px";
