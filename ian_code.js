@@ -737,6 +737,8 @@ Crafty.scene('Phase 3', function()
 			document.getElementById("stat_player_turn").style.display = "block";
 			document.getElementById("grid").style.display = "block";
 			document.getElementById("next").style.display = "block";
+			document.getElementById("log").style.display = "block";
+			document.getElementById("battle_log").style.display = "block";
 			
 			//old Hide- probably delete
 			document.getElementById("loggedin").style.display = "none";
