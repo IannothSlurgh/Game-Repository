@@ -415,6 +415,13 @@ Crafty.scene('Phase 3', function()
 				getPlayer(secondary_player).is_alive = false;
 			}
 			var div_tiles = document.getElementById("div_tiles");
+			// Jacob's going to break stuff
+			var damage_dealt = defender.health - defender_health;
+			var message = selected_unit.owner + "\'s " + attacker.name + " attacked "
+						+ secondary_player + "\'s " + defender.name + " and did "
+						+ damage_dealt + "damage";
+					
+			socket.emit('phaseIII_message', message);
 			//Set to health values given by server.
 			defender.health = defender_health;
 			attacker.health = attacker_health;
@@ -769,7 +776,19 @@ Crafty.scene('Phase 3', function()
 			console.log(message);
 		}
 		socket.on('Testing', Testing);
-	
+		
+		socket.on('phaseIII_notification',
+			function(message) 
+			{
+				if (message) 
+				{
+					// Similar to the handler of 'chat' event ...
+					var div = $('<div></div>');
+					div.append($('<span></span>').addClass('notification').text(message));
+					$('#log').append(div);
+				}
+			});
+		
 		//Finish constructing phase 3.
 		init();
 	});
