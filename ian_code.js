@@ -404,6 +404,7 @@ Crafty.scene('Phase 3', function()
 				sendEvent("Endturn", null, null);
 			}
 			//Change value to a numerical value.
+			var check_if_dead = false;
 			if(attacker_health == "Playerdead")
 			{
 				attacker_health = 0;
@@ -412,17 +413,24 @@ Crafty.scene('Phase 3', function()
 			if(defender_health == "Playerdead")
 			{
 				defender_health = 0;
+				check_if_dead = true;
 				getPlayer(secondary_player).is_alive = false;
 			}
 			var div_tiles = document.getElementById("div_tiles");
-			// Jacob's going to break stuff
+			// Hey, I didn't break anything!
 			var damage_dealt = defender.health - defender_health;
 			var message = selected_unit.owner + "\'s " + attacker.name + " attacked "
 						+ secondary_player + "\'s " + defender.name + " and did "
-						+ damage_dealt + " damage";
+						+ damage_dealt + " damage.";
 			if(selected_unit.owner == this_player_name)
 			{
 				socket.emit('phaseIII_message', message);
+				if(check_if_dead)
+				{
+					var death_message = secondary_player + "\'s " + 
+							defender.name + " died.";
+					socket.emit('phaseIII_message', death_message);
+				}
 			}
 			//Set to health values given by server.
 			defender.health = defender_health;
