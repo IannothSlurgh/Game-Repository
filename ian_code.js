@@ -419,7 +419,7 @@ Crafty.scene('Phase 3', function()
 			var damage_dealt = defender.health - defender_health;
 			var message = selected_unit.owner + "\'s " + attacker.name + " attacked "
 						+ secondary_player + "\'s " + defender.name + " and did "
-						+ damage_dealt + "damage";
+						+ damage_dealt + " damage";
 					
 			socket.emit('phaseIII_message', message);
 			//Set to health values given by server.
