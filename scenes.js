@@ -212,10 +212,11 @@ function returnFromHelpScreen()
 	document.getElementById("helpText1").style.display = "none";
 	document.getElementById("helpText2").style.display = "none";
 	document.getElementById("helpText3").style.display = "none";
-	document.getElementById("nextHelp").style.display = "none";
-	document.getElementById("back").style.display = "none";
-	document.getElementById("finish").style.display = "none";
-	document.getElementById("returnHome").style.display = "none";
+	document.getElementById("toHelp").style.display = "none";
+	document.getElementById("toTitle").style.display = "none";
+	document.getElementById("phase1").style.display = "none";
+	document.getElementById("phase2").style.display = "none";
+	document.getElementById("phase3").style.display = "none";
 	Crafty.stage.elem.style.display = "block";
 	Crafty.scene('StartScreen');
 }
