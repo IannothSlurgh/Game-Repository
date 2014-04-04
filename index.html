@@ -7,7 +7,7 @@
 	}
 	img.tile
 	{
-		
+
 		width: 605px;
 		height: 605px;
 		position:absolute;
@@ -85,7 +85,7 @@
 		width: 108px;
 		height: 35px;
 	}
-	
+
 	body {
 	  font-family: sans-serif;
 	}
@@ -133,7 +133,7 @@
 	  width: 208px;
 	  height: 72px;
 	}
-	
+
 	#msg {
 	  width: 740px;
 	  margin-right: 10px;
@@ -166,11 +166,48 @@
 	.notification {
 	  color: green;
 	}
-	
+
+	.phaseIII_notification {
+	  color: red;
+	}
+
 	.user_ready {
 		font-size: 10pt;
 		font-weight: bold;
 		color: green;
+	}
+.msg_phase_III {
+	  font-size: 12pt;
+	  font-family: serif;
+	}
+
+#send_phase_III {
+	  width: 50px;
+	}
+
+	#battle_log {
+		display: none;
+		position: absolute;
+		top: 630px;
+		left: 20px
+	}
+
+#msg_phase_III {
+	  width: 812px;
+	  margin-right: 10px;
+	}
+
+#log {
+	  width: 871px;
+	  height: 100px;
+	  border: 3px solid black;
+	  padding: 3px;
+	  overflow: auto;
+	  font-size: 12px;
+	}
+	
+	#log div {
+	  margin-top: 5px;
 	}
 </style>
 <div id="warning">
@@ -196,7 +233,12 @@
   <input id="send" type="button" value="Send"></input>
   <button id="start_button"> Ready </button>
 </div>
-
+<div id="battle_log" style = "width:1200px">
+  <div id="log">
+  </div>
+  <input id="msg_phase_III" type="text"></input>
+  <input id="send_phase_III" type="button" value="Send"></input>
+</div>
 	<style>
 	.unitlist 
 	{
@@ -225,19 +267,19 @@
 	<script src="/socket.io/socket.io.js"></script>
 
 <body style = "margin: 0px; font-size: 150%">
-	
-	<img id = "helpAndShop" src = "http://i.imgur.com/CvYIMk3.png" style="position: absolute; top: 0px; left: 0px; display = none; z-index: -1;"/> <!--background!!!-->
-	<input type="image" id="toHelp" src="http://i.imgur.com/k0tQqsp.png" onclick="back()" onmouseover="this.src=\'http://i.imgur.com/pqIjPcj.png\'" onmouseout="this.src=\'http://i.imgur.com/k0tQqsp.png\'" style="position: absolute; top: 576px; left: 761px; display:none;"> <!--back-->
-	<input type="image" id="toTitle" src="" onclick="returnFromHelpScreen()" onmouseover="this.src=\'\'" onmouseout="this.src=\'\'" style="position: absolute; top: 576px; left: 761px; display:none;"> <!--return-->
-	<input type="image" id="phase1" src="http://i.imgur.com/Bgmj0yR.png" onclick="phase_one()" onmouseover="this.src=\'http://i.imgur.com/d81j17K.png\'" onmouseout="this.src=\'http://i.imgur.com/Bgmj0yR.png\'" style="position: absolute; top: 576px; left: 0px; display:none;"> <!--phase1: The Mines!!!-->
-	<input type="image" id="phase2" src="http://i.imgur.com/Tsfgahm.png" onclick="phase_two()" onmouseover="this.src=\'http://i.imgur.com/pOOih4M.png\'" onmouseout="this.src=\'http://i.imgur.com/Tsfgahm.png\'" style="position: absolute; top: 576px; left: 761px; display:none;"> <!--phase2: The Store!!!-->
-	<input type="image" id="phase3" src="http://i.imgur.com/q533cDd.png" onclick="phase_three()" onmouseover="this.src=\'http://i.imgur.com/IzXUTxU.png\'" onmouseout="this.src=\'http://i.imgur.com/q533cDd.png\'" style="position: absolute; top: 576px; left: 0px; display:none;"> <!--phase 3: The Battle!!!-->
+
+
+	<img id = "helpAndShop" src = "http://i.imgur.com/biEGpNF.gif" style="position: absolute; top: 0px; left: 0px; display = none; z-index: -1;"/> <!--background-->
+	<input type="image" id="nextHelp" src="http://i.imgur.com/5gbW93j.gif" onclick="nextHelpScreen()" style="position: absolute; top: 576px; left: 761px; display:none;"> <!--nextHelp-->
+	<input type="image" id="back" src="http://i.imgur.com/NlWjySu.gif" onclick="previousHelpScreen()" style="position: absolute; top: 576px; left: 0px; display:none;"> <!--backtomenu-->
+	<input type="image" id="finish" src="http://i.imgur.com/bkJWemK.gif" onclick="returnFromHelpScreen()" style="position: absolute; top: 576px; left: 761px; display:none;"> <!--finish-->
+	<input type="image" id="returnHome" src="http://imgur.com/odInZKM.gif" onclick="returnFromHelpScreen()" style="position: absolute; top: 576px; left: 0px; display:none;"> <!--return_home-->
 	<img id = "helpText1" type="image" src="http://i.imgur.com/rCHvPhA.gif" style="position: absolute; top: 0px; left: 0px; display:none"> <!--help_1-->
 	<img id = "helpText2" type="image" src="http://i.imgur.com/TcTKoTp.gif" style="position: absolute; top: 0px; left: 0px; display:none"> <!--help_2-->
 	<img id = "helpText3" type="image" src="http://i.imgur.com/TQUKq1H.gif" style="position: absolute; top: 0px; left: 0px; display:none"> <!--help_3-->
-	
-	
-	
+
+
+
 	<img id = "grid" class = "tile"  src = "http://i.imgur.com/c4Z5Xrs.gif" oncontextmenu = "return false" ondragstart = "return false" ondrop = "return false"/> <!--grid-->
 	<img id = "next" class = "tile2 no_drag" src = "http://i.imgur.com/Zq1dW0S.gif" oncontextmenu = "return false" ondragstart = "return false" ondrop = "return false"/> <!--next (stat_board)-->
 	<p id = "stat_player_turn" class = "on_top stat_player_turn"> </p>
@@ -249,7 +291,7 @@
 	<p id = "stat_log" class = "on_top stat_log"></p>
 	<img id = "stat_icon" class = "on_top stat_icon" type = "image/gif" src = "http://i.imgur.com/q0pHXZ1.gif" oncontextmenu = "return false" ondragstart = "return false" ondrop = "return false" /> <!--test2-->
 	<img id = "stat_end_turn" class = "on_top stat_end_turn" src = "http://i.imgur.com/AEI8M7q.png" ondragstart = "return false" ondrop = "return false" oncontextmenu = "return false" /> <!--endturn-->
-	
+
 	<div id="div_tiles"> </div>
   <p id="command" style = "display: none;">
   Click the button of the unit you wish to purchase. The fight will begin in:<span id="timer"></span>
@@ -265,8 +307,8 @@
    Your Units: <span id="theUnits"></span>
   </p>
   <p style ="margin: 0px;">
-   <input type="image" src="http://i.imgur.com/xrdJlfD.png" onmouseover="this.src=\'http://i.imgur.com/ocfUe2r.png\'" onmouseout="this.src=\'http://i.imgur.com/xrdJlfD.png\'"  onclick="reset()" id="reset" style="position: absolute; top: 400px; left: 700px; display:none;"> <!--reset!!!-->
-   <input type="image" src="http://i.imgur.com/P4mTjL3.png" onmouseover="this.src=\'http://i.imgur.com/3TTXBhW.png\'" onmouseout="this.src=\'http://i.imgur.com/P4mTjL3.png\'"  onclick="ready_method()" id="ready" style="position: absolute; top: 500px; left: 700px; display:none;"> <!--ready!!!-->
+   <input type="image" src="http://i.imgur.com/47NbZRR.gif"  onclick="reset()" id="reset" style="position: absolute; top: 400px; left: 700px; display:none;"> <!--reset-->
+   <input type="image" src="http://i.imgur.com/odInZKM.gif"  onclick="ready_method()" id="ready" style="position: absolute; top: 500px; left: 700px; display:none;"> <!--ready-->
   </p>
  </body>
  <div id="scrollbar" class="unitlist" style = "display: none;">
@@ -276,4 +318,3 @@
     <br /> <input type="image" src="http://i.imgur.com/fB6tZMv.gif" onclick="selectGoblin()"> <!--Goblin-->
   </div>
 </html>
-
