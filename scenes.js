@@ -140,8 +140,8 @@ function phase_one() {
 	document.getElementById("phase3").style.display = "none";
 	document.getElementById("phase1").style.display = "none"; 
 	document.getElementById("toHelp").style.display = "block";
-	document.getElementById("toHelp").style.top = "528px";
-	document.getElementById("toHelp").style.left = "640px";
+	document.getElementById("toHelp").style.top = "552px";
+	document.getElementById("toHelp").style.left = "700px";
 	document.getElementById("toHelp").style.zIndex = "2";
 	document.getElementById("toHelp").alt.width="228px";
 	document.getElementById("toHelp").alt.height="96px";
@@ -158,8 +158,8 @@ function phase_two() {
 	document.getElementById("phase3").style.display = "none";
 	document.getElementById("phase1").style.display = "none"; 
 	document.getElementById("toHelp").style.display = "block";
-	document.getElementById("toHelp").style.top = "528px";
-	document.getElementById("toHelp").style.left = "640px";
+	document.getElementById("toHelp").style.top = "552px";
+	document.getElementById("toHelp").style.left = "700px";
 	document.getElementById("toHelp").style.zIndex = "2";
 	document.getElementById("toHelp").alt.width="228px";
 	document.getElementById("toHelp").alt.height="96px";
@@ -175,8 +175,8 @@ function phase_three() {
 	document.getElementById("phase3").style.display = "none";
 	document.getElementById("phase1").style.display = "none"; 
 	document.getElementById("toHelp").style.display = "block";
-	document.getElementById("toHelp").style.top = "528px";
-	document.getElementById("toHelp").style.left = "640px";
+	document.getElementById("toHelp").style.top = "552px";
+	document.getElementById("toHelp").style.left = "700px";
 	document.getElementById("toHelp").style.zIndex = "2";
 	document.getElementById("toHelp").alt.width="228px";
 	document.getElementById("toHelp").alt.height="96px";
