@@ -420,8 +420,10 @@ Crafty.scene('Phase 3', function()
 			var message = selected_unit.owner + "\'s " + attacker.name + " attacked "
 						+ secondary_player + "\'s " + defender.name + " and did "
 						+ damage_dealt + " damage";
-					
-			socket.emit('phaseIII_message', message);
+			if(selected_unit.owner == this_player_name)
+			{
+				socket.emit('phaseIII_message', message);
+			}
 			//Set to health values given by server.
 			defender.health = defender_health;
 			attacker.health = attacker_health;
