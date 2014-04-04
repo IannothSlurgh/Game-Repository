@@ -185,8 +185,8 @@ function mazeGenerationAlgorithm()
 	while(maze_data[col][row] == '#' 
 		&& !(col == 0 
 		|| col == 55 - 1 
-		|| col == 0
-		|| col == 39 - 1))
+		|| row == 0
+		|| row == 39 - 1))
 	{
 		col = Math.floor(Math.random() * 55);
 		row = Math.floor(Math.random() * 39);
@@ -392,6 +392,13 @@ io.sockets.on(
 					}
 				});
 		});
+	//Jacob stuff
+	client.on(
+		'phaseIII_message',
+		function(message)
+		{
+			io.sockets.emit('phaseIII_notification', message);
+		});
 	
 	// This function handles the player movement in the maze of phase one
 	client.on(
@@ -422,14 +429,11 @@ io.sockets.on(
 		'getusername',
 		function(message)
 		{
-			if(!err) 
-			{
-				var obj = 
-				{ 
-					"user_name": name
-				};
-				client.emit('getusername', JSON.stringify(obj));
-			}
+			var obj = 
+			{ 
+				"user_name": name
+			};
+			client.emit('getusername', JSON.stringify(obj));
 		});
 	
 		function translate_str_to_unit(name_list)
@@ -440,16 +444,16 @@ io.sockets.on(
 				switch(name_list[i])
 				{
 					case "warrior":
-						unit_list.push({src:"http://imgur.com/LnfGPbm.png", xcoor:null, ycoor:null, health:16, damage:4, range:1, movement:2, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i});
+						unit_list.push({src:"http://imgur.com/LnfGPbm.png", name:"warrior", xcoor:null, ycoor:null, health:16, damage:4, range:1, movement:2, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i});
 						break;
 					case "rogue":
-						unit_list.push({src:"http://imgur.com/WNL0znA.png", xcoor:null, ycoor:null, health:10, damage:3, range:1, movement:2, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i});
+						unit_list.push({src:"http://imgur.com/WNL0znA.png", name:"rogue", xcoor:null, ycoor:null, health:10, damage:3, range:1, movement:2, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i});
 						break;
 					case "goblin":
-						unit_list.push({src:"http://i.imgur.com/5SeUpMM.png", xcoor:null, ycoor:null, health:6, damage:2, range:1, movement:4, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i});
+						unit_list.push({src:"http://i.imgur.com/5SeUpMM.png", name:"goblin", xcoor:null, ycoor:null, health:6, damage:2, range:1, movement:4, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i});
 						break;
 					case "hunter":
-						unit_list.push({src:"http://imgur.com/Hc0Hcyp.png", xcoor:null, ycoor:null, health:8, damage:2, range:5, movement:1, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i});
+						unit_list.push({src:"http://imgur.com/Hc0Hcyp.png", name:"hunter", xcoor:null, ycoor:null, health:8, damage:2, range:5, movement:1, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i});
 						break;
 				}
 			}
@@ -615,6 +619,9 @@ io.sockets.on(
 								notification.starting_player = confirmation.starting_player;
 							}
 							confirmation.who = decrypted.who;
+							console.log("***");
+							console.log(decrypted.dragged_num.toString());
+							console.log("***");
 							confirmation.dragged_num = decrypted.dragged_num;
 							notification.dragged_num = decrypted.dragged_num;
 					}
