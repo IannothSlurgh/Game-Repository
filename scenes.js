@@ -122,8 +122,8 @@ function place_enemy_player(index)
 
 //the help screen
 var whichHelpScreen = 0;
-//the next 3 functions, and Craft.scene('Help', function()) written by Jason Sitzman
-//all illustrations inside the help menu produced by Jason Sitzman
+//the next 4 functions, and Craft.scene('Help', function()) written by Jason Sitzman
+//all illustrations inside the help menu produced by Jason Sitzman, template images provided by Steven Bierwagen
 Crafty.scene('Help', function()
 {
 	Crafty.stage.elem.style.display = "none";
@@ -131,7 +131,7 @@ Crafty.scene('Help', function()
 	document.getElementById("helpAndShop").style.zIndex = "-1";
 	back();
 });
-
+//display info for the first part of the game
 function phase_one() {
 	document.getElementById("helpText2").style.display = "none";
 	document.getElementById("helpText3").style.display = "none";
@@ -140,13 +140,16 @@ function phase_one() {
 	document.getElementById("phase3").style.display = "none";
 	document.getElementById("phase1").style.display = "none"; 
 	document.getElementById("toHelp").style.display = "block";
-	document.getElementById("toHelp").style.top = "576px";
-	document.getElementById("toHelp").style.left = "761px";
+	document.getElementById("toHelp").style.top = "528px";
+	document.getElementById("toHelp").style.left = "652px";
 	document.getElementById("toHelp").style.zIndex = "2";
+	document.getElementById("toHelp").alt.width="228px";
+	document.getElementById("toHelp").alt.height="96px";
 	document.getElementById("helpText1").style.display = "block";
 	document.getElementById("helpText1").style.zIndex = "0";
+	
 }
-
+//display info for the second part of the game
 function phase_two() {
 	document.getElementById("helpText1").style.display = "none";
 	document.getElementById("helpText3").style.display = "none";
@@ -155,13 +158,15 @@ function phase_two() {
 	document.getElementById("phase3").style.display = "none";
 	document.getElementById("phase1").style.display = "none"; 
 	document.getElementById("toHelp").style.display = "block";
-	document.getElementById("toHelp").style.top = "576px";
-	document.getElementById("toHelp").style.left = "761px";
+	document.getElementById("toHelp").style.top = "528px";
+	document.getElementById("toHelp").style.left = "652px";
 	document.getElementById("toHelp").style.zIndex = "2";
+	document.getElementById("toHelp").alt.width="228px";
+	document.getElementById("toHelp").alt.height="96px";
 	document.getElementById("helpText2").style.display = "block";
 	document.getElementById("helpText2").style.zIndex = "0";
 }
-
+//display info for the third part of the game
 function phase_three() {
 	document.getElementById("helpText2").style.display = "none";
 	document.getElementById("helpText1").style.display = "none";
@@ -170,9 +175,11 @@ function phase_three() {
 	document.getElementById("phase3").style.display = "none";
 	document.getElementById("phase1").style.display = "none"; 
 	document.getElementById("toHelp").style.display = "block";
-	document.getElementById("toHelp").style.top = "576px";
-	document.getElementById("toHelp").style.left = "761px";
+	document.getElementById("toHelp").style.top = "528px";
+	document.getElementById("toHelp").style.left = "652px";
 	document.getElementById("toHelp").style.zIndex = "2";
+	document.getElementById("toHelp").alt.width="228px";
+	document.getElementById("toHelp").alt.height="96px";
 	document.getElementById("helpText3").style.display = "block";
 	document.getElementById("helpText3").style.zIndex = "0";
 }
@@ -182,26 +189,33 @@ function back() {
 	document.getElementById("helpText2").style.display = "none";
 	document.getElementById("helpText3").style.display = "none";
 	document.getElementById("toHelp").style.display = "none";
-	
 	document.getElementById("toTitle").style.display = "block";
-	document.getElementById("toTitle").style.top = "490px";
-	document.getElementById("toTitle").style.left = "380px";
+	document.getElementById("toTitle").style.top = "480px";
+	document.getElementById("toTitle").style.left = "326px";
 	document.getElementById("toTitle").style.zIndex = "2";
+	document.getElementById("toTitle").alt.width="228px";
+	document.getElementById("toTitle").alt.height="96px";
 	
 	document.getElementById("phase2").style.display = "block";
-	document.getElementById("phase2").style.top = "221px";
-	document.getElementById("phase2").style.left = "380px";
+	document.getElementById("phase2").style.top = "192px";
+	document.getElementById("phase2").style.left = "326px";
 	document.getElementById("phase2").style.zIndex = "2";
+	document.getElementById("phase2").alt.width="228px";
+	document.getElementById("phase2").alt.height="96px";
 	
 	document.getElementById("phase3").style.display = "block";
-	document.getElementById("phase3").style.top = "355px";
-	document.getElementById("phase3").style.left = "380px";
+	document.getElementById("phase3").style.top = "336px";
+	document.getElementById("phase3").style.left = "326px";
 	document.getElementById("phase3").style.zIndex = "2";
+	document.getElementById("phase3").alt.width="228px";
+	document.getElementById("phase3").alt.height="96px";
 	
 	document.getElementById("phase1").style.display = "block"; 
-	document.getElementById("phase1").style.top = "86px";
-	document.getElementById("phase1").style.left = "380px";
+	document.getElementById("phase1").style.top = "48px";
+	document.getElementById("phase1").style.left = "326px";
 	document.getElementById("phase1").style.zIndex = "2";
+	document.getElementById("phase1").alt.width="228px";
+	document.getElementById("phase1").alt.height="96px";
 }
 
 //exits the help menu
