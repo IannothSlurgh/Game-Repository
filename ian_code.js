@@ -788,7 +788,7 @@ Crafty.scene('Phase 3', function()
 				{
 					// Similar to the handler of 'chat' event ...
 					var div = $('<div></div>');
-					div.append($('<span></span>').addClass('notification').text(message));
+					div.append($('<span></span>').addClass('phaseIII_notification').text(message));
 					$('#log').append(div);
 				}
 			});
