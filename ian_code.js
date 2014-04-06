@@ -937,6 +937,8 @@ Crafty.scene('Phase 3', function()
 					var div = $('<div></div>');
 					div.append($('<span></span>').addClass('phaseIII_notification').text(message));
 					$('#log').append(div);
+					var scrollingDown = document.getElementById("log");
+					scrollingDown.scrollTop = scrollingDown.scrollHeight; 
 				}
 			});
 		
