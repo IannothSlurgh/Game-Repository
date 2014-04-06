@@ -45,6 +45,118 @@ Crafty.scene('Phase 3', function()
 		//Used for place phase with unit-inventory to determine the index of the client's unit_list which is being dragged.
 		var inventory_dragged_unit = null;
 		
+		//An array containing all the movement-shadow DOM elements for easy removal
+		var movement_shadow = [];
+		
+		//Function that finds all spaces that can be moved to, checks their occupancy, then adds a shadow to array if unoccupied
+		function generateMovementShadow()
+		{
+			var unit = getPlayer(selected_unit.owner).unit_list[selected_unit.arr_index];
+			//Set appropriate boundaries.
+			var far_left = unit.xcoor - unit.movement;
+			var far_right = unit.xcoor + unit.movement;
+			var far_top = unit.ycoor - unit.movement;
+			var far_bottom = unit.ycoor + unit.movement;
+			if(far_left < 0)
+			{
+				far_left = 0;
+			}
+			if(far_right > 13)
+			{
+				far_right = 13;
+			}
+			if(far_top < 0)
+			{
+				far_top = 0;
+			}
+			if(far_bottom > 13)
+			{
+				far_bottom = 13;
+			}
+			//shadow_num equals the array index of the shadow variable.
+			var shadow_num = 0;
+			//Check each space top to bottom- left to right
+			for(;far_left <= far_right;++far_left)
+			{
+				for(;far_top <= far_bottom;++far_top)
+				{
+					//If space empty- add shadow.
+					if(!isOccupied(far_left, far_top))
+					{
+						++shadow_num;
+						var shadow_id = "shadow" + shadow_num.toString();
+						var left = getAbsoluteFromGrid(far_left);
+						var top = getAbsoluteFromGrid(far_top);
+						addImage(shadow_id, src, left, top, 9, 44, 44);
+						var shadow = getElementById(shadow_id);
+						shadow.style.opacity = ".4";
+						//Both of these functions use a 'generator pattern' to create
+						//functions specific to the current iteration of the double for-loop
+						shadow.onclick =
+						(function(shadow_num)
+						{
+							return function(mouse_event)
+							{
+								var shadow = movement_shadow[shadow_num];
+								//Get place clicked.
+								var xcoor = mouse_event.clientX;
+								var ycoor = mouse_event.clientY;
+								//Hide shadow element so elementFromPoint will return a tile, not shadow element.
+								shadow.style.visibility = "hidden";
+								var found_element = document.elementFromPoint(xcoor, ycoor);
+								shadow.style.visibility = "visible";
+								//If the click was aimed at a tile, make it happen.
+								if(found_element != null)
+								{
+									//If no onclick, not the element we want.
+									if(typeof found_element.onclick == "function")
+									{
+										found_element.onclick(mouse_event);
+									}
+								}
+							}
+						})(shadow_num)
+						shadow.oncontextmenu =
+						(function(shadow_num)
+						{
+							return function(mouse_event)
+							{
+								var shadow = movement_shadow[shadow_num];
+								//Get place clicked.
+								var xcoor = mouse_event.clientX;
+								var ycoor = mouse_event.clientY;
+								//Hide shadow element so elementFromPoint will return a tile, not shadow element.
+								shadow.style.visibility = "hidden";
+								var found_element = document.elementFromPoint(xcoor, ycoor);
+								shadow.style.visibility = "visible";
+								//If the click was aimed at a tile, make it happen.
+								if(found_element != null)
+								{
+									//If no context menu, not the element we want.
+									if(typeof found_element.oncontextmenu == "function")
+									{
+										found_element.oncontextmenu(mouse_event);
+									}
+								}
+								return false;
+							}
+						})(shadow_num)
+						movement_shadow.push(shadow);
+					}
+				}
+			}
+		}
+		
+		//Deletes the movement shadow.
+		function clearMovementShadow()
+		{
+			var div_tiles = getElementById("div_tiles");
+			for(var i = 0; i < movement_shadow.length; ++i)
+			{
+				div_tile.removeChild(movement_shadow.pop());
+			}
+		}
+		
 		function checkVictory()
 		{
 			//Check to see that only one player lives
@@ -211,7 +323,7 @@ Crafty.scene('Phase 3', function()
 			return unit_list;
 		}
 	
-		//Helper function that finds the unit object of a player at xcoor,ycoor. If no such unit, return false.
+		//Helper function that finds the unit object of a player at xcoor,ycoor. If no such unit, return null.
 		function findUnit(player_name, xcoor, ycoor)
 		{
 			var unit_list = findUnitList(player_name);
@@ -226,6 +338,24 @@ Crafty.scene('Phase 3', function()
 				}
 			}
 			return null;
+		}
+		
+		//Is the space at x-y occupied by a unit?
+		function isOccupied(xcoor, ycoor)
+		{
+			//Check each player's unit list for a unit at x-y.
+			var owner_1 = findUnit(player_1.name, xcoor, ycoor);
+			var owner_2 = findUnit(player_2.name, xcoor, ycoor);
+			var owner_3 = findUnit(player_3.name, xcoor, ycoor);
+			var owner_4 = findUnit(player_4.name, xcoor, ycoor);
+			if(owner_1 == null 
+			&& owner_2 == null 
+			&& owner_3 == null 
+			&& owner_4 == null)
+			{
+				return false;
+			}
+			return true;
 		}
 	
 		//Clears selected_unit, stats, and hides selection box.
@@ -244,6 +374,7 @@ Crafty.scene('Phase 3', function()
 			{
 				document.getElementById("selection").style.display="none";
 			}
+			clearMovementShadow();
 		}
 	
 		//Sets the stats to those indicated in a stats object. (has src, health, damage, range, and movement)
@@ -274,6 +405,8 @@ Crafty.scene('Phase 3', function()
 		//Handles the case that the client successfully selects a unit.
 		function select(xcoor, ycoor, unit_owner)
 		{
+			//Clear all currently existing movement shadow.
+			clearMovementShadow();
 			//Default cases
 			var src = "";
 			var health = 0;
@@ -312,6 +445,7 @@ Crafty.scene('Phase 3', function()
 			changeStatsGraphical(stats);
 			//Either create selection box, or move it to the newly selected unit.
 			moveSelectionBox(xcoor, ycoor);
+			generateMovementShadow();
 		}
 	
 		//Handler for endturn. Also called when a player dies on his own turn.
@@ -595,7 +729,7 @@ Crafty.scene('Phase 3', function()
 				//If no onclick, not the element we want.
 				if(typeof found_element.onclick == "function")
 				{
-					found_element.onclick();
+					found_element.onclick(mouse_event);
 				}
 			}
 		}
