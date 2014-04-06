@@ -150,7 +150,7 @@ Crafty.scene('Phase 3', function()
 		//Deletes the movement shadow.
 		function clearMovementShadow()
 		{
-			var div_tiles = getElementById("div_tiles");
+			var div_tiles = document.getElementById("div_tiles");
 			for(var i = 0; i < movement_shadow.length; ++i)
 			{
 				div_tile.removeChild(movement_shadow.pop());
