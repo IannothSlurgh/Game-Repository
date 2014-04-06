@@ -781,9 +781,9 @@ function getDistance(xcoor, ycoor)
 	var original_y = selected_unit.ycoor;
 	var delta_x = Math.abs(xcoor - original_x);
 	var delta_y = Math.abs(ycoor - original_y);
-	var distance = Math.pow(delta_x, 2) + Math.pow(delta_y, 2);
-	distance = Math.sqrt(distance);
-	return Math.ceil(distance);
+	var distance = Max(delta_x, delta_y)
+	console.log(distance);
+	return distance;
 }
 
 // Finds the unit as specified by findUnit
