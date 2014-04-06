@@ -781,7 +781,7 @@ function getDistance(xcoor, ycoor)
 	var original_y = selected_unit.ycoor;
 	var delta_x = Math.abs(xcoor - original_x);
 	var delta_y = Math.abs(ycoor - original_y);
-	var distance = Max(delta_x, delta_y)
+	var distance = Math.max(delta_x, delta_y)
 	console.log(distance);
 	return distance;
 }
