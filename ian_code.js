@@ -99,9 +99,7 @@ Crafty.scene('Phase 3', function()
 						//Both of these functions use a 'generator pattern' to create
 						//functions specific to the current iteration of the double for-loop
 						shadow.onclick =
-						(function(shadow_num)
-						{
-							return function(mouse_event)
+						(function(mouse_event)
 							{
 								var shadow = movement_shadow[shadow_num];
 								//Get place clicked.
@@ -123,9 +121,7 @@ Crafty.scene('Phase 3', function()
 							}
 						})(shadow_num);
 						shadow.oncontextmenu =
-						(function(shadow_num)
-						{
-							return function(mouse_event)
+						(function(mouse_event)
 							{
 								var shadow = movement_shadow[shadow_num];
 								//Get place clicked.
