@@ -52,6 +52,11 @@ Crafty.scene('Phase 3', function()
 		function generateMovementShadow()
 		{
 			var unit = getPlayer(selected_unit.owner).unit_list[selected_unit.arr_index];
+			//If the unit cannot move, no shadow.
+			if(unit.can_move == false)
+			{
+				return;
+			}
 			//Set appropriate boundaries.
 			var far_left = unit.xcoor - unit.movement;
 			var far_right = unit.xcoor + unit.movement;
@@ -512,6 +517,7 @@ Crafty.scene('Phase 3', function()
 		//Movement handler
 		function move(xcoor, ycoor)
 		{
+			clearMovementShadow()
 			//change selected unit's xcoor-ycoor
 			var unit_list = findUnitList(selected_unit.owner);
 			var original_xcoor = unit_list[selected_unit.arr_index].xcoor;
