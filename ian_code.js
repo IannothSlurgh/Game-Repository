@@ -121,7 +121,7 @@ Crafty.scene('Phase 3', function()
 									}
 								}
 							}
-						})(shadow_num)
+						})(shadow_num);
 						shadow.oncontextmenu =
 						(function(shadow_num)
 						{
@@ -146,7 +146,7 @@ Crafty.scene('Phase 3', function()
 								}
 								return false;
 							}
-						})(shadow_num)
+						})(shadow_num);
 					}
 				}
 			}
