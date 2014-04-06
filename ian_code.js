@@ -413,8 +413,11 @@ Crafty.scene('Phase 3', function()
 			if(defender_health == "Playerdead")
 			{
 				defender_health = 0;
-				check_if_dead = true;
 				getPlayer(secondary_player).is_alive = false;
+			}
+			if(defender_health <= 0)
+			{
+				check_if_dead = true;
 			}
 			var div_tiles = document.getElementById("div_tiles");
 			// Hey, I didn't break anything!
