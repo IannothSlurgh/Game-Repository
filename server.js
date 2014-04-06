@@ -774,6 +774,18 @@ io.sockets.on(
 	});
 
 //---------------------------------------------------------------------------------------------------------
+//Gives the distance from selected_unit's position to the given coordinates
+function getDistance(xcoor, ycoor)
+{
+	var original_x = selected_unit.xcoor;
+	var original_y = selected_unit.ycoor;
+	var delta_x = Math.abs(xcoor - original_x);
+	var delta_y = Math.abs(ycoor - original_y);
+	var distance = Math.pow(delta_x, 2) + Math.pow(delta_y, 2);
+	distance = Math.sqrt(distance);
+	return Math.ceil(distance);
+}
+
 // Finds the unit as specified by findUnit
 function findUnitHelp(xcoor, ycoor, player)
 {
@@ -886,10 +898,7 @@ function checkRange(xcoor, ycoor)
 	var unit_one = findUnit(selected_unit.xcoor, selected_unit.ycoor);
 	var unit_two = findUnit(xcoor, ycoor);
 	
-	var distance_one = Math.abs(unit_one.xcoor - unit_two.xcoor);
-	var distance_two = Math.abs(unit_one.ycoor - unit_two.ycoor);
-	
-	var total_distance = distance_one + distance_two;
+	var total_distance = getDistance(xcoor, ycoor);
 
 	var obj_one = 
 	{
@@ -929,7 +938,7 @@ function select(xcoor, ycoor)
 function move(xcoor, ycoor)
 {
 	var unit = findUnit(selected_unit.xcoor, selected_unit.ycoor);
-	var distance = Math.abs(unit.xcoor - xcoor) + Math.abs(unit.ycoor - ycoor);
+	var distance = getDistance(xcoor, ycoor);
 	if(distance > unit.movement || (!unit.can_move))
 	{
 		return false;
