@@ -95,6 +95,7 @@ Crafty.scene('Phase 3', function()
 						addImage(shadow_id, "http://i.imgur.com/Pa1TQOw.png", left, top, 9, 44, 44);
 						var shadow = document.getElementById(shadow_id);
 						shadow.style.opacity = ".4";
+						movement_shadow.push(shadow);
 						//Both of these functions use a 'generator pattern' to create
 						//functions specific to the current iteration of the double for-loop
 						shadow.onclick =
@@ -146,7 +147,6 @@ Crafty.scene('Phase 3', function()
 								return false;
 							}
 						})(shadow_num)
-						movement_shadow.push(shadow);
 					}
 				}
 			}
@@ -158,7 +158,7 @@ Crafty.scene('Phase 3', function()
 			var div_tiles = document.getElementById("div_tiles");
 			for(var i = 0; i < movement_shadow.length; ++i)
 			{
-				div_tile.removeChild(movement_shadow.pop());
+				div_tiles.removeChild(movement_shadow.pop());
 			}
 		}
 		
