@@ -87,7 +87,7 @@ Crafty.scene('Phase 3', function()
 						var shadow_id = "shadow" + shadow_num.toString();
 						var left = getAbsoluteFromGrid(far_left);
 						var top = getAbsoluteFromGrid(far_top);
-						addImage(shadow_id, src, left, top, 9, 44, 44);
+						addImage(shadow_id, "http://i.imgur.com/Pa1TQOw.png", left, top, 9, 44, 44);
 						var shadow = getElementById(shadow_id);
 						shadow.style.opacity = ".4";
 						//Both of these functions use a 'generator pattern' to create
