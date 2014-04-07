@@ -514,6 +514,8 @@ Crafty.scene('ConnectionRoom', function()
 				div.append($('<span></span>').addClass('msg').text(msg));
 				// Add the new div element to the chat board.
 				$('#board').append(div);
+				var scrollingDown = document.getElementById("board");
+				scrollingDown.scrollTop = scrollingDown.scrollHeight; 
 			}
 		});
 
