@@ -445,7 +445,7 @@ Crafty.scene('Phase 3', function()
 			//Either create selection box, or move it to the newly selected unit.
 			moveSelectionBox(xcoor, ycoor);
 			//Movement shadow seen only on your own units.
-			if(select_unit.owner == this_player_name)
+			if(selected_unit.owner == this_player_name)
 			{
 				generateMovementShadow();
 			}
