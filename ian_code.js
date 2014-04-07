@@ -85,14 +85,14 @@ Crafty.scene('Phase 3', function()
 			console.log(far_bottom);
 			console.log("%%%");
 			//Check each space top to bottom- left to right
-			for(;far_left <= far_right;++far_left)
+			for(var i = far_left;i <= far_right;++i)
 			{
-				for(;far_top <= far_bottom;++far_top)
+				for(var j = far_top;j <= far_bottom;++j)
 				{
 					//If space empty- add shadow.
-					if(!isOccupied(far_left, far_top))
+					if(!isOccupied(i, j))
 					{
-						var shadow_id = "X"+far_left.toString()+"Y"+far_top.toString();
+						var shadow_id = "X"+i.toString()+"Y"+j.toString();
 						console.log("^^^");
 						console.log(shadow_id);
 						console.log("^^^");
@@ -342,7 +342,7 @@ Crafty.scene('Phase 3', function()
 			{
 				document.getElementById("selection").style.display="none";
 			}
-			clearMovementShadow();
+			//clearMovementShadow();
 		}
 	
 		//Sets the stats to those indicated in a stats object. (has src, health, damage, range, and movement)
@@ -374,7 +374,7 @@ Crafty.scene('Phase 3', function()
 		function select(xcoor, ycoor, unit_owner)
 		{
 			//Clear all currently existing movement shadow.
-			clearMovementShadow();
+			//clearMovementShadow();
 			//Default cases
 			var src = "";
 			var health = 0;
@@ -413,7 +413,7 @@ Crafty.scene('Phase 3', function()
 			changeStatsGraphical(stats);
 			//Either create selection box, or move it to the newly selected unit.
 			moveSelectionBox(xcoor, ycoor);
-			generateMovementShadow();
+			//generateMovementShadow();
 		}
 	
 		//Handler for endturn. Also called when a player dies on his own turn.
@@ -480,7 +480,7 @@ Crafty.scene('Phase 3', function()
 		//Movement handler
 		function move(xcoor, ycoor)
 		{
-			clearMovementShadow()
+			//clearMovementShadow()
 			//change selected unit's xcoor-ycoor
 			var unit_list = findUnitList(selected_unit.owner);
 			var original_xcoor = unit_list[selected_unit.arr_index].xcoor;
