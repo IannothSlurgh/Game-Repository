@@ -93,6 +93,9 @@ Crafty.scene('Phase 3', function()
 					if(!isOccupied(far_left, far_top))
 					{
 						var shadow_id = "X"+far_left.toString()+"Y"+far_top.toString();
+						console.log("^^^");
+						console.log(shadow_id);
+						console.log("^^^");
 						movement_shadow.push(shadow_id);
 						document.getElementById(shadow_id).src = "http://i.imgur.com/Pa1TQOw.png";
 					}
