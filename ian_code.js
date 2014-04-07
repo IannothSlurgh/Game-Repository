@@ -105,7 +105,7 @@ Crafty.scene('Phase 3', function()
 				var xcoor = parseInt(shadow_id.substring(1, y_in_id));
 				//Start 1 past y, go to end. Make int
 				var ycoor = parseInt(shadow_id.substring(y_in_id+1));
-				if(!is_occupied(xcoor, ycoor))
+				if(!isOccupied(xcoor, ycoor))
 				{
 					document.getElementById(shadow_id).src = "http://i.imgur.com/ubwIthk.gif";
 				}
