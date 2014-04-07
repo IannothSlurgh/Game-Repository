@@ -109,7 +109,7 @@ Crafty.scene('Phase 3', function()
 			for(var i = 0; i < movement_shadow.length; ++i)
 			{
 				var shadow_id = movement_shadow.pop();
-				var y_in_id = shadow_id.indexOf("y");
+				var y_in_id = shadow_id.indexOf("Y");
 				//Start 1 past x, go to y. Make int.
 				var xcoor = parseInt(shadow_id.substring(1, y_in_id));
 				//Start 1 past y, go to end. Make int
