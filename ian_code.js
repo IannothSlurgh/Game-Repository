@@ -235,7 +235,38 @@ Crafty.scene('Phase 3', function()
 				alert(err);
 			}
 		}
-	
+		
+		function addRedX(id)
+		{
+			var red_x = document.getElementById(id);
+			var src = "";
+			if(red_x == null)
+			{
+				switch(id)
+				{
+					case "noAttack":
+						addImage(id, src, 823, 200, 2, 36, 36);
+					break;
+					case "noMove";
+						addImage(id, src, 728, 250, 2, 36, 36);
+					break;
+				}
+			}
+			else
+			{
+				red_x.style.visibility = "visible";
+			}
+		}
+		
+		function hideRedX(id)
+		{
+			var red_x = document.getElementById(id);
+			if(red_x != null)
+			{
+				red_x.style.visibility = "hidden";
+			}
+		}
+		
 		//If selection box not created, create at x,y pair (0 to 13 inclusive), if not move the existing selection box to the spot.
 		function moveSelectionBox(xcoor, ycoor)
 		{
@@ -329,6 +360,10 @@ Crafty.scene('Phase 3', function()
 			{
 				document.getElementById("selection").style.display="none";
 			}
+			//Clear disabilities.
+			hideRedX("noAttack");
+			hideRedX("noMove");
+			//Remove movement shadow.
 			clearMovementShadow();
 		}
 	
@@ -360,8 +395,8 @@ Crafty.scene('Phase 3', function()
 		//Handles the case that the client successfully selects a unit.
 		function select(xcoor, ycoor, unit_owner)
 		{
-			//Clear all currently existing movement shadow.
-			clearMovementShadow();
+			//Clear current selection.
+			clearSelection();
 			//Default cases
 			var src = "";
 			var health = 0;
@@ -393,6 +428,15 @@ Crafty.scene('Phase 3', function()
 						stats.range = unit_list[i].range;
 						
 						selected_unit.arr_index = i;
+						//Set disabilities.
+						if(!unit_list[i].can_move)
+						{
+							addRedX("noMove");
+						}
+						if(!unit_list[i].can_attack)
+						{
+							addRedX("noAttack");
+						}						
 					}
 				}
 			}
@@ -417,6 +461,13 @@ Crafty.scene('Phase 3', function()
 			}
 			document.getElementById("stat_player_turn").innerHTML = nextPlayer+"\'s turn";
 			clearSelection();
+			//Reset movement-attack capabilities for units owned by nextPlayer.
+			var unit_list = getPlayer(nextPlayer).unit_list
+			for(var i = 0; i < unit_list.length; ++i)
+			{
+				unit_list[i].can_move = true;
+				unit_list[i].can_attack = true;
+			}
 		}
 	
 		function place(xcoor, ycoor, player_name, nth_unit)
@@ -476,11 +527,13 @@ Crafty.scene('Phase 3', function()
 			var new_tile = document.getElementById("X"+xcoor+"Y"+ycoor);
 			unit_list[selected_unit.arr_index].xcoor = xcoor;
 			unit_list[selected_unit.arr_index].ycoor = ycoor;
+			unit_list[selected_unit.arr_index].can_move = false;
 			//Shift images on grid.
 			original_tile.src="http://i.imgur.com/ubwIthk.gif";
 			new_tile.src = unit_list[selected_unit.arr_index].src;
 			moveSelectionBox(xcoor, ycoor);
 			moveTeamColor(xcoor, ycoor);
+			addRedX("noMove");
 		}
 	
 		function attack(xcoor, ycoor, secondary_player, attacker_health, defender_health)
@@ -553,6 +606,8 @@ Crafty.scene('Phase 3', function()
 				attacker.ycoor = null;
 				clearSelection();
 			}
+			attacker.can_attack = false;
+			addRedX("noAttack");
 			checkVictory();
 		}
 	
