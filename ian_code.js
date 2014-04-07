@@ -78,12 +78,6 @@ Crafty.scene('Phase 3', function()
 			{
 				far_bottom = 13;
 			}
-			console.log("%%%");
-			console.log(far_left);
-			console.log(far_right);
-			console.log(far_top);
-			console.log(far_bottom);
-			console.log("%%%");
 			//Check each space top to bottom- left to right
 			for(var i = far_left;i <= far_right;++i)
 			{
@@ -93,9 +87,6 @@ Crafty.scene('Phase 3', function()
 					if(!isOccupied(i, j))
 					{
 						var shadow_id = "X"+i.toString()+"Y"+j.toString();
-						//console.log("^^^");
-						console.log(shadow_id);
-						//console.log("^^^");
 						movement_shadow.push(shadow_id);
 						document.getElementById(shadow_id).src = "http://i.imgur.com/Pa1TQOw.png";
 					}
@@ -106,7 +97,7 @@ Crafty.scene('Phase 3', function()
 		//Deletes the movement shadow.
 		function clearMovementShadow()
 		{
-			for(var i = 0; i < movement_shadow.length; ++i)
+			while(movement_shadow.length > 0)
 			{
 				var shadow_id = movement_shadow.pop();
 				var y_in_id = shadow_id.indexOf("Y");
@@ -114,10 +105,6 @@ Crafty.scene('Phase 3', function()
 				var xcoor = parseInt(shadow_id.substring(1, y_in_id));
 				//Start 1 past y, go to end. Make int
 				var ycoor = parseInt(shadow_id.substring(y_in_id+1));
-				console.log("&&&");
-				console.log(xcoor.toString());
-				console.log(ycoor.toString());
-				console.log("&&&");
 				if(!isOccupied(xcoor, ycoor))
 				{
 					document.getElementById(shadow_id).src = "http://i.imgur.com/ubwIthk.gif";
