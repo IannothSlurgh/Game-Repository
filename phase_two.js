@@ -94,10 +94,13 @@ function reset()
 //indicates that the client is ready to proceed to phase 3
 function ready_method()
 {
-	ready = true;
-	clearInterval(counter);
-	console.log(user_str);
-	socket.emit('SetStatusReady', JSON.stringify({user_name: user_str, player_units: units, player_score : money}));
+	if(!ready)
+	{
+		ready = true;
+		clearInterval(counter);
+		console.log(user_str);
+		socket.emit('SetStatusReady', JSON.stringify({user_name: user_str, player_units: units, player_score : money}));
+	}
 }
 
 //timer function (1 tick per second)
