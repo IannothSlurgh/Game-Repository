@@ -45,11 +45,11 @@ Crafty.scene('Phase 3', function()
 		//Used for place phase with unit-inventory to determine the index of the client's unit_list which is being dragged.
 		var inventory_dragged_unit = null;
 		
-		//An array containing all the movement-shadow DOM elements for easy removal
+		//An array containing all DOM ids of squares which can be moved to.
 		var movement_shadow = [];
 		
 		//Function that finds all spaces that can be moved to, checks their occupancy, then adds a shadow to array if unoccupied
-/*		function generateMovementShadow()
+		function generateMovementShadow()
 		{
 			var unit = getPlayer(selected_unit.owner).unit_list[selected_unit.arr_index];
 			//If the unit cannot move, no shadow.
@@ -78,8 +78,6 @@ Crafty.scene('Phase 3', function()
 			{
 				far_bottom = 13;
 			}
-			//shadow_num equals the array index of the shadow variable.
-			var shadow_num = 0;
 			//Check each space top to bottom- left to right
 			for(;far_left <= far_right;++far_left)
 			{
@@ -88,75 +86,31 @@ Crafty.scene('Phase 3', function()
 					//If space empty- add shadow.
 					if(!isOccupied(far_left, far_top))
 					{
-						++shadow_num;
-						var shadow_id = "shadow" + shadow_num.toString();
-						var left = getAbsoluteFromGrid(far_left);
-						var top = getAbsoluteFromGrid(far_top);
-						addImage(shadow_id, "http://i.imgur.com/Pa1TQOw.png", left, top, 9, 44, 44);
-						var shadow = document.getElementById(shadow_id);
-						shadow.style.opacity = ".4";
-						movement_shadow.push(shadow);
-						//Both of these functions use a 'generator pattern' to create
-						//functions specific to the current iteration of the double for-loop
-						shadow.onclick =
-						(function(mouse_event)
-							{
-								var shadow = movement_shadow[shadow_num];
-								//Get place clicked.
-								var xcoor = mouse_event.clientX;
-								var ycoor = mouse_event.clientY;
-								//Hide shadow element so elementFromPoint will return a tile, not shadow element.
-								shadow.style.visibility = "hidden";
-								var found_element = document.elementFromPoint(xcoor, ycoor);
-								shadow.style.visibility = "visible";
-								//If the click was aimed at a tile, make it happen.
-								if(found_element != null)
-								{
-									//If no onclick, not the element we want.
-									if(typeof found_element.onclick == "function")
-									{
-										found_element.onclick(mouse_event);
-									}
-								}
-							}
-						})(shadow_num);
-						shadow.oncontextmenu =
-						(function(mouse_event)
-							{
-								var shadow = movement_shadow[shadow_num];
-								//Get place clicked.
-								var xcoor = mouse_event.clientX;
-								var ycoor = mouse_event.clientY;
-								//Hide shadow element so elementFromPoint will return a tile, not shadow element.
-								shadow.style.visibility = "hidden";
-								var found_element = document.elementFromPoint(xcoor, ycoor);
-								shadow.style.visibility = "visible";
-								//If the click was aimed at a tile, make it happen.
-								if(found_element != null)
-								{
-									//If no context menu, not the element we want.
-									if(typeof found_element.oncontextmenu == "function")
-									{
-										found_element.oncontextmenu(mouse_event);
-									}
-								}
-								return false;
-							}
-						)(shadow_num);
+						var shadow_id = "X"+far_left.toString()+"Y"+far_top.toString();
+						movement_shadow.push(shadow_id);
+						document.getElementById(shadow_id).src = "http://i.imgur.com/Pa1TQOw.png";
 					}
 				}
 			}
-		}*/
+		}
 		
 		//Deletes the movement shadow.
-		/*function clearMovementShadow()
+		function clearMovementShadow()
 		{
-			var div_tiles = document.getElementById("div_tiles");
 			for(var i = 0; i < movement_shadow.length; ++i)
 			{
-				div_tiles.removeChild(movement_shadow.pop());
+				var shadow_id = movement_shadow.pop();
+				var y_in_id = shadow_id.indexOf("y");
+				//Start 1 past x, go to y. Make int.
+				var xcoor = parseInt(shadow_id.substring(1, y_in_id));
+				//Start 1 past y, go to end. Make int
+				var ycoor = parseInt(shadow_id.substring(y_in_id+1));
+				if(!is_occupied(xcoor, ycoor))
+				{
+					document.getElementById(shadow_id).src = "http://i.imgur.com/ubwIthk.gif";
+				}
 			}
-		}*/
+		}
 		
 		function checkVictory()
 		{
@@ -375,7 +329,7 @@ Crafty.scene('Phase 3', function()
 			{
 				document.getElementById("selection").style.display="none";
 			}
-			//clearMovementShadow();
+			clearMovementShadow();
 		}
 	
 		//Sets the stats to those indicated in a stats object. (has src, health, damage, range, and movement)
@@ -407,7 +361,7 @@ Crafty.scene('Phase 3', function()
 		function select(xcoor, ycoor, unit_owner)
 		{
 			//Clear all currently existing movement shadow.
-			//clearMovementShadow();
+			clearMovementShadow();
 			//Default cases
 			var src = "";
 			var health = 0;
@@ -446,7 +400,7 @@ Crafty.scene('Phase 3', function()
 			changeStatsGraphical(stats);
 			//Either create selection box, or move it to the newly selected unit.
 			moveSelectionBox(xcoor, ycoor);
-			//generateMovementShadow();
+			generateMovementShadow();
 		}
 	
 		//Handler for endturn. Also called when a player dies on his own turn.
@@ -513,7 +467,7 @@ Crafty.scene('Phase 3', function()
 		//Movement handler
 		function move(xcoor, ycoor)
 		{
-			//clearMovementShadow()
+			clearMovementShadow()
 			//change selected unit's xcoor-ycoor
 			var unit_list = findUnitList(selected_unit.owner);
 			var original_xcoor = unit_list[selected_unit.arr_index].xcoor;
