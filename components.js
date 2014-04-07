@@ -104,7 +104,7 @@ Crafty.c('Money', {
 	init: function(){
 		this.attr({
 			array_index : -1,
-			value: 50
+			value: 25
 		});
 		this.requires('Actor, Color')
 			.color('rgb(170, 125, 40)');
