@@ -184,8 +184,8 @@ function mazeGenerationAlgorithm()
 		
 	while(maze_data[col][row] == '#' 
 		&& !(col == 0 
-		|| col == 55 - 1 
-		|| row == 0
+		|| col == 55 - 1)
+		&& !(row == 0
 		|| row == 39 - 1))
 	{
 		col = Math.floor(Math.random() * 55);
