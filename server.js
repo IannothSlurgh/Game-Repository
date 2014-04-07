@@ -500,7 +500,7 @@ io.sockets.on(
 				turn_order[index] = username;
 				score_list[index] = JSON.parse(message).player_score;
 
-				//clients_ready[index] = 0;
+				clients_ready[index] = 0;
 				switch(index)
 				{
 					case 0: 
@@ -527,6 +527,9 @@ io.sockets.on(
 						player_4.is_alive = true;
 						io.sockets.emit('SetPlayerFourUnitList', JSON.stringify({unit_list : player_4.unit_list}));
 						break;
+					default:
+						console.log("No such name");
+					break;
 				}
 				
 				var num_of_players_ready = 0;
@@ -541,10 +544,6 @@ io.sockets.on(
 				
 				if(num_of_players_ready == clients.length)
 				{
-					for(var i = 0; i < clients_ready.length; ++i)
-					{
-						clients_ready[i] = 0;
-					}
 					console.log("***");
 					console.log(player_1.unit_list);
 					console.log(player_2.unit_list);
