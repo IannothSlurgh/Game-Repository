@@ -239,7 +239,7 @@ Crafty.scene('Phase 3', function()
 		function addRedX(id)
 		{
 			var red_x = document.getElementById(id);
-			var src = "";
+			var src = "http://i.imgur.com/hj0R9rv.png";
 			if(red_x == null)
 			{
 				switch(id)
