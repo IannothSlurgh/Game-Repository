@@ -247,7 +247,7 @@ Crafty.scene('Phase 3', function()
 					case "noAttack":
 						addImage(id, src, 823, 200, 2, 36, 36);
 					break;
-					case "noMove";
+					case "noMove":
 						addImage(id, src, 728, 250, 2, 36, 36);
 					break;
 				}
