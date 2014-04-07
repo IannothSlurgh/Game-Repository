@@ -484,6 +484,7 @@ io.sockets.on(
 			function(message)
 			{
 				var username = JSON.parse(message).user_name;
+				console.log(username);
 				var str_unit_list = JSON.parse(message).player_units;
 				var index = clients.indexOf(username);
 				if(index > 1 
@@ -499,7 +500,7 @@ io.sockets.on(
 				turn_order[index] = username;
 				score_list[index] = JSON.parse(message).player_score;
 
-				clients_ready[index] = 0;
+				//clients_ready[index] = 0;
 				switch(index)
 				{
 					case 0: 
@@ -528,13 +529,6 @@ io.sockets.on(
 						break;
 				}
 				
-				console.log("***");
-				console.log(player_1.unit_list);
-				console.log(player_2.unit_list);
-				console.log(player_3.unit_list);
-				console.log(player_4.unit_list);
-				console.log("***");
-				
 				var num_of_players_ready = 0;
 				
 				for(var i = 0; i < clients_ready.length; i++)
@@ -547,7 +541,21 @@ io.sockets.on(
 				
 				if(num_of_players_ready == clients.length)
 				{
+					for(var i = 0; i < clients_ready.length; ++i)
+					{
+						clients_ready[i] = 0;
+					}
+					console.log("***");
+					console.log(player_1.unit_list);
+					console.log(player_2.unit_list);
+					console.log(player_3.unit_list);
+					console.log(player_4.unit_list);
+					console.log("***");
 					sort_scores();
+					console.log("---");
+					console.log(turn_order);
+					console.log(score_list);
+					console.log("---");
 					io.sockets.emit('moveToPhase3');
 				}
 			}
