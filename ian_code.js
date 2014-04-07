@@ -626,6 +626,7 @@ Crafty.scene('Phase 3', function()
 				}
 				catch(err)
 				{
+					alert(err);
 					events_locked = false;
 				}
 			}
