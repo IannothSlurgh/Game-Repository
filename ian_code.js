@@ -245,10 +245,10 @@ Crafty.scene('Phase 3', function()
 				switch(id)
 				{
 					case "noAttack":
-						addImage(id, src, 823, 200, 2, 36, 36);
+						addImage(id, src, 800, 200, 2, 36, 36);
 					break;
 					case "noMove":
-						addImage(id, src, 728, 250, 2, 36, 36);
+						addImage(id, src, 700, 250, 2, 36, 36);
 					break;
 				}
 			}
@@ -444,7 +444,11 @@ Crafty.scene('Phase 3', function()
 			changeStatsGraphical(stats);
 			//Either create selection box, or move it to the newly selected unit.
 			moveSelectionBox(xcoor, ycoor);
-			generateMovementShadow();
+			//Movement shadow seen only on your own units.
+			if(select_unit.owner == this_player_name)
+			{
+				generateMovementShadow();
+			}
 		}
 	
 		//Handler for endturn. Also called when a player dies on his own turn.
