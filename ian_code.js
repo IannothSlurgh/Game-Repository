@@ -973,6 +973,8 @@ Crafty.scene('Phase 3', function()
 					div.append($('<span></span>').addClass('msg').text(msg));
 					
 					$('#log').append(div);
+					var scrollingDown = document.getElementById("log");
+					scrollingDown.scrollTop = scrollingDown.scrollHeight; 
 				}
 			});
 		//Finish constructing phase 3.
