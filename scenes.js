@@ -645,6 +645,30 @@ Crafty.scene('ConnectionRoom', function()
 				$('#send').click();
 			}
 		});
+		$('#send_phase_III').click(function() 
+		{
+			var data = $('#msg_phase_III').val();
+			if (data) 
+			{
+				data = data.trim();
+				if (data.length > 0) 
+				{
+					socket.emit('phaseIII_chat', { msg: data });
+				}
+			}
+			// Clear the input field.
+			$('#msg_phase_III').val('');
+		});
+
+		// When Enter is pressed in the message field, it should be treated as
+		// clicking on the Send button.
+		$('#msg_phase_III').keyup(function(event) 
+		{
+			if (event.keyCode == 13) 
+			{
+				$('#send_phase_III').click();
+			}
+		});
 	});
 });
 
