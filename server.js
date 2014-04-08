@@ -350,6 +350,29 @@ io.sockets.on(
 					});
 			}
 		});
+	client.on(
+		'phaseIII_chat',
+		function(message) 
+		{
+			// This function tries to get the user name from the client object, and
+			// use that to form a chat message that will be sent to all clients.
+			if (message && message.msg) 
+			{
+				client.get(
+					'user_name', 
+					function(err, name) 
+					{
+						if (!err)
+						{
+							// io.sockets.emit() will send the message to all clients,
+							// including the current client. See socket.io FAQ for more
+							// examples.
+							var obj = { "user_name": name, "msg": message.msg };
+							io.sockets.emit('phaseIII_chat', JSON.stringify(obj));
+						}
+					});
+			}
+		});
 		function removeDuplicates(arr)
 		{
 			var i,
