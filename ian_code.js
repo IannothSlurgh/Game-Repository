@@ -956,7 +956,25 @@ Crafty.scene('Phase 3', function()
 					scrollingDown.scrollTop = scrollingDown.scrollHeight; 
 				}
 			});
-		
+		socket.on('phaseIII_chat',
+			function(message)
+			{
+				var obj = JSON.parse(message);
+				if (obj && obj.user_name && obj.msg) 
+				{
+					var user_name = obj.user_name;
+					  
+					var msg = obj.msg;
+
+					var div = $('<div></div>');
+					
+					div.append($('<span></span>').addClass('user_name').text(user_name));
+					div.append($('<span></span>').addClass('says').text(' says: '));
+					div.append($('<span></span>').addClass('msg').text(msg));
+					
+					$('#battle_log').append(div);
+				}
+			});
 		//Finish constructing phase 3.
 		init();
 	});
