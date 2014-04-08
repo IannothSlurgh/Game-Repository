@@ -626,9 +626,6 @@ io.sockets.on(
 								notification.starting_player = confirmation.starting_player;
 							}
 							confirmation.who = decrypted.who;
-							console.log("***");
-							console.log(decrypted.dragged_num.toString());
-							console.log("***");
 							confirmation.dragged_num = decrypted.dragged_num;
 							notification.dragged_num = decrypted.dragged_num;
 					}
