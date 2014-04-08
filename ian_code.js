@@ -742,6 +742,7 @@ Crafty.scene('Phase 3', function()
 			//If the click was aimed at a tile, make it happen.
 			if(found_element != null)
 			{
+				console.log(found_element.id);
 				//If no onclick, not the element we want.
 				if(typeof found_element.onclick == "function")
 				{
