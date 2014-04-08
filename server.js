@@ -184,8 +184,8 @@ function mazeGenerationAlgorithm()
 		
 	while(maze_data[col][row] == '#' 
 		&& !(col == 0 
-		|| col == 55 - 1)
-		&& !(row == 0
+		|| col == 55 - 1 
+		|| row == 0
 		|| row == 39 - 1))
 	{
 		col = Math.floor(Math.random() * 55);
@@ -626,6 +626,9 @@ io.sockets.on(
 								notification.starting_player = confirmation.starting_player;
 							}
 							confirmation.who = decrypted.who;
+							console.log("***");
+							console.log(decrypted.dragged_num.toString());
+							console.log("***");
 							confirmation.dragged_num = decrypted.dragged_num;
 							notification.dragged_num = decrypted.dragged_num;
 					}
