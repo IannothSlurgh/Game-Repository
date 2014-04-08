@@ -972,7 +972,7 @@ Crafty.scene('Phase 3', function()
 					div.append($('<span></span>').addClass('says').text(' says: '));
 					div.append($('<span></span>').addClass('msg').text(msg));
 					
-					$('#battle_log').append(div);
+					$('#log').append(div);
 				}
 			});
 		//Finish constructing phase 3.
