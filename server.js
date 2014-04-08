@@ -582,6 +582,7 @@ io.sockets.on(
 		function translateMessagePhaseIII(message)
 		{
 			var decrypted = JSON.parse(message);
+			console.log(decrypted);
 			var confirmation =
 			{
 				"type":"Confirmation",
