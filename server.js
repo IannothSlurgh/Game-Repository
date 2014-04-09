@@ -700,29 +700,32 @@ io.sockets.on(
 								confirmation.healthTarget = attack_results.unit_two;
 								confirmation.who = getPlayerOccupying(decrypted.xcoor, decrypted.ycoor);
 								var attacker = findUnit(selected_unit.xcoor, selected_unit.ycoor);
-								attacker.can_attack = false;
 								var defender = findUnit(decrypted.xcoor, decrypted.ycoor);
-								if(attacker.health <= 0)
+								if(confirmation.success)
 								{
-									attacker.is_dead = true;
-									attacker.xcoor = null;
-									attacker.ycoor = null;
-									if(! checkPlayerAlive(selected_unit.owner))
+									attacker.can_attack = false;
+									if(attacker.health <= 0)
 									{
-										confirmation.healthSelf = "Playerdead";
+										attacker.is_dead = true;
+										attacker.xcoor = null;
+										attacker.ycoor = null;
+										if(! checkPlayerAlive(selected_unit.owner))
+										{
+											confirmation.healthSelf = "Playerdead";
+										}
+										selected_unit.xcoor = null;
+										selected_unit.ycoor = null;
+										selected_unit.owner = null;
 									}
-									selected_unit.xcoor = null;
-									selected_unit.ycoor = null;
-									selected_unit.owner = null;
-								}
-								if(defender.health <= 0)
-								{
-									defender.is_dead = true;
-									defender.xcoor = null;
-									defender.ycoor = null;
-									if(! checkPlayerAlive(confirmation.who))
+									if(defender.health <= 0)
 									{
-										confirmation.healthTarget = "Playerdead";
+										defender.is_dead = true;
+										defender.xcoor = null;
+										defender.ycoor = null;
+										if(! checkPlayerAlive(confirmation.who))
+										{
+											confirmation.healthTarget = "Playerdead";
+										}
 									}
 								}
 							}
