@@ -943,14 +943,15 @@ function checkRange(xcoor, ycoor)
 	{
 		obj_one.unit_two = returnNewUnitHP(unit_two.health, unit_one.damage);
 		obj_one.success = true;	
+		if(total_distance <= unit_two.range)
+		{
+			var damage_taken = Math.ceil(unit_two.damage/2);
+			obj_one.unit_one = returnNewUnitHP(unit_one.health, damage_taken);
+		}
+		unit_one.health = obj_one.unit_one;
+		unit_two.health = obj_one.unit_two;
+
 	}
-	if(total_distance <= unit_two.range)
-	{
-		var damage_taken = Math.ceil(unit_two.damage/2);
-		obj_one.unit_one = returnNewUnitHP(unit_one.health, damage_taken);
-	}
-	unit_one.health = obj_one.unit_one;
-	unit_two.health = obj_one.unit_two;
 	return obj_one;
 }
 // Returns the new unit's HP
