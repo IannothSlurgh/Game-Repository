@@ -99,7 +99,7 @@ function ready_method()
 		ready = true;
 		clearInterval(counter);
 		console.log(user_str);
-		socket.emit('SetStatusReady', JSON.stringify({user_name: user_str, player_units: units, player_score : money}));
+		socket.emit('SetStatusReady', JSON.stringify({user_name: user_str, player_units: units, player_score : player.score}));
 	}
 }
 
