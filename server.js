@@ -703,6 +703,8 @@ io.sockets.on(
 								var defender = findUnit(decrypted.xcoor, decrypted.ycoor);
 								if(confirmation.success)
 								{
+									attacker.health = confirmation.healthSelf;
+									defender.health = confirmation.healthTarget;
 									attacker.can_attack = false;
 									if(attacker.health <= 0)
 									{
@@ -951,9 +953,6 @@ function checkRange(xcoor, ycoor)
 			var damage_taken = Math.ceil(unit_two.damage/2);
 			obj_one.unit_one = returnNewUnitHP(unit_one.health, damage_taken);
 		}
-		unit_one.health = obj_one.unit_one;
-		unit_two.health = obj_one.unit_two;
-
 	}
 	return obj_one;
 }
