@@ -99,6 +99,10 @@ function ready_method()
 		ready = true;
 		clearInterval(counter);
 		console.log(user_str);
+		if(unitCount == 0) {
+			units[unitCount] = "goblin";
+			unitCount++;
+		}
 		socket.emit('SetStatusReady', JSON.stringify({user_name: user_str, player_units: units, player_score : player.score}));
 	}
 }
