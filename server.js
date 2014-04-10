@@ -196,6 +196,49 @@ function mazeGenerationAlgorithm()
 	
 	modifyMaze();
 	
+	for(var x = 2; x < 55-2; x++)
+	{
+		for(var y = 2; y < 39 - 2; y++)
+		{
+			if(maze_data[x][y] == '.')
+			{
+				if((maze_data[x - 1][y] == '#' || maze_data[x - 1][y] == 'U') && (maze_data[x+1][y] == '#' || maze_data[x + 1][y] == 'U'))
+				{
+					if((maze_data[x - 1][y - 1] == '.' && maze_data[x][y - 1] == '.' && maze_data[x + 1][y - 1] == '.') || (maze_data[x + 1][y + 1] == '.' && maze_data[x][y + 1] == '.' && maze_data[x - 1][y + 1] == '.'))
+					{
+						var coin_flip = Math.round(Math.random());
+						switch(coin_flip)
+						{
+						case 0: maze_data[x - 1][y] = '.';
+								maze_data[x + 1][y] = '_';
+							break;
+						case 1: maze_data[x + 1][y] = '.';
+								maze_data[x - 1][y] = '_';
+							break;
+						}
+					}
+				}
+				
+				else if((maze_data[x][y - 1] == '#' || maze_data[x][y - 1] == 'U') && (maze_data[x][y + 1] == '#' || maze_data[x][y + 1] == 'U'))
+				{
+					if((maze_data[x + 1][y + 1] == '.' && maze_data[x + 1][y] == '.' && maze_data[x + 1][y - 1] == '.') || (maze_data[x - 1][y - 1] == '.' && maze_data[x - 1][y] == '.' && maze_data[x - 1][y + 1] == '.'))
+					{
+						var coin_flip = Math.round(Math.random());
+						switch(coin_flip)
+						{
+						case 0: maze_data[x][y + 1] = '.';
+								maze_data[x][y - 1] = '_';
+							break;
+						case 1: maze_data[x][y - 1] = '.';
+								maze_data[x][y + 1] = '_';
+							break;
+						}
+					}
+				}
+			}
+		}
+	}
+	
 	//distributes the money around the board
 	var max_money = 100;
 	var money_count = 0;
