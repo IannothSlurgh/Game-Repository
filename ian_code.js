@@ -618,6 +618,7 @@ Crafty.scene('Phase 3', function()
 		//Pass data to server based on player click. Called by the tiles onclick and oncontextmenu
 		function sendEvent(action, xcoor, ycoor)
 		{
+			console.log("Event sent");
 			//If its your turn and you are not waiting on a server response already.
 			if(! events_locked )
 			{
@@ -842,6 +843,7 @@ Crafty.scene('Phase 3', function()
 				{
 					return function()
 					{
+						console.log("drag start" + parseInt(unit.id.substring(14).toString())
 						//Set global variable telling the index of the dragged unit.
 						inventory_dragged_unit = parseInt(unit.id.substring(14));
 					}
