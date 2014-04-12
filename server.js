@@ -696,7 +696,14 @@ io.sockets.on(
 							}
 							confirmation.who = decrypted.who;
 							console.log("***");
-							console.log(decrypted.dragged_num.toString());
+							if(decrypted.dragged_num != null)
+							{
+								console.log(decrypted.dragged_num.toString());
+							}
+							else
+							{
+								console.log("null");
+							}
 							console.log("***");
 							confirmation.dragged_num = decrypted.dragged_num;
 							notification.dragged_num = decrypted.dragged_num;
