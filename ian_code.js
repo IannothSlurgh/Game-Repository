@@ -843,7 +843,7 @@ Crafty.scene('Phase 3', function()
 				{
 					return function()
 					{
-						console.log("drag start" + parseInt(unit.id.substring(14).toString())
+						console.log("drag start" + parseInt(unit.id.substring(14)).toString());
 						//Set global variable telling the index of the dragged unit.
 						inventory_dragged_unit = parseInt(unit.id.substring(14));
 					}
