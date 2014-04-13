@@ -34,20 +34,20 @@ Crafty.scene('Phase 3', function()
 
 		//Once client sends an event to server, the client cannot send any more until the server sends a confirmation to the client.
 		var events_locked = false;
-		
+
 		//Makes finding selected unit easier for modifying attacker and modifying selected unit location.
 		var selected_unit =
 		{
 			owner:null,
 			arr_index:null
 		};
-		
+
 		//Used for place phase with unit-inventory to determine the index of the client's unit_list which is being dragged.
 		var inventory_dragged_unit = null;
-		
+
 		//An array containing all DOM ids of squares which can be moved to.
 		var movement_shadow = [];
-		
+
 		//Function that finds all spaces that can be moved to, checks their occupancy, then adds a shadow to array if unoccupied
 		function generateMovementShadow()
 		{
@@ -93,7 +93,7 @@ Crafty.scene('Phase 3', function()
 				}
 			}
 		}
-		
+
 		//Deletes the movement shadow.
 		function clearMovementShadow()
 		{
@@ -111,7 +111,7 @@ Crafty.scene('Phase 3', function()
 				}
 			}
 		}
-		
+
 		function checkVictory()
 		{
 			//Check to see that only one player lives
@@ -141,7 +141,7 @@ Crafty.scene('Phase 3', function()
 				alert("There has been a tie.");
 			}
 		}
-		
+
 		//Simple helper function for finding player object based on a string name. Returns null if no such player. (Modify to switch self)
 		function getPlayer(player_name)
 		{
@@ -164,7 +164,7 @@ Crafty.scene('Phase 3', function()
 			}
 			return player;
 		}
-	
+
 		//Return a string of player-color based on if the given string equals a particular player name. (important for finding team_color elements)
 		//(Switchify self)
 		function getTeamColor(player_name)
@@ -186,13 +186,13 @@ Crafty.scene('Phase 3', function()
 				return "purple"
 			}
 		}
-	
+
 		//Take integer value 0 to 13 inclusive and give pixel value for where a tile is. Ex 0,0 is 23 top, 23 left.
 		function getAbsoluteFromGrid(coor)
 		{
 			return 23+43*coor;
 		}
-	
+
 		//Paint a tile for the combat grid at particular x and y where the coordinates are 0 to 13 inclusive.
 		//Set its event handlers.
 		function addTile(xcoor, ycoor)
@@ -209,7 +209,7 @@ Crafty.scene('Phase 3', function()
 			alert(err);
 			}
 		}
-	
+
 		//Generalized function to add a new image with id, src, left, top, zindex, width, height attributes specified. Disable drag-drop and add to div_tiles
 		function addImage(id, src, left, top, z, width, height)
 		{
@@ -235,7 +235,7 @@ Crafty.scene('Phase 3', function()
 				alert(err);
 			}
 		}
-		
+
 		function addRedX(id)
 		{
 			var red_x = document.getElementById(id);
@@ -257,7 +257,7 @@ Crafty.scene('Phase 3', function()
 				red_x.style.visibility = "visible";
 			}
 		}
-		
+
 		function hideRedX(id)
 		{
 			var red_x = document.getElementById(id);
@@ -266,7 +266,7 @@ Crafty.scene('Phase 3', function()
 				red_x.style.visibility = "hidden";
 			}
 		}
-		
+
 		//If selection box not created, create at x,y pair (0 to 13 inclusive), if not move the existing selection box to the spot.
 		function moveSelectionBox(xcoor, ycoor)
 		{
@@ -283,13 +283,13 @@ Crafty.scene('Phase 3', function()
 				selection_box.style.display="block";
 			}
 		}
-	
+
 		//Helper function- given a string player_name, return the unit_list of the player object.
 		//(Switchify self)
 		function findUnitList(player_name)
 		{
 			var unit_list;
-		
+
 			if(player_name==player_1.name)
 			{
 				unit_list = player_1.unit_list;
@@ -308,7 +308,7 @@ Crafty.scene('Phase 3', function()
 			}
 			return unit_list;
 		}
-	
+
 		//Helper function that finds the unit object of a player at xcoor,ycoor. If no such unit, return null.
 		function findUnit(player_name, xcoor, ycoor)
 		{
@@ -325,7 +325,7 @@ Crafty.scene('Phase 3', function()
 			}
 			return null;
 		}
-		
+
 		//Is the space at x-y occupied by a unit?
 		function isOccupied(xcoor, ycoor)
 		{
@@ -343,7 +343,7 @@ Crafty.scene('Phase 3', function()
 			}
 			return true;
 		}
-	
+
 		//Clears selected_unit, stats, and hides selection box.
 		function clearSelection()
 		{
@@ -366,7 +366,7 @@ Crafty.scene('Phase 3', function()
 			//Remove movement shadow.
 			clearMovementShadow();
 		}
-	
+
 		//Sets the stats to those indicated in a stats object. (has src, health, damage, range, and movement)
 		function changeStatsGraphical(stats)
 		{
@@ -391,7 +391,7 @@ Crafty.scene('Phase 3', function()
 				document.getElementById("stat_movement").innerHTML = stats.movement.toString();
 			}
 		}
-	
+
 		//Handles the case that the client successfully selects a unit.
 		function select(xcoor, ycoor, unit_owner)
 		{
@@ -426,7 +426,7 @@ Crafty.scene('Phase 3', function()
 						stats.movement = unit_list[i].movement;
 						stats.damage = unit_list[i].damage;
 						stats.range = unit_list[i].range;
-						
+
 						selected_unit.arr_index = i;
 						//Set disabilities.
 						if(!unit_list[i].can_move)
@@ -450,7 +450,7 @@ Crafty.scene('Phase 3', function()
 				generateMovementShadow();
 			}
 		}
-	
+
 		//Handler for endturn. Also called when a player dies on his own turn.
 		function endTurn(nextPlayer)
 		{
@@ -473,7 +473,7 @@ Crafty.scene('Phase 3', function()
 				unit_list[i].can_attack = true;
 			}
 		}
-	
+
 		function place(xcoor, ycoor, player_name, nth_unit)
 		{
 			//Set unit (nth_unit in the unit_list) location attributes
@@ -509,7 +509,7 @@ Crafty.scene('Phase 3', function()
 				div_tiles.removeChild(inventory_unit);
 			}			
 		}
-	
+
 		//helper function that moves team color element of selected unit.
 		function moveTeamColor(xcoor, ycoor)
 		{
@@ -518,7 +518,7 @@ Crafty.scene('Phase 3', function()
 			team_color.style.top = getAbsoluteFromGrid(ycoor).toString()+"px";
 			team_color.style.left = getAbsoluteFromGrid(xcoor).toString()+"px";
 		}
-	
+
 		//Movement handler
 		function move(xcoor, ycoor)
 		{
@@ -539,7 +539,7 @@ Crafty.scene('Phase 3', function()
 			moveTeamColor(xcoor, ycoor);
 			addRedX("noMove");
 		}
-	
+
 		function attack(xcoor, ycoor, secondary_player, attacker_health, defender_health)
 		{
 			//Get related unit objects.
@@ -614,7 +614,7 @@ Crafty.scene('Phase 3', function()
 			addRedX("noAttack");
 			checkVictory();
 		}
-	
+
 		//Pass data to server based on player click. Called by the tiles onclick and oncontextmenu
 		function sendEvent(action, xcoor, ycoor)
 		{
@@ -645,7 +645,7 @@ Crafty.scene('Phase 3', function()
 				}
 			}
 		}
-	
+
 		//Called when server sends a confirmation (responding to a client activity) or a notification (telling other clients of that activity)
 		socket.on('phaseIIIservermessage', translateServerMessage);
 		function translateServerMessage(message)
@@ -685,23 +685,7 @@ Crafty.scene('Phase 3', function()
 						endTurn(decrypted.starting_player);
 						document.getElementById("stat_log").innerHTML = "";
 						var div_tiles = document.getElementById("div_tiles");
-						var unit_camp_id = "unit_camp";
-						switch(this_player_name)
-						{
-							case player_1.name:
-								unit_camp_id+="1";
-								break;
-							case player_2.name:
-								unit_camp_id+="2";
-								break;
-							case player_3.name:
-								unit_camp_id+="3";
-								break;
-							case player_4.name:
-								unit_camp_id+="4";
-								break;
-						}
-						var unit_camp = document.getElementById(unit_camp_id);
+						var unit_camp = document.getElementById("unit_camp");
 						div_tiles.removeChild(unit_camp);
 					}
 				} //Except in special situations, it remains your turn and you can go ahead and send more events.
@@ -739,48 +723,16 @@ Crafty.scene('Phase 3', function()
 					endTurn(decrypted.starting_player);
 					document.getElementById("stat_log").innerHTML = "";
 					var div_tiles = document.getElementById("div_tiles");
-					var unit_camp_id = "unit_camp";
-					switch(this_player_name)
-					{
-						case player_1.name:
-							unit_camp_id+="1";
-							break;
-						case player_2.name:
-							unit_camp_id+="2";
-							break;
-						case player_3.name:
-							unit_camp_id+="3";
-							break;
-						case player_4.name:
-							unit_camp_id+="4";
-							break;
-					}
-					var unit_camp = document.getElementById(unit_camp_id);
+					var unit_camp = document.getElementById("unit_camp");
 					div_tiles.removeChild(unit_camp);
 				}
 			}
 		}
-		
+
 		//Unit camp element's onclick function that transports events to tiles beneath the element.
 		function unitCampOnClick(mouse_event)
 		{
-			var id = "unit_camp";
-			switch(this_player_name)
-			{
-				case player_1.name:
-					id+="1";
-					break;
-				case player_2.name:
-					id+="2";
-					break;
-				case player_3.name:
-					id+="3";
-					break;
-				case player_4.name:
-					id+="4";
-					break;
-			}
-			var unit_camp = document.getElementById(id);
+			var unit_camp = document.getElementById("unit_camp");
 			//Get place clicked.
 			var xcoor = mouse_event.clientX;
 			var ycoor = mouse_event.clientY;
@@ -800,42 +752,37 @@ Crafty.scene('Phase 3', function()
 				}
 			}
 		}
-		
+
 		//Place player-camp affordance based on which player this client is.
 		function placePlayerCamp()
 		{
 			var xcoor;
 			var ycoor;
-			var id = "unit_camp"
 			switch(this_player_name)
 			{
 				case player_1.name:
 					xcoor = 0;
 					ycoor = 0;
-					id+="1";
 					break;
 				case player_2.name:
 					xcoor = 10;
 					ycoor = 10;
-					id+="2";
 					break;
 				case player_3.name:
 					xcoor = 0;
 					ycoor = 10;
-					id+="3";
 					break;
 				case player_4.name:
 					xcoor = 10;
 					ycoor = 0;
-					id+="4";
 					break;
 			}
 			xcoor = getAbsoluteFromGrid(xcoor);
 			ycoor = getAbsoluteFromGrid(ycoor);
 			//Add the big green square.
-			addImage(id, "http://imgur.com/VSv5AOI.png", xcoor, ycoor, 2, 184, 184);
+			addImage("unit_camp", "http://imgur.com/VSv5AOI.png", xcoor, ycoor, 2, 184, 184);
 			//Set transport layer for the green square.
-			var unit_camp = document.getElementById(id);
+			var unit_camp = document.getElementById("unit_camp");
 			unit_camp.onclick = unitCampOnClick;
 			unit_camp.ondragover =
 			function(mouse_event)
@@ -848,7 +795,7 @@ Crafty.scene('Phase 3', function()
 				mouse_event.preventDefault();
 			}			
 		}
-		
+
 	function paintInventory(unit_list)
 	{
 		//Create unit inventory back-drop
@@ -902,7 +849,7 @@ Crafty.scene('Phase 3', function()
 						inventory_dragged_unit = parseInt(unit.id.substring(14));
 					}
 				})(unit);
-				
+
 				unit.ondragend = 
 				function(mouse_event)
 				{
@@ -922,7 +869,7 @@ Crafty.scene('Phase 3', function()
 			}
 		}
 	}
-		
+
 		//Sets up phase 3 elements.
 		function init()
 		{
@@ -935,7 +882,7 @@ Crafty.scene('Phase 3', function()
 			document.getElementById("yourUnitList").style.display = "none";
 			document.getElementById("ready").style.display = "none";
 			document.getElementById("reset").style.display = "none";
-			
+
 			//Generate tiles on grid.
 			for(var i = 0; i<14; ++i)
 			{
@@ -959,25 +906,25 @@ Crafty.scene('Phase 3', function()
 			document.getElementById("next").style.display = "block";
 			document.getElementById("log").style.display = "block";
 			document.getElementById("battle_log").style.display = "block";
-			
+
 			//old Hide- probably delete
 			document.getElementById("loggedin").style.display = "none";
 			document.getElementById("board").style.display = "none";
 			document.getElementById("msg").style.display = "none";
 			document.getElementById("send").style.display = "none";
 			document.getElementById("start_button").style.display = "none";
-			
+
 			document.getElementById("stat_player_turn").innerHTML = "Place Phase";
-			
+
 			//Set names of player objects.
 			this_player_name = user_str;
-			
+
 			player_1.name = list_of_users[0];
 			player_2.name = list_of_users[1];
-			
+
 			player_1.is_alive = true;
 			player_2.is_alive = true;
-			
+
 			if(!is_two_player_game)
 			{
 				player_3.name = list_of_users[2];
@@ -991,14 +938,14 @@ Crafty.scene('Phase 3', function()
 			paintInventory(getPlayer(this_player_name).unit_list);
 			socket.emit('Testing', "Hello");
 		}
-		
+
 		//Old testing function. Probably delete.
 		function Testing(message)
 		{
 			console.log(message);
 		}
 		socket.on('Testing', Testing);
-		
+
 		socket.on('phaseIII_notification',
 			function(message) 
 			{
@@ -1019,15 +966,15 @@ Crafty.scene('Phase 3', function()
 				if (obj && obj.user_name && obj.msg) 
 				{
 					var user_name = obj.user_name;
-					  
+
 					var msg = obj.msg;
 
 					var div = $('<div></div>');
-					
+
 					div.append($('<span></span>').addClass('user_name').text(user_name));
 					div.append($('<span></span>').addClass('says').text(' says: '));
 					div.append($('<span></span>').addClass('msg').text(msg));
-					
+
 					$('#log').append(div);
 					var scrollingDown = document.getElementById("log");
 					scrollingDown.scrollTop = scrollingDown.scrollHeight; 
