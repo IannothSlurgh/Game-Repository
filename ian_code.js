@@ -732,7 +732,23 @@ Crafty.scene('Phase 3', function()
 		//Unit camp element's onclick function that transports events to tiles beneath the element.
 		function unitCampOnClick(mouse_event)
 		{
-			var unit_camp = document.getElementById("unit_camp");
+			var id = "unit_camp";
+			switch(this_player_name)
+			{
+				case player_1.name:
+					id+="1";
+					break;
+				case player_2.name:
+					id+="2";
+					break;
+				case player_3.name:
+					id+="3";
+					break;
+				case player_4.name:
+					id+="4";
+					break;
+			}
+			var unit_camp = document.getElementById(id);
 			//Get place clicked.
 			var xcoor = mouse_event.clientX;
 			var ycoor = mouse_event.clientY;
@@ -758,29 +774,34 @@ Crafty.scene('Phase 3', function()
 		{
 			var xcoor;
 			var ycoor;
+			var id = "unit_camp"
 			switch(this_player_name)
 			{
 				case player_1.name:
 					xcoor = 0;
 					ycoor = 0;
+					id+="1";
 					break;
 				case player_2.name:
 					xcoor = 10;
 					ycoor = 10;
+					id+="2";
 					break;
 				case player_3.name:
 					xcoor = 0;
 					ycoor = 10;
+					id+="3";
 					break;
 				case player_4.name:
 					xcoor = 10;
 					ycoor = 0;
+					id+="4";
 					break;
 			}
 			xcoor = getAbsoluteFromGrid(xcoor);
 			ycoor = getAbsoluteFromGrid(ycoor);
 			//Add the big green square.
-			addImage("unit_camp", "http://imgur.com/VSv5AOI.png", xcoor, ycoor, 2, 184, 184);
+			addImage(id, "http://imgur.com/VSv5AOI.png", xcoor, ycoor, 2, 184, 184);
 			//Set transport layer for the green square.
 			var unit_camp = document.getElementById("unit_camp");
 			unit_camp.onclick = unitCampOnClick;
