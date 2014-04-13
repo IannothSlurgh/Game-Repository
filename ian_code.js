@@ -732,11 +732,10 @@ Crafty.scene('Phase 3', function()
 		//Unit camp element's onclick function that transports events to tiles beneath the element.
 		function unitCampOnClick(mouse_event)
 		{
-			var div_tiles = document.getElementById("div_tiles");
 			var unit_camp = document.getElementById("unit_camp");
 			//Get place clicked.
-			var xcoor = parseInt(div_tiles.style.left) + mouse_event.pageX;
-			var ycoor = parseInt(div_tiles.style.top) + mouse_event.pageY;
+			var xcoor = mouse_event.screenX;
+			var ycoor = mouse_event.screenY;
 			//Hide unit camp element so elementFromPoint will return a tile, not unit camp element.
 			unit_camp.style.visibility = "hidden";
 			var found_element = document.elementFromPoint(xcoor, ycoor);
@@ -854,9 +853,8 @@ Crafty.scene('Phase 3', function()
 				unit.ondragend = 
 				function(mouse_event)
 				{
-					var div_tiles = document.getElementById("div_tiles");
-					var xcoor = parseInt(div_tiles.style.left) + mouse_event.pageX;
-					var ycoor = parseInt(div_tiles.style.top) + mouse_event.pageY;
+					var xcoor = mouse_event.screenX;
+					var ycoor = mouse_event.screenY;
 					var found_element = document.elementFromPoint(xcoor, ycoor);
 					if(found_element != null)
 					{
