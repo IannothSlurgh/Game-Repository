@@ -685,7 +685,23 @@ Crafty.scene('Phase 3', function()
 						endTurn(decrypted.starting_player);
 						document.getElementById("stat_log").innerHTML = "";
 						var div_tiles = document.getElementById("div_tiles");
-						var unit_camp = document.getElementById("unit_camp");
+						var unit_camp_id = "unit_camp";
+						switch(this_player_name)
+						{
+							case player_1.name:
+								unit_camp_id+="1";
+								break;
+							case player_2.name:
+								unit_camp_id+="2";
+								break;
+							case player_3.name:
+								unit_camp_id+="3";
+								break;
+							case player_4.name:
+								unit_camp_id+="4";
+								break;
+						}
+						var unit_camp = document.getElementById(unit_camp_id);
 						div_tiles.removeChild(unit_camp);
 					}
 				} //Except in special situations, it remains your turn and you can go ahead and send more events.
@@ -723,23 +739,23 @@ Crafty.scene('Phase 3', function()
 					endTurn(decrypted.starting_player);
 					document.getElementById("stat_log").innerHTML = "";
 					var div_tiles = document.getElementById("div_tiles");
-					var id = "unit_camp";
+					var unit_camp_id = "unit_camp";
 					switch(this_player_name)
 					{
 						case player_1.name:
-							id+="1";
+							unit_camp_id+="1";
 							break;
 						case player_2.name:
-							id+="2";
+							unit_camp_id+="2";
 							break;
 						case player_3.name:
-							id+="3";
+							unit_camp_id+="3";
 							break;
 						case player_4.name:
-							id+="4";
+							unit_camp_id+="4";
 							break;
 					}
-					var unit_camp = document.getElementById(id);
+					var unit_camp = document.getElementById(unit_camp_id);
 					div_tiles.removeChild(unit_camp);
 				}
 			}
