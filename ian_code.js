@@ -723,7 +723,23 @@ Crafty.scene('Phase 3', function()
 					endTurn(decrypted.starting_player);
 					document.getElementById("stat_log").innerHTML = "";
 					var div_tiles = document.getElementById("div_tiles");
-					var unit_camp = document.getElementById("unit_camp");
+					var id = "unit_camp";
+					switch(this_player_name)
+					{
+						case player_1.name:
+							id+="1";
+							break;
+						case player_2.name:
+							id+="2";
+							break;
+						case player_3.name:
+							id+="3";
+							break;
+						case player_4.name:
+							id+="4";
+							break;
+					}
+					var unit_camp = document.getElementById(id);
 					div_tiles.removeChild(unit_camp);
 				}
 			}
@@ -803,7 +819,7 @@ Crafty.scene('Phase 3', function()
 			//Add the big green square.
 			addImage(id, "http://imgur.com/VSv5AOI.png", xcoor, ycoor, 2, 184, 184);
 			//Set transport layer for the green square.
-			var unit_camp = document.getElementById("unit_camp");
+			var unit_camp = document.getElementById(id);
 			unit_camp.onclick = unitCampOnClick;
 			unit_camp.ondragover =
 			function(mouse_event)
