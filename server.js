@@ -179,17 +179,13 @@ function mazeGenerationAlgorithm()
 	initializeMaze();
 	
 	//choose valid start position in the grid
-	var col = Math.floor(Math.random() * 56);
-	var row = Math.floor(Math.random() * 40);
+	var col = Math.floor(Math.random() * 39);
+	var row = Math.floor(Math.random() * 39);
 		
-	while(maze_data[col][row] == '#' 
-		&& !(col > 0 
-		&& col < (56 - 1) 
-		&& row > 0
-		&& row < (40 - 1)))
+	while(maze_data[col][row] == '#')
 	{
-		col = Math.floor(Math.random() * 56);
-		row = Math.floor(Math.random() * 40);
+		col = Math.floor(Math.random() * 39);
+		row = Math.floor(Math.random() * 39);
 	}
 	
 	console.log("Maze starts @ (" + col + "," + row +")");
