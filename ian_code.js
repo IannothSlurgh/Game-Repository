@@ -167,7 +167,7 @@ Crafty.scene('Phase 3', function()
 
 		//Return a string of player-color based on if the given string equals a particular player name. (important for finding team_color elements)
 		//(Switchify self)
-		function getTeamColor(player_name)
+		/*function getTeamColor(player_name)
 		{
 			if(player_name == player_1.name)
 			{
@@ -185,7 +185,7 @@ Crafty.scene('Phase 3', function()
 			{
 				return "purple"
 			}
-		}
+		}*/
 
 		//Take integer value 0 to 13 inclusive and give pixel value for where a tile is. Ex 0,0 is 23 top, 23 left.
 		function getAbsoluteFromGrid(coor)
@@ -484,7 +484,7 @@ Crafty.scene('Phase 3', function()
 			var tile = document.getElementById("X"+xcoor.toString()+"Y"+ycoor.toString());
 			tile.src = unit_list[nth_unit].src;
 			//Add teamcolor underneath placed unit.
-			var color = getTeamColor(player_name);
+			/*var color = getTeamColor(player_name);
 			if(color == "blue")
 			{
 				addImage(color+nth_unit.toString(), "http://imgur.com/0naGZPu.png", getAbsoluteFromGrid(xcoor), getAbsoluteFromGrid(ycoor), 0, 40, 40);
@@ -500,7 +500,7 @@ Crafty.scene('Phase 3', function()
 			if(color == "purple")
 			{
 				addImage(color+nth_unit.toString(), "http://imgur.com/USo1Ce6.png", getAbsoluteFromGrid(xcoor), getAbsoluteFromGrid(ycoor), 0, 40, 40);
-			}
+			}*/
 			//Remove placed unit from your inventory if the placed unit was your unit.
 			if(player_name == this_player_name)
 			{
@@ -511,13 +511,13 @@ Crafty.scene('Phase 3', function()
 		}
 
 		//helper function that moves team color element of selected unit.
-		function moveTeamColor(xcoor, ycoor)
+		/*function moveTeamColor(xcoor, ycoor)
 		{
 			var color = getTeamColor(selected_unit.owner);
 			var team_color = document.getElementById(color+selected_unit.arr_index.toString());
 			team_color.style.top = getAbsoluteFromGrid(ycoor).toString()+"px";
 			team_color.style.left = getAbsoluteFromGrid(xcoor).toString()+"px";
-		}
+		}*/
 
 		//Movement handler
 		function move(xcoor, ycoor)
@@ -536,7 +536,7 @@ Crafty.scene('Phase 3', function()
 			original_tile.src="http://i.imgur.com/ubwIthk.gif";
 			new_tile.src = unit_list[selected_unit.arr_index].src;
 			moveSelectionBox(xcoor, ycoor);
-			moveTeamColor(xcoor, ycoor);
+			//moveTeamColor(xcoor, ycoor);
 			addRedX("noMove");
 		}
 
@@ -592,7 +592,7 @@ Crafty.scene('Phase 3', function()
 			{
 				var defender_tile = document.getElementById("X"+xcoor+"Y"+ycoor);
 				defender_tile.src = "http://i.imgur.com/ubwIthk.gif";
-				var color_id = getTeamColor(secondary_player)+defender.arr_index.toString();
+				//var color_id = getTeamColor(secondary_player)+defender.arr_index.toString();
 				var defender_color = document.getElementById(color_id);
 				div_tiles.removeChild(defender_color);
 				defender.xcoor = null;
@@ -603,7 +603,7 @@ Crafty.scene('Phase 3', function()
 			{
 				var attacker_tile = document.getElementById("X"+attacker.xcoor+"Y"+attacker.ycoor);
 				attacker_tile.src = "http://i.imgur.com/ubwIthk.gif";
-				var color_id = getTeamColor(selected_unit.owner)+selected_unit.arr_index.toString();
+				//var color_id = getTeamColor(selected_unit.owner)+selected_unit.arr_index.toString();
 				var attacker_color = document.getElementById(color_id);
 				div_tiles.removeChild(attacker_color);
 				attacker.xcoor = null;
@@ -734,8 +734,8 @@ Crafty.scene('Phase 3', function()
 		{
 			var unit_camp = document.getElementById("unit_camp");
 			//Get place clicked.
-			var xcoor = mouse_event.pageX + parseInt(document.body.scrollLeft);
-			var ycoor = mouse_event.pageY + parseInt(document.body.scrollTop);
+			var xcoor = mouse_event.pageX;
+			var ycoor = mouse_event.pageY;
 			//Hide unit camp element so elementFromPoint will return a tile, not unit camp element.
 			unit_camp.style.visibility = "hidden";
 			var found_element = document.elementFromPoint(xcoor, ycoor);
@@ -853,8 +853,8 @@ Crafty.scene('Phase 3', function()
 				unit.ondragend = 
 				function(mouse_event)
 				{
-					var xcoor = mouse_event.pageX + parseInt(document.body.scrollLeft);
-					var ycoor = mouse_event.pageY + parseInt(document.body.scrollTop);
+					var xcoor = mouse_event.pageX;
+					var ycoor = mouse_event.pageY;
 					var found_element = document.elementFromPoint(xcoor, ycoor);
 					if(found_element != null)
 					{
