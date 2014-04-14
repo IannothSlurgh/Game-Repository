@@ -500,7 +500,7 @@ io.sockets.on(
 			client.emit('getusername', JSON.stringify(obj));
 		});
 	
-		function translate_str_to_unit(name_list)
+		function translate_str_to_unit(name_list, index)
 		{
 			var unit_list = new Array();
 			for(var i = 0; i < name_list.length; ++i)
@@ -508,20 +508,96 @@ io.sockets.on(
 				switch(name_list[i])
 				{
 					case "warrior":
-						unit_list.push({src:"http://imgur.com/LnfGPbm.png", name:"warrior", xcoor:null, ycoor:null, health:16, damage:4, range:1, movement:2, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i});
+						var unit = {src: "", name:"warrior", xcoor:null, ycoor:null, health:16, damage:4, range:1, movement:2, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
+						unit_list.push(checkPlayerWarrior(unit, index));
 						break;
 					case "rogue":
-						unit_list.push({src:"http://imgur.com/WNL0znA.png", name:"rogue", xcoor:null, ycoor:null, health:10, damage:3, range:1, movement:2, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i});
+						var unit = {src:"", name:"rogue", xcoor:null, ycoor:null, health:10, damage:3, range:1, movement:2, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
+						unit_list.push(checkPlayerRogue(unit, index));
 						break;
 					case "goblin":
-						unit_list.push({src:"http://i.imgur.com/5SeUpMM.png", name:"goblin", xcoor:null, ycoor:null, health:6, damage:2, range:1, movement:4, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i});
+						var unit = {src:"", name:"goblin", xcoor:null, ycoor:null, health:6, damage:2, range:1, movement:4, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
+						unit_list.push(checkPlayerGoblin(unit, index));
 						break;
 					case "hunter":
-						unit_list.push({src:"http://imgur.com/Hc0Hcyp.png", name:"hunter", xcoor:null, ycoor:null, health:8, damage:2, range:5, movement:1, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i});
+						var unit = {src:"", name:"hunter", xcoor:null, ycoor:null, health:8, damage:2, range:5, movement:1, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
+						unit_list.push(checkPlayerHunter(unit, index));
 						break;
 				}
 			}
 			return unit_list;
+		}
+		function checkPlayerWarrior(var unit, var index)
+		{
+			switch(index)
+			{
+				case 0:
+					unit.src = "http://i.imgur.com/8GPzJz3.png";
+					return unit;
+				case 1:
+					unit.src = "http://i.imgur.com/fOHXK7Z.png";
+					return unit;
+				case 2:
+					unit.src = "http://i.imgur.com/HgAdP0A.png";
+					return unit;
+				case 3:
+					unit.src = "http://i.imgur.com/zYOKFBA.png";
+					return unit;
+			}
+		}
+		function checkPlayerRogue(var unit, var index)
+		{
+			switch(index)
+			{
+				case 0:
+					unit.src = "http://i.imgur.com/aay0Qpa.png";
+					return unit;
+				case 1:
+					unit.src = "http://i.imgur.com/MZzY8ee.png";
+					return unit;
+				case 2:
+					unit.src = "http://i.imgur.com/tGgtPdS.png";
+					return unit;
+				case 3:
+					unit.src = "http://i.imgur.com/Vk5wMBp.png";
+					return unit;
+			}
+		}
+		function checkPlayerGoblin(var unit, var index)
+		{
+			switch(index)
+			{
+				case 0:
+					unit.src = "http://i.imgur.com/7UPOjeq.png";
+					return unit;
+				case 1:
+					unit.src = "http://i.imgur.com/2EV4cTu.png";
+					return unit;
+				case 2:
+					unit.src = "http://i.imgur.com/c2eUcPc.png";
+					return unit;
+				case 3:
+					unit.src = "http://i.imgur.com/wVXV9VJ.png";
+					return unit;
+			}
+		}
+		function checkPlayerHunter(var unit, var index)
+		{
+			switch(index)
+			{
+				case 0:
+					unit.src = "http://i.imgur.com/3G4LY2t.png";
+					return unit;
+				case 1:
+					unit.src = "http://i.imgur.com/7pYt5wt.png";
+					return unit;
+				case 2:
+					unit.src = "http://i.imgur.com/cMBKJYG.png";
+					return unit;
+				case 3:
+					unit.src = "http://i.imgur.com/YWn3lj0.png";
+					return unit;
+			}
 		}
 	// This function sorts the scores of players in phase one to determine turn order in phase three
 		function sort_scores()
@@ -569,7 +645,7 @@ io.sockets.on(
 				{
 					case 0: 
 						player_1.name = username;
-						player_1.unit_list = translate_str_to_unit(str_unit_list);
+						player_1.unit_list = translate_str_to_unit(str_unit_list, index);
 						player_1.is_alive = true;
 						io.sockets.emit('SetPlayerOneUnitList', JSON.stringify({unit_list : player_1.unit_list}));
 						break;
