@@ -667,19 +667,19 @@ io.sockets.on(
 						break;
 					case 1:
 						player_2.name = username;
-						player_2.unit_list = translate_str_to_unit(str_unit_list);
+						player_2.unit_list = translate_str_to_unit(str_unit_list, index);
 						player_2.is_alive = true;
 						io.sockets.emit('SetPlayerTwoUnitList', JSON.stringify({unit_list : player_2.unit_list}));
 						break;
 					case 2:
 						player_3.name = username;
 						player_3.is_alive = true;
-						player_3.unit_list = translate_str_to_unit(str_unit_list);
+						player_3.unit_list = translate_str_to_unit(str_unit_list, index);
 						io.sockets.emit('SetPlayerThreeUnitList', JSON.stringify({unit_list : player_3.unit_list}));
 						break;
 					case 3:
 						player_4.name = username;
-						player_4.unit_list = translate_str_to_unit(str_unit_list);
+						player_4.unit_list = translate_str_to_unit(str_unit_list, index);
 						player_4.is_alive = true;
 						io.sockets.emit('SetPlayerFourUnitList', JSON.stringify({unit_list : player_4.unit_list}));
 						break;
