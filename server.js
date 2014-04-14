@@ -527,7 +527,7 @@ io.sockets.on(
 			}
 			return unit_list;
 		}
-		function checkPlayerWarrior(var unit, var index)
+		function checkPlayerWarrior(unit, index)
 		{
 			switch(index)
 			{
@@ -545,7 +545,7 @@ io.sockets.on(
 					return unit;
 			}
 		}
-		function checkPlayerRogue(var unit, var index)
+		function checkPlayerRogue(unit, index)
 		{
 			switch(index)
 			{
@@ -563,7 +563,7 @@ io.sockets.on(
 					return unit;
 			}
 		}
-		function checkPlayerGoblin(var unit, var index)
+		function checkPlayerGoblin(unit, index)
 		{
 			switch(index)
 			{
@@ -581,7 +581,7 @@ io.sockets.on(
 					return unit;
 			}
 		}
-		function checkPlayerHunter(var unit, var index)
+		function checkPlayerHunter(unit, index)
 		{
 			switch(index)
 			{
