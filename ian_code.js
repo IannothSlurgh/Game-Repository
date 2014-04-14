@@ -734,8 +734,8 @@ Crafty.scene('Phase 3', function()
 		{
 			var unit_camp = document.getElementById("unit_camp");
 			//Get place clicked.
-			var xcoor = mouse_event.pageX;
-			var ycoor = mouse_event.pageY;
+			var xcoor = mouse_event.pageX - parseInt(document.body.scrollLeft);
+			var ycoor = mouse_event.pageY - parseInt(document.body.scrollTop);
 			//Hide unit camp element so elementFromPoint will return a tile, not unit camp element.
 			unit_camp.style.visibility = "hidden";
 			var found_element = document.elementFromPoint(xcoor, ycoor);
@@ -853,8 +853,8 @@ Crafty.scene('Phase 3', function()
 				unit.ondragend = 
 				function(mouse_event)
 				{
-					var xcoor = mouse_event.pageX;
-					var ycoor = mouse_event.pageY;
+					var xcoor = mouse_event.pageX - parseInt(document.body.scrollLeft);
+ 					var ycoor = mouse_event.pageY - parseInt(document.body.scrollTop);
 					var found_element = document.elementFromPoint(xcoor, ycoor);
 					if(found_element != null)
 					{
