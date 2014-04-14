@@ -593,8 +593,8 @@ Crafty.scene('Phase 3', function()
 				var defender_tile = document.getElementById("X"+xcoor+"Y"+ycoor);
 				defender_tile.src = "http://i.imgur.com/ubwIthk.gif";
 				//var color_id = getTeamColor(secondary_player)+defender.arr_index.toString();
-				var defender_color = document.getElementById(color_id);
-				div_tiles.removeChild(defender_color);
+				//var defender_color = document.getElementById(color_id);
+				//div_tiles.removeChild(defender_color);
 				defender.xcoor = null;
 				defender.ycoor = null;
 			}
@@ -604,8 +604,8 @@ Crafty.scene('Phase 3', function()
 				var attacker_tile = document.getElementById("X"+attacker.xcoor+"Y"+attacker.ycoor);
 				attacker_tile.src = "http://i.imgur.com/ubwIthk.gif";
 				//var color_id = getTeamColor(selected_unit.owner)+selected_unit.arr_index.toString();
-				var attacker_color = document.getElementById(color_id);
-				div_tiles.removeChild(attacker_color);
+				//var attacker_color = document.getElementById(color_id);
+				//div_tiles.removeChild(attacker_color);
 				attacker.xcoor = null;
 				attacker.ycoor = null;
 				clearSelection();
@@ -734,8 +734,8 @@ Crafty.scene('Phase 3', function()
 		{
 			var unit_camp = document.getElementById("unit_camp");
 			//Get place clicked.
-			var xcoor = mouse_event.pageX - parseInt(document.body.scrollLeft);
-			var ycoor = mouse_event.pageY - parseInt(document.body.scrollTop);
+			var xcoor = mouse_event.clientX + document.body.scrollLeft;
+			var ycoor = mouse_event.clientY + document.body.scrollTop;
 			//Hide unit camp element so elementFromPoint will return a tile, not unit camp element.
 			unit_camp.style.visibility = "hidden";
 			var found_element = document.elementFromPoint(xcoor, ycoor);
@@ -853,8 +853,8 @@ Crafty.scene('Phase 3', function()
 				unit.ondragend = 
 				function(mouse_event)
 				{
-					var xcoor = mouse_event.pageX - parseInt(document.body.scrollLeft);
- 					var ycoor = mouse_event.pageY - parseInt(document.body.scrollTop);
+					var xcoor = mouse_event.clientX + document.body.scrollLeft;
+					var ycoor = mouse_event.clientY + document.body.scrollTop;
 					var found_element = document.elementFromPoint(xcoor, ycoor);
 					if(found_element != null)
 					{
