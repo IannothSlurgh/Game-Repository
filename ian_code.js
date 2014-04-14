@@ -854,8 +854,8 @@ Crafty.scene('Phase 3', function()
 				unit.ondragend = 
 				function(mouse_event)
 				{
-					var xcoor = mouse_event.pageX - mouse_event.clientX;
-					var ycoor = mouse_event.pageY - parseInt(document.body.scrollTop);
+					var xcoor = mouse_event.pageX;
+					var ycoor = mouse_event.pageY;
 					alert("Drop:X"+xcoor.toString()+" Y"+ycoor.toString());
 					alert("Scroll X"+document.body.scrollLeft.toString()+" Y"+document.body.scrollTop.toString());
 					var found_element = document.elementFromPoint(xcoor, ycoor);
