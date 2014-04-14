@@ -534,15 +534,19 @@ io.sockets.on(
 				case 0:
 					unit.src = "http://i.imgur.com/8GPzJz3.png";
 					return unit;
+					break;
 				case 1:
 					unit.src = "http://i.imgur.com/fOHXK7Z.png";
 					return unit;
+					break;
 				case 2:
 					unit.src = "http://i.imgur.com/HgAdP0A.png";
 					return unit;
+					break;
 				case 3:
 					unit.src = "http://i.imgur.com/zYOKFBA.png";
 					return unit;
+					break;
 			}
 		}
 		function checkPlayerRogue(unit, index)
@@ -552,15 +556,19 @@ io.sockets.on(
 				case 0:
 					unit.src = "http://i.imgur.com/aay0Qpa.png";
 					return unit;
+					break;
 				case 1:
 					unit.src = "http://i.imgur.com/MZzY8ee.png";
 					return unit;
+					break;
 				case 2:
 					unit.src = "http://i.imgur.com/tGgtPdS.png";
 					return unit;
+					break;
 				case 3:
 					unit.src = "http://i.imgur.com/Vk5wMBp.png";
 					return unit;
+					break;
 			}
 		}
 		function checkPlayerGoblin(unit, index)
@@ -570,15 +578,19 @@ io.sockets.on(
 				case 0:
 					unit.src = "http://i.imgur.com/7UPOjeq.png";
 					return unit;
+					break;
 				case 1:
 					unit.src = "http://i.imgur.com/2EV4cTu.png";
 					return unit;
+					break;
 				case 2:
 					unit.src = "http://i.imgur.com/c2eUcPc.png";
 					return unit;
+					break;
 				case 3:
 					unit.src = "http://i.imgur.com/wVXV9VJ.png";
 					return unit;
+					break;
 			}
 		}
 		function checkPlayerHunter(unit, index)
@@ -588,15 +600,19 @@ io.sockets.on(
 				case 0:
 					unit.src = "http://i.imgur.com/3G4LY2t.png";
 					return unit;
+					break;
 				case 1:
 					unit.src = "http://i.imgur.com/7pYt5wt.png";
 					return unit;
+					break;
 				case 2:
 					unit.src = "http://i.imgur.com/cMBKJYG.png";
 					return unit;
+					break;
 				case 3:
 					unit.src = "http://i.imgur.com/YWn3lj0.png";
 					return unit;
+					break;
 			}
 		}
 	// This function sorts the scores of players in phase one to determine turn order in phase three
