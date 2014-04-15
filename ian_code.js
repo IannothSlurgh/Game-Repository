@@ -856,7 +856,7 @@ Crafty.scene('Phase 3', function()
 				{
 					var div_tiles = document.getElementById("div_tiles");
 					var xcoor = mouse_event.clientX + document.body.scrollLeft + parseInt(div_tiles.style.left);
-					var ycoor = mouse_event.clientY + document.body.scrollTop + parseInt(div_tile.style.top);
+					var ycoor = mouse_event.clientY + document.body.scrollTop + parseInt(div_tiles.style.top);
 					var found_element = document.elementFromPoint(xcoor, ycoor);
 					if(found_element != null)
 					{
