@@ -343,12 +343,12 @@ Crafty.scene('Game', function()
 	//displays the score of the client player
 	Crafty.e("2D, DOM, Text")
 		.attr({x: 0, y: 0, w: 75})
-		.text("Score: 0")
+		.text("Gold: 0")
 		.textColor('rgb(255, 250, 250)')
 		.bind('ChangeScore', function(player)
 		{
 			//receive signal from server
-			this.text('Score: ' + player.score);
+			this.text('Gold: ' + player.score);
 		});
 	
 	//sends an event to update the maze timer
