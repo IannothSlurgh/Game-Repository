@@ -112,6 +112,7 @@ Crafty.scene('Phase 3', function()
 			}
 		}
 
+		//Handles victory & tie conditions. Will handle movement speed abuse.
 		function checkVictory()
 		{
 			//Check to see that only one player lives
@@ -130,7 +131,7 @@ Crafty.scene('Phase 3', function()
 					case player_3.is_alive:
 						name = player_3.name;
 					break;
-					case player_3.is_alive:
+					case player_4.is_alive:
 						name = player_4.name;
 					break;					
 				}
@@ -234,7 +235,8 @@ Crafty.scene('Phase 3', function()
 				alert(err);
 			}
 		}
-
+		
+		//Used for placing a red X over the movement-attack icons to indicate a unit cannot do one or both
 		function addRedX(id)
 		{
 			var red_x = document.getElementById(id);
@@ -257,6 +259,7 @@ Crafty.scene('Phase 3', function()
 			}
 		}
 
+		//Can be used to hide any element, but currently only for red X.
 		function hideRedX(id)
 		{
 			var red_x = document.getElementById(id);
@@ -284,26 +287,23 @@ Crafty.scene('Phase 3', function()
 		}
 
 		//Helper function- given a string player_name, return the unit_list of the player object.
-		//(Switchify self)
 		function findUnitList(player_name)
 		{
 			var unit_list;
-
-			if(player_name==player_1.name)
+			switch(player_name)
 			{
-				unit_list = player_1.unit_list;
-			}
-			else if(player_name==player_2.name)
-			{
-				unit_list = player_2.unit_list;
-			}
-			else if(player_name==player_3.name)
-			{
-				unit_list = player_3.unit_list;
-			}
-			else if(player_name==player_4.name)
-			{
-				unit_list = player_4.unit_list;
+				case player_1.name:
+					unit_list = player_1.unit_list;
+					break;
+				case player_2.name:
+					unit_list = player_2.unit_list;
+					break;
+				case player_3.name:
+					unit_list = player_3.unit_list;
+					break;
+				case player_4.name:
+					unit_list = player_4.unit_list;
+					break;
 			}
 			return unit_list;
 		}
@@ -492,24 +492,6 @@ Crafty.scene('Phase 3', function()
 			//Change src of appropriate tile.
 			var tile = document.getElementById("X"+xcoor.toString()+"Y"+ycoor.toString());
 			tile.src = unit_list[nth_unit].src;
-			//Add teamcolor underneath placed unit.
-			/*var color = getTeamColor(player_name);
-			if(color == "blue")
-			{
-				addImage(color+nth_unit.toString(), "http://imgur.com/0naGZPu.png", getAbsoluteFromGrid(xcoor), getAbsoluteFromGrid(ycoor), 0, 40, 40);
-			}
-			if(color == "teal")
-			{
-				addImage(color+nth_unit.toString(), "http://imgur.com/2uaKXfL.png", getAbsoluteFromGrid(xcoor), getAbsoluteFromGrid(ycoor), 0, 40, 40);
-			}
-			if(color == "orange")
-			{
-				addImage(color+nth_unit.toString(), "http://imgur.com/RzvzXFl.png", getAbsoluteFromGrid(xcoor), getAbsoluteFromGrid(ycoor), 0, 40, 40);
-			}
-			if(color == "purple")
-			{
-				addImage(color+nth_unit.toString(), "http://imgur.com/USo1Ce6.png", getAbsoluteFromGrid(xcoor), getAbsoluteFromGrid(ycoor), 0, 40, 40);
-			}*/
 			//Remove placed unit from your inventory if the placed unit was your unit.
 			if(player_name == this_player_name)
 			{
@@ -518,15 +500,6 @@ Crafty.scene('Phase 3', function()
 				div_tiles.removeChild(inventory_unit);
 			}			
 		}
-
-		//helper function that moves team color element of selected unit.
-		/*function moveTeamColor(xcoor, ycoor)
-		{
-			var color = getTeamColor(selected_unit.owner);
-			var team_color = document.getElementById(color+selected_unit.arr_index.toString());
-			team_color.style.top = getAbsoluteFromGrid(ycoor).toString()+"px";
-			team_color.style.left = getAbsoluteFromGrid(xcoor).toString()+"px";
-		}*/
 
 		//Movement handler
 		function move(xcoor, ycoor)
@@ -545,7 +518,7 @@ Crafty.scene('Phase 3', function()
 			original_tile.src="http://i.imgur.com/ubwIthk.gif";
 			new_tile.src = unit_list[selected_unit.arr_index].src;
 			moveSelectionBox(xcoor, ycoor);
-			//moveTeamColor(xcoor, ycoor);
+			//Disable movement affordance
 			addRedX("noMove");
 		}
 
@@ -576,11 +549,12 @@ Crafty.scene('Phase 3', function()
 				check_if_dead = true;
 			}
 			var div_tiles = document.getElementById("div_tiles");
-			// Hey, I didn't break anything!
 			var damage_dealt = defender.health - defender_health;
+			//Print out battle log message.
 			var message = selected_unit.owner + "\'s " + attacker.name + " attacked "
 						+ secondary_player + "\'s " + defender.name + " and did "
 						+ damage_dealt + " damage.";
+			//Only output once
 			if(selected_unit.owner == this_player_name)
 			{
 				socket.emit('phaseIII_message', message);
@@ -601,9 +575,6 @@ Crafty.scene('Phase 3', function()
 			{
 				var defender_tile = document.getElementById("X"+xcoor+"Y"+ycoor);
 				defender_tile.src = "http://i.imgur.com/ubwIthk.gif";
-				//var color_id = getTeamColor(secondary_player)+defender.arr_index.toString();
-				//var defender_color = document.getElementById(color_id);
-				//div_tiles.removeChild(defender_color);
 				defender.xcoor = null;
 				defender.ycoor = null;
 			}
@@ -611,16 +582,18 @@ Crafty.scene('Phase 3', function()
 			if(attacker_health <= 0)
 			{
 				var attacker_tile = document.getElementById("X"+attacker.xcoor+"Y"+attacker.ycoor);
-				//var color_id = getTeamColor(selected_unit.owner)+selected_unit.arr_index.toString();
-				//var attacker_color = document.getElementById(color_id);
-				//div_tiles.removeChild(attacker_color);
+				//If attacker dies, clear selection
 				clearSelection();
 				attacker_tile.src = "http://i.imgur.com/ubwIthk.gif";
 				attacker.xcoor = null;
 				attacker.ycoor = null;
 			}
-			attacker.can_attack = false;
-			addRedX("noAttack");
+			else
+			{
+				//If attacker remains alive, disable attack
+				attacker.can_attack = false;
+				addRedX("noAttack");
+			}
 			checkVictory();
 		}
 
@@ -979,7 +952,7 @@ Crafty.scene('Phase 3', function()
 					var msg = obj.msg;
 
 					var div = $('<div></div>');
-
+					//Print "User says message" to a div which is added to the log. Scrolls to bottom.
 					div.append($('<span></span>').addClass('user_name').text(user_name));
 					div.append($('<span></span>').addClass('says').text(' says: '));
 					div.append($('<span></span>').addClass('msg').text(msg));
