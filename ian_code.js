@@ -433,8 +433,12 @@ Crafty.scene('Phase 3', function()
 						stats.range = unit_list[i].range;
 
 						selected_unit.arr_index = i;
-						var unit_tile = document.getElementById("X"+xcoor.toString()+"Y"+ycoor.toString());
-						unit_tile.src = unit_list[i].src_select;
+						//Animate unit on selection (must be your unit.)
+						if(selected_unit.owner == this_player_name)
+						{
+							var unit_tile = document.getElementById("X"+xcoor.toString()+"Y"+ycoor.toString());
+							unit_tile.src = unit_list[i].src_select;
+						}
 						//Set disabilities.
 						if(!unit_list[i].can_move)
 						{
