@@ -682,6 +682,7 @@ Crafty.scene('Phase 2', function()
 	Crafty.stage.elem.style.display = "none";
 	document.getElementById("helpAndShop").style.display = "block";
 	document.getElementById("command").style.display = "block";
+	document.getElementById("command").style.font-size = "150%";
 	document.getElementById("yourGold").style.display = "block";
 	document.getElementById("yourUnit").style.display = "block";
 	document.getElementById("scrollbar").style.display = "block";
@@ -691,11 +692,14 @@ Crafty.scene('Phase 2', function()
 	document.getElementById("helpAndShop").style.top = "0px";
 	document.getElementById("helpAndShop").style.left = "0px";
 	document.getElementById("yourGold").style.top = "120px";
-	document.getElementById("yourGold").style.left = "700px";
+	document.getElementById("yourGold").style.left = "710px";
+	document.getElementById("yourGold").style.font-size = "150%";
 	document.getElementById("yourUnit").style.top = "220px";
 	document.getElementById("yourUnit").style.left = "710px";
+	document.getElementById("yourUnit").style.font-size = "150%";
 	document.getElementById("yourUnitList").style.top = "450px";
 	document.getElementById("yourUnitList").style.left= "0px";
+	document.getElementById("yourUnitList").style.font-size = "150%";
 	counter=setInterval(timer, 1000);
 	reset();
 	
