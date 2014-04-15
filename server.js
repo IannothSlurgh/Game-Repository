@@ -1145,7 +1145,9 @@ function checkRange(xcoor, ycoor)
 	{
 		obj_one.unit_two = returnNewUnitHP(unit_two.health, unit_one.damage);
 		obj_one.success = true;	
-		if(total_distance <= unit_two.range)
+		
+		//only melee retailiation
+		if(total_distance <= 1) 
 		{
 			var damage_taken = Math.ceil(unit_two.damage/2);
 			obj_one.unit_one = returnNewUnitHP(unit_one.health, damage_taken);
