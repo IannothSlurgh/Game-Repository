@@ -342,6 +342,7 @@ Crafty.scene('Game', function()
 	Crafty.e("2D, DOM, Text")
 		.attr({x: 0, y: 0, w: 75})
 		.text("Score: 0")
+		.textColor('rgb(255, 255, 255)')
 		.bind('ChangeScore', function(player)
 		{
 			//receive signal from server
@@ -360,6 +361,7 @@ Crafty.scene('Game', function()
 	Crafty.e("2D, DOM, Text")
 		.attr({x: 100, y: 0, w: 100})
 		.text("Time = " + Math.floor(time_left/60) + ":"+(time_left%60))
+		.textColor('rgb(255, 255, 255)')
 		.bind('ChangeTimer', function()
 		{
 			time_left -= 1;
