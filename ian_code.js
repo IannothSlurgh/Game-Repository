@@ -347,9 +347,12 @@ Crafty.scene('Phase 3', function()
 		//Clears selected_unit, stats, and hides selection box.
 		function clearSelection()
 		{
-			var unit = getPlayer(selected_unit.owner).unit_list[arr_index];
-			var unit_tile = document.getElementById("X"+unit.xcoor.toString()+"Y"+unit.ycoor.toString());
-			unit_tile.src = unit.src;
+			if(selected_unit.owner != null)
+			{
+				var unit = getPlayer(selected_unit.owner).unit_list[selected_unit.arr_index];
+				var unit_tile = document.getElementById("X"+unit.xcoor.toString()+"Y"+unit.ycoor.toString());
+				unit_tile.src = unit.src;
+			}
 			selected_unit.owner = null;
 			selected_unit.arr_index = null;
 			document.getElementById("stat_hp").innerHTML = "";
