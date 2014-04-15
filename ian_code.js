@@ -611,7 +611,10 @@ Crafty.scene('Phase 3', function()
 			{
 				//If attacker remains alive, disable attack
 				attacker.can_attack = false;
+				attacker.can_move = false;
 				addRedX("noAttack");
+				addRedX("noMove");
+				clearMovementShadow();
 			}
 			checkVictory();
 		}
