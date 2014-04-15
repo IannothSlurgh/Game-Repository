@@ -508,19 +508,19 @@ io.sockets.on(
 				switch(name_list[i])
 				{
 					case "warrior":
-						var unit = {src: "", name:"warrior", xcoor:null, ycoor:null, health:16, damage:4, range:1, movement:2, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
+						var unit = {src: "", src_select:"", name:"warrior", xcoor:null, ycoor:null, health:16, damage:4, range:1, movement:2, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
 						unit_list.push(checkPlayerWarrior(unit, index));
 						break;
 					case "rogue":
-						var unit = {src:"", name:"rogue", xcoor:null, ycoor:null, health:10, damage:3, range:1, movement:2, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
+						var unit = {src:"", src_select:"", name:"rogue", xcoor:null, ycoor:null, health:10, damage:3, range:1, movement:2, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
 						unit_list.push(checkPlayerRogue(unit, index));
 						break;
 					case "goblin":
-						var unit = {src:"", name:"goblin", xcoor:null, ycoor:null, health:6, damage:2, range:1, movement:4, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
+						var unit = {src:"", src_select:"", name:"goblin", xcoor:null, ycoor:null, health:6, damage:2, range:1, movement:4, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
 						unit_list.push(checkPlayerGoblin(unit, index));
 						break;
 					case "hunter":
-						var unit = {src:"", name:"hunter", xcoor:null, ycoor:null, health:8, damage:2, range:5, movement:1, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
+						var unit = {src:"", src_select:"", name:"hunter", xcoor:null, ycoor:null, health:8, damage:2, range:5, movement:1, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
 						unit_list.push(checkPlayerHunter(unit, index));
 						break;
 				}
@@ -533,18 +533,22 @@ io.sockets.on(
 			{
 				case 0:
 					unit.src = "http://i.imgur.com/8GPzJz3.png";
+					unit.src_select = "http://i.imgur.com/Il7gmXy.gif";
 					return unit;
 					break;
 				case 1:
 					unit.src = "http://i.imgur.com/fOHXK7Z.png";
+					unit.src_select = "http://i.imgur.com/koeSvDG.gif";
 					return unit;
 					break;
 				case 2:
 					unit.src = "http://i.imgur.com/HgAdP0A.png";
+					unit.src_select = "http://i.imgur.com/3GbhNoO.gif";
 					return unit;
 					break;
 				case 3:
 					unit.src = "http://i.imgur.com/zYOKFBA.png";
+					unit.src_select = "http://i.imgur.com/S4WqgL9.gif";
 					return unit;
 					break;
 			}
@@ -555,18 +559,22 @@ io.sockets.on(
 			{
 				case 0:
 					unit.src = "http://i.imgur.com/aay0Qpa.png";
+					unit.src_select = "http://i.imgur.com/P4dTqLp.gif";
 					return unit;
 					break;
 				case 1:
 					unit.src = "http://i.imgur.com/MZzY8ee.png";
+					unit.src_select = "http://i.imgur.com/fE8AJOc.gif";
 					return unit;
 					break;
 				case 2:
 					unit.src = "http://i.imgur.com/tGgtPdS.png";
+					unit.src_select = "http://i.imgur.com/BAaslld.gif";
 					return unit;
 					break;
 				case 3:
 					unit.src = "http://i.imgur.com/Vk5wMBp.png";
+					unit.src_select = "http://i.imgur.com/QInfi9k.gif";
 					return unit;
 					break;
 			}
@@ -577,18 +585,22 @@ io.sockets.on(
 			{
 				case 0:
 					unit.src = "http://i.imgur.com/7UPOjeq.png";
+					unit.src_select = "http://i.imgur.com/sRTKoG7.gif";
 					return unit;
 					break;
 				case 1:
 					unit.src = "http://i.imgur.com/2EV4cTu.png";
+					unit.src_select = "http://i.imgur.com/4ESjvvq.gif";
 					return unit;
 					break;
 				case 2:
 					unit.src = "http://i.imgur.com/c2eUcPc.png";
+					unit.src_select = "http://i.imgur.com/0218NEN.gif";
 					return unit;
 					break;
 				case 3:
 					unit.src = "http://i.imgur.com/wVXV9VJ.png";
+					unit.src_select = "http://i.imgur.com/XmIVSRd.gif";
 					return unit;
 					break;
 			}
@@ -599,18 +611,22 @@ io.sockets.on(
 			{
 				case 0:
 					unit.src = "http://i.imgur.com/3G4LY2t.png";
+					unit.src_select = "http://i.imgur.com/9E12eT8.gif";
 					return unit;
 					break;
 				case 1:
 					unit.src = "http://i.imgur.com/7pYt5wt.png";
+					unit.src_select = "http://i.imgur.com/nut6uE1.gif";
 					return unit;
 					break;
 				case 2:
 					unit.src = "http://i.imgur.com/cMBKJYG.png";
+					unit.src_select = "http://i.imgur.com/yC20NDl.gif";
 					return unit;
 					break;
 				case 3:
 					unit.src = "http://i.imgur.com/YWn3lj0.png";
+					unit.src_select = "http://i.imgur.com/LJhYTN2.gif";
 					return unit;
 					break;
 			}
