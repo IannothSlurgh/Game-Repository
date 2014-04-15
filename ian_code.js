@@ -165,27 +165,26 @@ Crafty.scene('Phase 3', function()
 			return player;
 		}
 
-		//Return a string of player-color based on if the given string equals a particular player name. (important for finding team_color elements)
+		//Return a string of player-color based on if the given string equals a particular player name. (important for colorizing text elements)
 		//(Switchify self)
-		/*function getTeamColor(player_name)
+		function getTeamColor(player_name)
 		{
-			if(player_name == player_1.name)
+			switch(player_name)
 			{
-				return "blue";
+				case player_1.name:
+					return "rgb(63,72,204)";
+					break;
+				case player_2.name:
+					return "rgb(43,132,134)";
+					break;
+				case player_3.name:
+					return "rgb(255,127,39)";
+					break;
+				case player_4.name:
+					return "rgb(163,73,164)";
+					break;
 			}
-			else if(player_name == player_2.name)
-			{
-				return "teal"
-			}
-			else if(player_name == player_3.name)
-			{
-				return "orange"
-			}
-			else if(player_name == player_4.name)
-			{
-				return "purple"
-			}
-		}*/
+		}
 
 		//Take integer value 0 to 13 inclusive and give pixel value for where a tile is. Ex 0,0 is 23 top, 23 left.
 		function getAbsoluteFromGrid(coor)
@@ -471,7 +470,9 @@ Crafty.scene('Phase 3', function()
 			{
 				events_locked = true;
 			}
-			document.getElementById("stat_player_turn").innerHTML = nextPlayer+"\'s turn";
+			var turn_text = document.getElementById("stat_player_turn");
+			turn_text.innerHTML = nextPlayer+"\'s turn";
+			turn_text.style.color = getTeamColor(nextPlayer);
 			clearSelection();
 			//Reset movement-attack capabilities for units owned by nextPlayer.
 			var unit_list = getPlayer(nextPlayer).unit_list
