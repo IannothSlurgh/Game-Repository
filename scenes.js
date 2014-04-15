@@ -63,7 +63,7 @@ function place_player()
 	
 	var player_text = Crafty.e("2D, DOM, Text")
 		.attr({x: col * 16, y: row * 16 - 15, w: 75})
-		.textColor('rgb(255, 255, 255)')
+		.textColor('rgb(255, 250, 250)')
 		.text(list_of_users[player_number]);
 		
 	player = Crafty.e('PlayerCharacter').at(col, row).attach(player_text);
@@ -116,7 +116,7 @@ function place_enemy_player(index)
 	//need to change width and x position based on user_name
 	var enemy_text = Crafty.e("2D, DOM, Text")
 		.attr({x: col * 16, y: row * 16 - 15, w: 75})
-		.textColor('rgb(255, 255, 255)')
+		.textColor('rgb(255, 250, 250)')
 		.text(list_of_users[index]);
 	
 	enemy_list.push(Crafty.e('EnemyPlayer').attr({index: index}).at(col, row).attach(enemy_text));
@@ -344,7 +344,7 @@ Crafty.scene('Game', function()
 	Crafty.e("2D, DOM, Text")
 		.attr({x: 0, y: 0, w: 75})
 		.text("Score: 0")
-		.textColor('rgb(255, 255, 255)')
+		.textColor('rgb(255, 250, 250)')
 		.bind('ChangeScore', function(player)
 		{
 			//receive signal from server
@@ -363,7 +363,7 @@ Crafty.scene('Game', function()
 	Crafty.e("2D, DOM, Text")
 		.attr({x: 100, y: 0, w: 100})
 		.text("Time = " + Math.floor(time_left/60) + ":"+(time_left%60))
-		.textColor('rgb(255, 255, 255)')
+		.textColor('rgb(255, 250, 250)')
 		.bind('ChangeTimer', function()
 		{
 			time_left -= 1;
