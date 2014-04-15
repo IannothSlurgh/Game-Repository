@@ -32,7 +32,7 @@ Crafty.c('Actor', {
 Crafty.c('Wall', {
 	init: function() {
 		this.requires('Actor, Color, Solid')
-			.color('rgb(20, 185, 40)');
+			.color('rgb(92, 51, 23)');
 	},
 });
 
@@ -50,7 +50,7 @@ Crafty.c('EnemyPlayer', {
 Crafty.c('Path', {
 	init: function(){
 		this.requires('Actor, Color')
-			.color('rgb(249, 223, 125)');
+			.color('rgb(205, 170, 125)');
 	},
 });
 
