@@ -614,9 +614,9 @@ Crafty.scene('Phase 3', function()
 				//var color_id = getTeamColor(selected_unit.owner)+selected_unit.arr_index.toString();
 				//var attacker_color = document.getElementById(color_id);
 				//div_tiles.removeChild(attacker_color);
+				clearSelection();
 				attacker.xcoor = null;
 				attacker.ycoor = null;
-				clearSelection();
 			}
 			attacker.can_attack = false;
 			addRedX("noAttack");
