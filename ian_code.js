@@ -610,11 +610,11 @@ Crafty.scene('Phase 3', function()
 			if(attacker_health <= 0)
 			{
 				var attacker_tile = document.getElementById("X"+attacker.xcoor+"Y"+attacker.ycoor);
-				attacker_tile.src = "http://i.imgur.com/ubwIthk.gif";
 				//var color_id = getTeamColor(selected_unit.owner)+selected_unit.arr_index.toString();
 				//var attacker_color = document.getElementById(color_id);
 				//div_tiles.removeChild(attacker_color);
 				clearSelection();
+				attacker_tile.src = "http://i.imgur.com/ubwIthk.gif";
 				attacker.xcoor = null;
 				attacker.ycoor = null;
 			}
