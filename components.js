@@ -107,7 +107,7 @@ Crafty.c('Money', {
 			value: 50
 		});
 		this.requires('Actor, Color')
-			.color('rgb(170, 125, 40)');
+			.color('rgb(255, 215, 0)');
 	}
 });
 
