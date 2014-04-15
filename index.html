@@ -32,6 +32,7 @@
 		display: none;
 		left: 710px;
 		top: 7px;
+		font-size: 150%;
 	}
 	p.stat_hp
 	{
@@ -66,8 +67,8 @@
 	p.stat_log
 	{
 		display:none;
-		left: 733px;
-		top: 420px;	
+		left: 670px;
+		top: 430px;
 	}
 	img.stat_icon
 	{
@@ -266,7 +267,7 @@
 	<script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
 
-<body style = "margin: 0px; font-size: 150%">
+<body style = "margin: 0px;">
 
 
 	<img id = "helpAndShop" src = "http://i.imgur.com/Me15cXC.png" style="position: absolute; top: 0px; left: 0px; display = none; z-index: -1;"/> <!--background-->
@@ -294,17 +295,17 @@
 	<img id = "stat_end_turn" class = "on_top stat_end_turn" src = "http://i.imgur.com/AEI8M7q.png" ondragstart = "return false" ondrop = "return false" oncontextmenu = "return false" /> <!--endturn-->
 
 	<div id="div_tiles"> </div>
-  <p id="command" style = "display: none;">
+  <p id="command" style = "display: none; font-size: 150%;">
   Click the button of the unit you wish to purchase. The fight will begin in:<span id="timer"></span>
   </p>
-  <p id="yourGold" style="position: absolute; top: 120; left:800; display:none;">
+  <p id="yourGold" style="position: absolute; top: 120; left:710; display:none; font-size: 150%;">
    Gold: <span id="money"></span>
   </p>
-  <p id="yourUnit" style="position: absolute; top: 220; left:800; display:none;">
+  <p id="yourUnit" style="position: absolute; top: 220; left:710; display:none; font-size: 150%;">
    Unit Count: <span id="counter"></span>
   </p>
    
-  <p id="yourUnitList" style="position: absolute; top: 400; left:0; display:none;">
+  <p id="yourUnitList" style="position: absolute; top: 400; left:0; display:none; font-size: 150%;">
    Your Units: <span id="theUnits"></span>
   </p>
   <p style ="margin: 0px;">
