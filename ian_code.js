@@ -487,6 +487,21 @@ Crafty.scene('Phase 3', function()
 			}
 		}
 
+		function ability(xcoor, ycoor, healthUser, healthTarget, player_name, ability_id)
+		{
+			var target = findUnit(player_name, xcoor, ycoor);
+			var user = findUnitList(selected_unit.owner)[selected_unit.arr_index];
+			switch(ability_id)
+			{
+				case 0:
+					target.health = healthTarget;
+					break;
+			}
+			user.can_attack = false;
+			user.can_move = false;
+			clearSelection();
+		}
+		
 		function place(xcoor, ycoor, player_name, nth_unit)
 		{
 			//Set unit (nth_unit in the unit_list) location attributes
@@ -659,6 +674,13 @@ Crafty.scene('Phase 3', function()
 					{
 						attack(decrypted.xcoor, decrypted.ycoor, decrypted.who, decrypted.healthSelf, decrypted.healthTarget);
 					}
+					else if(decrypted.action == "Ability")
+					{
+					}
+					else if(decrypted.action == "AbilityUsed")
+					{
+						ability(decrypted.xcoor, decrypted.ycoor, decrypted.healthSelf, decrypted.healthTarget, decrpyted.who, decrypted.dragged_num)
+					}
 					else if(decrypted.action == "Place")
 					{
 						place(decrypted.xcoor, decrypted.ycoor, this_player_name, decrypted.dragged_num);
@@ -698,6 +720,13 @@ Crafty.scene('Phase 3', function()
 				else if(decrypted.action == "Attack")
 				{
 					attack(decrypted.xcoor, decrypted.ycoor, decrypted.who, decrypted.healthSelf, decrypted.healthTarget);
+				}
+				else if(decrypted.action == "Ability")
+				{
+				}
+				else if(decrypted.action == "AbilityUsed")
+				{
+					ability(decrypted.xcoor, decrypted.ycoor, decrypted.healthSelf, decrypted.healthTarget, decrpyted.who, decrypted.dragged_num)
 				}
 				else if(decrypted.action == "Place")
 				{

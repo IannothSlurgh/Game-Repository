@@ -842,6 +842,7 @@ io.sockets.on(
 						//If unit at space, select unit.
 						if(isOccupied(decrypted.xcoor, decrypted.ycoor))
 						{
+							ability_toggled = false;
 							confirmation.action = "Select";
 							confirmation.success = true;
 							select(decrypted.xcoor, decrypted.ycoor);
@@ -852,6 +853,7 @@ io.sockets.on(
 							//If not occupied, tries to move selected unit.
 							if(selected_unit.owner == decrypted.who)
 							{
+								ability_toggled = false;
 								confirmation.action = "Move";
 								confirmation.success = move(decrypted.xcoor, decrypted.ycoor);
 								confirmation.who = selected_unit.owner;
@@ -869,7 +871,16 @@ io.sockets.on(
 						//Ability will be used for 'healer' and 'plant' which are not made yet.
 						if(ability_toggle)
 						{
-							confirmation.success = ability(decrypted.xcoor, decrypted.ycoor);
+							confirmation.type = "abilityUsed";
+							var results = ability(decrypted.xcoor, decrypted.ycoor);
+							confirmation.success = results.success;
+							confirmation.who = results.targetOwner;
+							confirmation.healthSelf = results.userHealth;
+							confirmation.healthTarget = result.targetHealth
+							if(results.success)
+							{
+								confirmation.dragged_num = results.abilityID;
+							}
 						}
 						else
 						{
@@ -895,6 +906,7 @@ io.sockets.on(
 									attacker.health = confirmation.healthSelf;
 									defender.health = confirmation.healthTarget;
 									attacker.can_attack = false;
+									attacker.can_move = false;
 									if(attacker.health <= 0)
 									{
 										attacker.is_dead = true;
@@ -951,6 +963,18 @@ io.sockets.on(
 									unit_list[i].can_attack = true;
 								}
 							}
+						}
+					}
+					break;
+				case "Ability":
+					//Toggles ability button for all players.
+					if(!place_phase)
+					{
+						var unit = findUnit(selected_unit.xcoor, selected_unit.ycoor);
+						if(unit.can_attack && unit.can_move)
+						{
+							confirmation.success = true;
+							ability_toggle = !ability_toggle;
 						}
 					}
 					break;
@@ -1125,6 +1149,43 @@ function checkPlayerAlive(player_name)
 	player.is_alive = false;
 	return false;
 }
+
+function ability(xcoor, ycoor)
+{
+	var user = findUnit(selected_unit.xcoor, selected_unit.ycoor);
+	var target = findUnit(xcoor, ycoor);
+	var distance = getDistance(xcoor, ycoor);
+	var results =
+	{
+		success: false,
+		abilityID: null,
+		targetOwner: getPlayerOccupying(xcoor, ycoor),
+		targetHealth: null,
+		userHealth: null
+	}
+	var success = false;
+	switch(user.ability)
+	{
+		case "Heal":
+			//Range 1, not self, on your team
+			if(distance == 1 && target != null && results.target_owner == selected_unit.owner)
+			{
+				//Add x health, currently 2.
+				target.health += 2;
+				targetHealth = target.health;
+				success = true;
+				results.abilityID = 0;
+			}
+			break;
+	}
+	if(results.success)
+	{
+		user.can_attack = false;
+		user.can_move = false;
+	}
+	return results;
+}
+
 // Checks and returns the decision of an attack based on a range check
 function checkRange(xcoor, ycoor)
 {
