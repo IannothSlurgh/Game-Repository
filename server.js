@@ -414,6 +414,7 @@ io.sockets.on(
 					});
 			}
 		});
+		//Removes duplicated user names from a list of user names
 		function removeDuplicates(arr)
 		{
 			var i,
@@ -435,6 +436,7 @@ io.sockets.on(
 		'userlist',
 		function(message)
 		{
+			//Called in game lobby and end of phase II shop
 			client.get(
 				'user_name', 
 				function(err, name) 
@@ -452,15 +454,16 @@ io.sockets.on(
 								clients_ready[index] = status;
 							}
 						}
+						//Sends a set of ready booleans and unique user names
 						io.sockets.emit('userlist', JSON.stringify({"uniqueNames":unique_names, "status": clients_ready}));
 					}
 				});
 		});
-	//Jacob stuff
 	client.on(
 		'phaseIII_message',
 		function(message)
 		{
+			//Outputs chat segments in phase III chatlog
 			io.sockets.emit('phaseIII_notification', message);
 		});
 	
@@ -499,12 +502,14 @@ io.sockets.on(
 			};
 			client.emit('getusername', JSON.stringify(obj));
 		});
-	
+
+		//Converts a list of string names of units to unit objects with appropriate stats, src, etc	
 		function translate_str_to_unit(name_list, index)
 		{
 			var unit_list = new Array();
 			for(var i = 0; i < name_list.length; ++i)
 			{
+				//Take string name and convert to unit object.
 				switch(name_list[i])
 				{
 					case "warrior":
@@ -527,6 +532,7 @@ io.sockets.on(
 			}
 			return unit_list;
 		}
+		//Set srcs of a warrior unit object based on player color
 		function checkPlayerWarrior(unit, index)
 		{
 			switch(index)
@@ -553,6 +559,7 @@ io.sockets.on(
 					break;
 			}
 		}
+		//Set srcs of a rogue unit object based on player color
 		function checkPlayerRogue(unit, index)
 		{
 			switch(index)
@@ -579,6 +586,8 @@ io.sockets.on(
 					break;
 			}
 		}
+		
+		//Set srcs of a goblin unit object based on player color
 		function checkPlayerGoblin(unit, index)
 		{
 			switch(index)
@@ -605,6 +614,8 @@ io.sockets.on(
 					break;
 			}
 		}
+		
+		//Set srcs of a hunter unit object based on player color
 		function checkPlayerHunter(unit, index)
 		{
 			switch(index)
@@ -631,7 +642,8 @@ io.sockets.on(
 					break;
 			}
 		}
-	// This function sorts the scores of players in phase one to determine turn order in phase three
+		
+		// This function sorts the scores of players in phase one to determine turn order in phase three
 		function sort_scores()
 		{
 			for(var i = 1; i < turn_order.length; ++i)
@@ -650,7 +662,8 @@ io.sockets.on(
 				}
 			}
 		}
-	// This function sets the status of players as ready as they have pressed the ready button. Allows for moving between phases
+		
+		// This function sets the status of players as ready as they have pressed the ready button. Allows for moving between phases
 		client.on(
 			'SetStatusReady',
 			function(message)
@@ -659,6 +672,7 @@ io.sockets.on(
 				console.log(username);
 				var str_unit_list = JSON.parse(message).player_units;
 				var index = clients.indexOf(username);
+				//If a 3rd or 4th player sends ready, make defaults for 4 person
 				if(index > 1 
 					&& (score_list.length < 4 
 					|| turn_order.length < 4))
@@ -668,11 +682,13 @@ io.sockets.on(
 					turn_order.push("");
 					turn_order.push("");
 				}
-			
+				
 				turn_order[index] = username;
 				score_list[index] = JSON.parse(message).player_score;
 
 				clients_ready[index] = 0;
+				
+				//Create unit_lists and send them to all users.
 				switch(index)
 				{
 					case 0: 
@@ -706,6 +722,8 @@ io.sockets.on(
 				
 				var num_of_players_ready = 0;
 				
+				//Check readiness of players where ready in this context
+				//is 0. (readiness in an earlier context was 1)
 				for(var i = 0; i < clients_ready.length; i++)
 				{
 					if(clients_ready[i] == 0)
@@ -714,6 +732,7 @@ io.sockets.on(
 					}
 				}
 				
+				//If all players ready, go to phase III
 				if(num_of_players_ready == clients.length)
 				{
 					console.log("***");
@@ -731,7 +750,8 @@ io.sockets.on(
 				}
 			}
 		);
-	// Generic translate message between client and server
+		
+		// Generic translate message between client and server
 		function translateMessage(message)
 		{
 			switch(phase)
@@ -750,11 +770,13 @@ io.sockets.on(
 	
 		client.on('Event_received',
 			translateMessage);
-	// Translates any message in phase three
+			
+		// Translates any message in phase three
 		function translateMessagePhaseIII(message)
 		{
 			var decrypted = JSON.parse(message);
 			console.log(decrypted);
+			//Response to sender.
 			var confirmation =
 			{
 				"type":"Confirmation",
@@ -767,7 +789,8 @@ io.sockets.on(
 				"healthTarget":null,
 				"dragged_num":null
 			};
-		
+			
+			//Message to other players
 			var notification =
 			{
 				"type":"Notification",
@@ -779,7 +802,7 @@ io.sockets.on(
 				"healthTarget":null,
 				"dragged_num":null
 			};
-		
+			
 			switch(decrypted.action)
 			{
 				case "Lclick":
@@ -787,7 +810,9 @@ io.sockets.on(
 					{
 						console.log(decrypted);
 						confirmation.action = "Place";
+						//Check if a place is possible with the given message.
 						confirmation.success = place(decrypted.xcoor, decrypted.ycoor, decrypted.who, decrypted.dragged_num); 
+						//If all units placed, special message to tell everyone the game begins.
 						if(player_1.units_placed == player_1.unit_list.length 
 							&& player_2.units_placed == player_2.unit_list.length 
 							&& player_3.units_placed == player_3.unit_list.length 
@@ -814,6 +839,7 @@ io.sockets.on(
 					}
 					else
 					{
+						//If unit at space, select unit.
 						if(isOccupied(decrypted.xcoor, decrypted.ycoor))
 						{
 							confirmation.action = "Select";
@@ -823,6 +849,7 @@ io.sockets.on(
 						}
 						else
 						{
+							//If not occupied, tries to move selected unit.
 							if(selected_unit.owner == decrypted.who)
 							{
 								confirmation.action = "Move";
@@ -839,17 +866,21 @@ io.sockets.on(
 				case "Rclick":
 					if(!place_phase)
 					{
+						//Ability will be used for 'healer' and 'plant' which are not made yet.
 						if(ability_toggle)
 						{
 							confirmation.success = ability(decrypted.xcoor, decrypted.ycoor);
 						}
 						else
 						{
+							//Currently right-click always means attack
 							confirmation.action = "Attack";
+							//Check there is unit, it is hostile, and the attacker is under your control.
 							if(isOccupied(decrypted.xcoor, decrypted.ycoor) 
 								&& getPlayerOccupying(decrypted.xcoor, decrypted.ycoor) != selected_unit.owner 
 								&& decrypted.who == selected_unit.owner)
 							{
+								//Return the success, and resulting hitpoints of both attacker and defender.
 								var attack_results = checkRange(decrypted.xcoor, decrypted.ycoor);
 								confirmation.success = attack_results.success;
 								confirmation.healthSelf = attack_results.unit_one;
@@ -857,8 +888,10 @@ io.sockets.on(
 								confirmation.who = getPlayerOccupying(decrypted.xcoor, decrypted.ycoor);
 								var attacker = findUnit(selected_unit.xcoor, selected_unit.ycoor);
 								var defender = findUnit(decrypted.xcoor, decrypted.ycoor);
+								//If all checks successful- continue
 								if(confirmation.success)
 								{
+									//Set server details (units hp, can_attack, etc)
 									attacker.health = confirmation.healthSelf;
 									defender.health = confirmation.healthTarget;
 									attacker.can_attack = false;
@@ -867,6 +900,7 @@ io.sockets.on(
 										attacker.is_dead = true;
 										attacker.xcoor = null;
 										attacker.ycoor = null;
+										//Special hp value to tell players that last unit owned by attacker dead.
 										if(! checkPlayerAlive(selected_unit.owner))
 										{
 											confirmation.healthSelf = "Playerdead";
@@ -880,6 +914,7 @@ io.sockets.on(
 										defender.is_dead = true;
 										defender.xcoor = null;
 										defender.ycoor = null;
+										//Special hp value to tell players that last unit owned by defender dead.
 										if(! checkPlayerAlive(confirmation.who))
 										{
 											confirmation.healthTarget = "Playerdead";
@@ -899,9 +934,12 @@ io.sockets.on(
 					{
 						confirmation.action = "Endturn";
 						confirmation.success = false;
+						//It must be the sender's turn to end turn
 						if(turn_order[current_turn] == decrypted.who)
 						{
+							//Return the name of the next player in turn order
 							confirmation.who = endTurn();
+							//If game is not tied, reset appropriate player's attack-move permissions
 							if(confirmation.who != "tie")
 							{
 								confirmation.success = true;
@@ -921,6 +959,8 @@ io.sockets.on(
 			notification.who = confirmation.who;
 			notification.healthSelf = confirmation.healthSelf;
 			notification.healthTarget = confirmation.healthTarget;
+			//If operation requested by client is good, tell client so, and tell
+			//All other clients what happened.
 			if(confirmation.success)
 			{
 				client.emit('phaseIIIservermessage', JSON.stringify(confirmation));
@@ -952,6 +992,7 @@ io.sockets.on(
 			{
 				if (name) 
 				{
+					//Remove user from lists.
 					io.sockets.emit('notification', name + ' left the room.');
 					var index = clients.indexOf(name);
 					if(index > -1)
@@ -1098,7 +1139,7 @@ function checkRange(xcoor, ycoor)
 		unit_two:unit_two.health,
 		success:false
 	}
-	
+	//If attacker is in range, consider retaliation, and change hit points appropriately
 	if(total_distance <= unit_one.range 
 		&& unit_one.can_attack)
 	{
@@ -1124,7 +1165,7 @@ function select(xcoor, ycoor)
 	selected_unit.ycoor = ycoor;
 	selected_unit.owner = getPlayerOccupying(xcoor, ycoor);
 }
-// Specifys the rules of moving a player
+// Specifies the rules of moving a player
 function move(xcoor, ycoor)
 {
 	var unit = findUnit(selected_unit.xcoor, selected_unit.ycoor);
@@ -1149,6 +1190,7 @@ function place(xcoor, ycoor, player_name, unit_to_place)
 	}
 	var player = getPlayer(player_name);
 	var success = true;
+	//Player camp checks
 	if(player_name == player_1.name)
 	{
 		if(xcoor > 3 || ycoor > 3)
@@ -1214,6 +1256,7 @@ function endTurn()
 	}
 	current_turn = (current_turn + 1) % turn_order.length;
 	var next_player = getPlayer(turn_order[current_turn]);
+	//Go past dead players in turn_order.
 	while(! next_player.is_alive)
 	{
 		current_turn = (current_turn + 1) % turn_order.length;
