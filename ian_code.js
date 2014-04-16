@@ -48,20 +48,30 @@ Crafty.scene('Phase 3', function()
 		//An array containing all DOM ids of squares which can be moved to.
 		var movement_shadow = [];
 
+		//Gives the distance from one point to another.
+		function getDistance(start_xcoor, start_ycoor, dest_xcoor, dest_ycoor)
+		{
+			var delta_x = Math.abs(dest_xcoor - start_xcoor);
+			var delta_y = Math.abs(dest_ycoor - start_ycoor);
+			var distance = Math.max(delta_x, delta_y)
+			return distance;
+		}		
+		
 		//Function that finds all spaces that can be moved to, checks their occupancy, then adds a shadow to array if unoccupied
 		function generateMovementShadow()
 		{
 			var unit = getPlayer(selected_unit.owner).unit_list[selected_unit.arr_index];
-			//If the unit cannot move, no shadow.
-			if(unit.can_move == false)
+			var bound = Math.max(unit.range, unit.movement);
+			//If the unit cannot attack, no shadow period.
+			if(unit.can_attack == false)
 			{
 				return;
 			}
 			//Set appropriate boundaries.
-			var far_left = unit.xcoor - unit.movement;
-			var far_right = unit.xcoor + unit.movement;
-			var far_top = unit.ycoor - unit.movement;
-			var far_bottom = unit.ycoor + unit.movement;
+			var far_left = unit.xcoor - bound;
+			var far_right = unit.xcoor + bound;
+			var far_top = unit.ycoor - bound;
+			var far_bottom = unit.ycoor + bound;
 			if(far_left < 0)
 			{
 				far_left = 0;
@@ -87,8 +97,25 @@ Crafty.scene('Phase 3', function()
 					if(!isOccupied(i, j))
 					{
 						var shadow_id = "X"+i.toString()+"Y"+j.toString();
+						var distance = getDistance(unit.xcoor, unit.ycoor, i, j);
 						movement_shadow.push(shadow_id);
-						document.getElementById(shadow_id).src = "http://i.imgur.com/Pa1TQOw.png";
+						//Outer movement shadow.
+						if(distance > unit.range && distance <= unit.movement)
+						{
+							document.getElementById(shadow_id).src = "http://i.imgur.com/Pa1TQOw.png";
+						} //Outer Attack shadow.
+						else if(distance <= unit.range && distance > unit.movement)
+						{
+							document.getElementById(shadow_id).src = "http://i.imgur.com/SfuSfhe.png";
+						} //Inner movement
+						else if(unit.range > unit.movement)
+						{
+							document.getElementById(shadow_id).src = "http://i.imgur.com/Pa1TQOw.png";
+						}//Inner attack
+						else
+						{
+							document.getElementById(shadow_id).src = "http://i.imgur.com/SfuSfhe.png";
+						}
 					}
 				}
 			}
