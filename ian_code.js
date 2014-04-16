@@ -58,7 +58,7 @@ Crafty.scene('Phase 3', function()
 		}		
 		
 		//Function that finds all spaces that can be moved to, checks their occupancy, then adds a shadow to array if unoccupied
-		function generateMovementShadow()
+		function generateShadow()
 		{
 			var unit = getPlayer(selected_unit.owner).unit_list[selected_unit.arr_index];
 			var bound = Math.max(unit.range, unit.movement);
@@ -102,13 +102,20 @@ Crafty.scene('Phase 3', function()
 						//Outer movement shadow.
 						if(distance > unit.range && distance <= unit.movement)
 						{
-							document.getElementById(shadow_id).src = "http://i.imgur.com/Pa1TQOw.png";
+							if(unit.can_move)
+							{
+								document.getElementById(shadow_id).src = "http://i.imgur.com/Pa1TQOw.png";
+							}
+							else
+							{
+								movement_shadow.pop();
+							}
 						} //Outer Attack shadow.
 						else if(distance <= unit.range && distance > unit.movement)
 						{
 							document.getElementById(shadow_id).src = "http://i.imgur.com/SfuSfhe.png";
 						} //Inner movement
-						else if(unit.range > unit.movement)
+						else if(unit.range > unit.movement && unit.can_move)
 						{
 							document.getElementById(shadow_id).src = "http://i.imgur.com/Pa1TQOw.png";
 						}//Inner attack
@@ -122,7 +129,7 @@ Crafty.scene('Phase 3', function()
 		}
 
 		//Deletes the movement shadow.
-		function clearMovementShadow()
+		function clearShadow()()
 		{
 			while(movement_shadow.length > 0)
 			{
@@ -396,7 +403,7 @@ Crafty.scene('Phase 3', function()
 			hideRedX("noAttack");
 			hideRedX("noMove");
 			//Remove movement shadow.
-			clearMovementShadow();
+			clearShadow()();
 		}
 
 		//Sets the stats to those indicated in a stats object. (has src, health, damage, range, and movement)
@@ -485,7 +492,7 @@ Crafty.scene('Phase 3', function()
 			//Movement shadow seen only on your own units.
 			if(selected_unit.owner == this_player_name)
 			{
-				generateMovementShadow();
+				generateShadow();
 			}
 		}
 
@@ -550,7 +557,8 @@ Crafty.scene('Phase 3', function()
 		//Movement handler
 		function move(xcoor, ycoor)
 		{
-			clearMovementShadow()
+			clearShadow()()
+			generateShadow();
 			//change selected unit's xcoor-ycoor
 			var unit_list = findUnitList(selected_unit.owner);
 			var original_xcoor = unit_list[selected_unit.arr_index].xcoor;
@@ -641,7 +649,7 @@ Crafty.scene('Phase 3', function()
 				attacker.can_move = false;
 				addRedX("noAttack");
 				addRedX("noMove");
-				clearMovementShadow();
+				clearShadow()();
 			}
 			checkVictory();
 		}
