@@ -148,14 +148,18 @@ function phase_one() {
 	document.getElementById("toHelp").alt.width="228px";
 	document.getElementById("toHelp").alt.height="96px";
 	document.getElementById("helpText1").style.display = "block";
-	document.getElementById("helpText1").style.zIndex = "0";
+	document.getElementById("helpText1").style.zindex = "0";
 	document.getElementById("helpText1").style.left = "105px";
-	document.getElementById("helpText1").style.top = "68px";
-	
+	document.getElementById("helpText1").style.top = "68px"
+	document.getElementById("text1").style.display = "block";
+	document.getElementById("text1").style.zIndex = "0";
+	document.getElementById("text1").style.left = "105px";
+	document.getElementById("text1").style.top = "560px";
 }
 //display info for the second part of the game
 function phase_two() {
 	document.getElementById("helpText1").style.display = "none";
+	document.getElementById("text1").style.display = "none";
 	document.getElementById("helpText3").style.display = "none";
 	document.getElementById("toTitle").style.display = "none";
 	document.getElementById("phase2").style.display = "none";
@@ -176,6 +180,7 @@ function phase_two() {
 function phase_three() {
 	document.getElementById("helpText2").style.display = "none";
 	document.getElementById("helpText1").style.display = "none";
+	document.getElementById("text1").style.display = "none";
 	document.getElementById("toTitle").style.display = "none";
 	document.getElementById("phase2").style.display = "none";
 	document.getElementById("phase3").style.display = "none";
@@ -194,6 +199,7 @@ function phase_three() {
 
 function back() {
 	document.getElementById("helpText1").style.display = "none";
+	document.getElementById("text1").style.display = "none";
 	document.getElementById("helpText2").style.display = "none";
 	document.getElementById("helpText3").style.display = "none";
 	document.getElementById("toHelp").style.display = "none";
@@ -232,6 +238,7 @@ function returnFromHelpScreen()
 	whichHelpScreen = 0;
 	document.getElementById("Help").style.display = "none";
 	document.getElementById("helpText1").style.display = "none";
+	document.getElementById("text1").style.display = "none";
 	document.getElementById("helpText2").style.display = "none";
 	document.getElementById("helpText3").style.display = "none";
 	document.getElementById("toHelp").style.display = "none";
