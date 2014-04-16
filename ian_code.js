@@ -42,6 +42,8 @@ Crafty.scene('Phase 3', function()
 			arr_index:null
 		};
 
+		var current_turn = null;
+		
 		//Used for place phase with unit-inventory to determine the index of the client's unit_list which is being dragged.
 		var inventory_dragged_unit = null;
 
@@ -467,11 +469,13 @@ Crafty.scene('Phase 3', function()
 						stats.range = unit_list[i].range;
 
 						selected_unit.arr_index = i;
-						//Animate unit on selection (must be your unit.)
-						if(selected_unit.owner == this_player_name)
+						//Animate unit on selection (must be your unit. and your turn)
+						if(selected_unit.owner == this_player_name && current_turn == this_player_name)
 						{
 							var unit_tile = document.getElementById("X"+xcoor.toString()+"Y"+ycoor.toString());
 							unit_tile.src = unit_list[i].src_select;
+							//Movement shadow seen only on your own units.
+							generateShadow();
 						}
 						//Set disabilities.
 						if(!unit_list[i].can_move)
@@ -489,11 +493,6 @@ Crafty.scene('Phase 3', function()
 			changeStatsGraphical(stats);
 			//Either create selection box, or move it to the newly selected unit.
 			moveSelectionBox(xcoor, ycoor);
-			//Movement shadow seen only on your own units.
-			if(selected_unit.owner == this_player_name)
-			{
-				generateShadow();
-			}
 		}
 
 		//Handler for endturn. Also called when a player dies on his own turn.
@@ -519,6 +518,7 @@ Crafty.scene('Phase 3', function()
 				unit_list[i].can_move = true;
 				unit_list[i].can_attack = true;
 			}
+			current_turn = nextPlayer;
 		}
 
 		function ability(xcoor, ycoor, healthUser, healthTarget, player_name, ability_id)
@@ -573,6 +573,7 @@ Crafty.scene('Phase 3', function()
 			if(selected_unit.owner == this_player_name)
 			{
 				new_tile.src = unit_list[selected_unit.arr_index].src_select;
+				generateShadow();
 			}
 			else
 			{
@@ -581,7 +582,6 @@ Crafty.scene('Phase 3', function()
 			moveSelectionBox(xcoor, ycoor);
 			//Disable movement affordance
 			addRedX("noMove");
-			generateShadow();
 		}
 
 		function attack(xcoor, ycoor, secondary_player, attacker_health, defender_health)
