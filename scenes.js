@@ -153,8 +153,8 @@ function phase_one() {
 	document.getElementById("helpText1").style.top = "68px"
 	document.getElementById("text1").style.display = "block";
 	document.getElementById("text1").style.zIndex = "0";
-	document.getElementById("text1").style.left = "105px";
-	document.getElementById("text1").style.top = "560px";
+	document.getElementById("text1").style.left = "140px";
+	document.getElementById("text1").style.top = "540px";
 }
 //display info for the second part of the game
 function phase_two() {
@@ -704,9 +704,9 @@ Crafty.scene('Phase 2', function()
 	document.getElementById("Shop").style.top = "0px";
 	document.getElementById("Shop").style.left = "0px";
 	document.getElementById("yourGold").style.top = "120px";
-	document.getElementById("yourGold").style.left = "710px";
+	document.getElementById("yourGold").style.left = "690px";
 	document.getElementById("yourUnit").style.top = "220px";
-	document.getElementById("yourUnit").style.left = "710px";
+	document.getElementById("yourUnit").style.left = "690px";
 	document.getElementById("yourUnitList").style.top = "450px";
 	document.getElementById("yourUnitList").style.left= "0px";
 	counter=setInterval(timer, 1000);
