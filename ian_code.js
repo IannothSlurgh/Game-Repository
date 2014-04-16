@@ -569,7 +569,15 @@ Crafty.scene('Phase 3', function()
 			unit_list[selected_unit.arr_index].can_move = false;
 			//Shift images on grid.
 			original_tile.src="http://i.imgur.com/ubwIthk.gif";
-			new_tile.src = unit_list[selected_unit.arr_index].src_select;
+			//Animation only for the owner.
+			if(selected_unit.owner == this_player_name)
+			{
+				new_tile.src = unit_list[selected_unit.arr_index].src_select;
+			}
+			else
+			{
+				new_tile.src = unit_list[selected_unit.arr_index].src;
+			}
 			moveSelectionBox(xcoor, ycoor);
 			//Disable movement affordance
 			addRedX("noMove");
