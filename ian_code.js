@@ -129,7 +129,7 @@ Crafty.scene('Phase 3', function()
 		}
 
 		//Deletes the movement shadow.
-		function clearShadow()()
+		function clearShadow()
 		{
 			while(movement_shadow.length > 0)
 			{
@@ -403,7 +403,7 @@ Crafty.scene('Phase 3', function()
 			hideRedX("noAttack");
 			hideRedX("noMove");
 			//Remove movement shadow.
-			clearShadow()();
+			clearShadow();
 		}
 
 		//Sets the stats to those indicated in a stats object. (has src, health, damage, range, and movement)
@@ -557,7 +557,7 @@ Crafty.scene('Phase 3', function()
 		//Movement handler
 		function move(xcoor, ycoor)
 		{
-			clearShadow()()
+			clearShadow();
 			generateShadow();
 			//change selected unit's xcoor-ycoor
 			var unit_list = findUnitList(selected_unit.owner);
@@ -649,7 +649,7 @@ Crafty.scene('Phase 3', function()
 				attacker.can_move = false;
 				addRedX("noAttack");
 				addRedX("noMove");
-				clearShadow()();
+				clearShadow();
 			}
 			checkVictory();
 		}
