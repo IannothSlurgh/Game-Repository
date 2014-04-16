@@ -129,8 +129,8 @@ var whichHelpScreen = 0;
 Crafty.scene('Help', function()
 {
 	Crafty.stage.elem.style.display = "none";
-	document.getElementById("helpAndShop").style.display = "block";
-	document.getElementById("helpAndShop").style.zIndex = "-1";
+	document.getElementById("Help").style.display = "block";
+	document.getElementById("Help").style.zIndex = "-1";
 	back();
 });
 //display info for the first part of the game
@@ -224,7 +224,7 @@ function back() {
 function returnFromHelpScreen() 
 {
 	whichHelpScreen = 0;
-	document.getElementById("helpAndShop").style.display = "none";
+	document.getElementById("Help").style.display = "none";
 	document.getElementById("helpText1").style.display = "none";
 	document.getElementById("helpText2").style.display = "none";
 	document.getElementById("helpText3").style.display = "none";
@@ -680,7 +680,7 @@ Crafty.scene('ConnectionRoom', function()
 Crafty.scene('Phase 2', function()
 {
 	Crafty.stage.elem.style.display = "none";
-	document.getElementById("helpAndShop").style.display = "block";
+	document.getElementById("Shop").style.display = "block";
 	document.getElementById("command").style.display = "block";
 	document.getElementById("yourGold").style.display = "block";
 	document.getElementById("yourUnit").style.display = "block";
@@ -688,8 +688,8 @@ Crafty.scene('Phase 2', function()
 	document.getElementById("yourUnitList").style.display = "block";
 	document.getElementById("ready").style.display = "block";
 	document.getElementById("reset").style.display = "block";
-	document.getElementById("helpAndShop").style.top = "0px";
-	document.getElementById("helpAndShop").style.left = "0px";
+	document.getElementById("Shop").style.top = "0px";
+	document.getElementById("Shop").style.left = "0px";
 	document.getElementById("yourGold").style.top = "120px";
 	document.getElementById("yourGold").style.left = "710px";
 	document.getElementById("yourUnit").style.top = "220px";
