@@ -558,7 +558,6 @@ Crafty.scene('Phase 3', function()
 		function move(xcoor, ycoor)
 		{
 			clearShadow();
-			generateShadow();
 			//change selected unit's xcoor-ycoor
 			var unit_list = findUnitList(selected_unit.owner);
 			var original_xcoor = unit_list[selected_unit.arr_index].xcoor;
@@ -570,10 +569,11 @@ Crafty.scene('Phase 3', function()
 			unit_list[selected_unit.arr_index].can_move = false;
 			//Shift images on grid.
 			original_tile.src="http://i.imgur.com/ubwIthk.gif";
-			new_tile.src = unit_list[selected_unit.arr_index].src;
+			new_tile.src = unit_list[selected_unit.arr_index].src_select;
 			moveSelectionBox(xcoor, ycoor);
 			//Disable movement affordance
 			addRedX("noMove");
+			generateShadow();
 		}
 
 		function attack(xcoor, ycoor, secondary_player, attacker_health, defender_health)
