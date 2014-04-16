@@ -149,6 +149,8 @@ function phase_one() {
 	document.getElementById("toHelp").alt.height="96px";
 	document.getElementById("helpText1").style.display = "block";
 	document.getElementById("helpText1").style.zIndex = "0";
+	document.getElementById("helpText1").style.left = "105px";
+	document.getElementById("helpText1").style.top = "68px";
 	
 }
 //display info for the second part of the game
@@ -167,6 +169,8 @@ function phase_two() {
 	document.getElementById("toHelp").alt.height="96px";
 	document.getElementById("helpText2").style.display = "block";
 	document.getElementById("helpText2").style.zIndex = "0";
+	document.getElementById("helpText2").style.left = "109px";
+	document.getElementById("helpText2").style.top = "77px";
 }
 //display info for the third part of the game
 function phase_three() {
@@ -184,6 +188,8 @@ function phase_three() {
 	document.getElementById("toHelp").alt.height="96px";
 	document.getElementById("helpText3").style.display = "block";
 	document.getElementById("helpText3").style.zIndex = "0";
+	document.getElementById("helpText3").style.left = "109px";
+	document.getElementById("helpText3").style.top = "84px";
 }
 
 function back() {

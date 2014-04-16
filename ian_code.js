@@ -935,7 +935,7 @@ Crafty.scene('Phase 3', function()
 		function init()
 		{
 			//Hide phase 2
-			document.getElementById("helpAndShop").style.display = "none";
+			document.getElementById("Shop").style.display = "none";
 			document.getElementById("command").style.display = "none";
 			document.getElementById("yourGold").style.display = "none";
 			document.getElementById("yourUnit").style.display = "none";
