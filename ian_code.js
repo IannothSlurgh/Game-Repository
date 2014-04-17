@@ -530,6 +530,9 @@ Crafty.scene('Phase 3', function()
 				case 0:
 					target.health = healthTarget;
 					break;
+				case 1:
+					
+					break;
 			}
 			user.can_attack = false;
 			user.can_move = false;

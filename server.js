@@ -513,20 +513,28 @@ io.sockets.on(
 				switch(name_list[i])
 				{
 					case "warrior":
-						var unit = {src: "", src_select:"", name:"warrior", xcoor:null, ycoor:null, health:16, damage:4, range:1, movement:2, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
+						var unit = {src: "", src_select:"", name:"warrior", ability:"N/A", cooldown:0, xcoor:null, ycoor:null, health:16, damage:4, range:1, movement:2, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
 						unit_list.push(checkPlayerWarrior(unit, index));
 						break;
 					case "rogue":
-						var unit = {src:"", src_select:"", name:"rogue", xcoor:null, ycoor:null, health:10, damage:3, range:1, movement:2, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
+						var unit = {src:"", src_select:"", name:"rogue", ability:"N/A", cooldown:0, xcoor:null, ycoor:null, health:10, damage:3, range:1, movement:2, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
 						unit_list.push(checkPlayerRogue(unit, index));
 						break;
 					case "goblin":
-						var unit = {src:"", src_select:"", name:"goblin", xcoor:null, ycoor:null, health:6, damage:2, range:1, movement:6, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
+						var unit = {src:"", src_select:"", name:"goblin", ability:"N/A", cooldown:0, xcoor:null, ycoor:null, health:6, damage:2, range:1, movement:6, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
 						unit_list.push(checkPlayerGoblin(unit, index));
 						break;
 					case "hunter":
-						var unit = {src:"", src_select:"", name:"hunter", xcoor:null, ycoor:null, health:8, damage:2, range:5, movement:1, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
+						var unit = {src:"", src_select:"", name:"hunter", ability:"N/A", cooldown:0, xcoor:null, ycoor:null, health:8, damage:2, range:5, movement:1, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
 						unit_list.push(checkPlayerHunter(unit, index));
+						break;
+					case "priest":
+						var unit = {src:"", src_select:"", name:"priest", ability:"Heal", cooldown:0, xcoor:null, ycoor:null, health:8, damage:1, range:1, movement:2, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
+						unit_list.push(checkPlayerPriest(unit, index));
+						break;
+					case "plant":
+						var unit = {src:"", src_select:"", name:"plant", ability:"Growth", cooldown:3, xcoor:null, ycoor:null, health:8, damage:1, range:1, movement:0, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
+						unit_list.push(checkPlayerPlant(unit, index));
 						break;
 				}
 			}
@@ -617,6 +625,62 @@ io.sockets.on(
 		
 		//Set srcs of a hunter unit object based on player color
 		function checkPlayerHunter(unit, index)
+		{
+			switch(index)
+			{
+				case 0:
+					unit.src = "http://i.imgur.com/3G4LY2t.png";
+					unit.src_select = "http://i.imgur.com/9E12eT8.gif";
+					return unit;
+					break;
+				case 1:
+					unit.src = "http://i.imgur.com/7pYt5wt.png";
+					unit.src_select = "http://i.imgur.com/nut6uE1.gif";
+					return unit;
+					break;
+				case 2:
+					unit.src = "http://i.imgur.com/cMBKJYG.png";
+					unit.src_select = "http://i.imgur.com/yC20NDl.gif";
+					return unit;
+					break;
+				case 3:
+					unit.src = "http://i.imgur.com/YWn3lj0.png";
+					unit.src_select = "http://i.imgur.com/LJhYTN2.gif";
+					return unit;
+					break;
+			}
+		}
+
+		//Set srcs of a priest unit object based on player color
+		function checkPlayerPriest(unit, index)
+		{
+			switch(index)
+			{
+				case 0:
+					unit.src = "http://i.imgur.com/3G4LY2t.png";
+					unit.src_select = "http://i.imgur.com/9E12eT8.gif";
+					return unit;
+					break;
+				case 1:
+					unit.src = "http://i.imgur.com/7pYt5wt.png";
+					unit.src_select = "http://i.imgur.com/nut6uE1.gif";
+					return unit;
+					break;
+				case 2:
+					unit.src = "http://i.imgur.com/cMBKJYG.png";
+					unit.src_select = "http://i.imgur.com/yC20NDl.gif";
+					return unit;
+					break;
+				case 3:
+					unit.src = "http://i.imgur.com/YWn3lj0.png";
+					unit.src_select = "http://i.imgur.com/LJhYTN2.gif";
+					return unit;
+					break;
+			}
+		}
+		
+		//Set srcs of a hunter unit object based on player color
+		function checkPlayerPlant(unit, index)
 		{
 			switch(index)
 			{
@@ -871,7 +935,7 @@ io.sockets.on(
 						//Ability will be used for 'healer' and 'plant' which are not made yet.
 						if(ability_toggle)
 						{
-							confirmation.type = "abilityUsed";
+							confirmation.type = "AbilityUsed";
 							var results = ability(decrypted.xcoor, decrypted.ycoor);
 							confirmation.success = results.success;
 							confirmation.who = results.targetOwner;
@@ -966,12 +1030,12 @@ io.sockets.on(
 						}
 					}
 					break;
-				case "Ability":
+				case "AbilityButton":
 					//Toggles ability button for all players.
 					if(!place_phase)
 					{
 						var unit = findUnit(selected_unit.xcoor, selected_unit.ycoor);
-						if(unit.can_attack && unit.can_move)
+						if(unit.can_attack && unit.can_move && unit.cooldown == 0)
 						{
 							confirmation.success = true;
 							ability_toggle = !ability_toggle;
@@ -1163,18 +1227,29 @@ function ability(xcoor, ycoor)
 		targetHealth: null,
 		userHealth: null
 	}
-	var success = false;
 	switch(user.ability)
 	{
 		case "Heal":
 			//Range 1, not self, on your team
-			if(distance == 1 && target != null && results.target_owner == selected_unit.owner)
+			if(distance == 1 && target != null && results.targetOwner == selected_unit.owner)
 			{
 				//Add x health, currently 2.
 				target.health += 2;
 				targetHealth = target.health;
-				success = true;
+				results.success = true;
 				results.abilityID = 0;
+			}
+			break;
+		case "Growth":
+			//Max range 2, min range 1, empty space.
+			if(distance <= 2 && distance > 0 && target == null)
+			{
+				var new_owner = getPlayer(selected_unit.owner);
+				//Newly grown plant is of same color, starts with growth on cooldown, is at clicked x-y, considered placed, can immediately act, is placed.
+				var new_unit = {src:user.src, src_select:user.src_select, name:"plant", ability:"Growth", cooldown:3, xcoor:xcoor, ycoor:ycoor, health:8, damage:1, range:1, movement:0, can_move:true, can_attack:true, is_dead:false, has_been_placed:true, arr_index:new_owner.unit_list.length};
+				new_owner.unit_list.push({new_unit});
+				results.success = true;
+				results.abilityID = 1;
 			}
 			break;
 	}
