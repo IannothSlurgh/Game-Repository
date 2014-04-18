@@ -1247,7 +1247,7 @@ function ability(xcoor, ycoor)
 				var new_owner = getPlayer(selected_unit.owner);
 				//Newly grown plant is of same color, starts with growth on cooldown, is at clicked x-y, considered placed, can immediately act, is placed.
 				var new_unit = {src:user.src, src_select:user.src_select, name:"plant", ability:"Growth", cooldown:3, xcoor:xcoor, ycoor:ycoor, health:8, damage:1, range:1, movement:0, can_move:true, can_attack:true, is_dead:false, has_been_placed:true, arr_index:new_owner.unit_list.length};
-				new_owner.unit_list.push({new_unit});
+				new_owner.unit_list.push(new_unit);
 				results.success = true;
 				results.abilityID = 1;
 			}

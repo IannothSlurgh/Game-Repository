@@ -44,6 +44,9 @@ Crafty.scene('Phase 3', function()
 
 		var current_turn = null;
 		
+		//If true, show range of ability
+		var ability_on = false;
+		
 		//Used for place phase with unit-inventory to determine the index of the client's unit_list which is being dragged.
 		var inventory_dragged_unit = null;
 
@@ -723,7 +726,7 @@ Crafty.scene('Phase 3', function()
 					{
 						attack(decrypted.xcoor, decrypted.ycoor, decrypted.who, decrypted.healthSelf, decrypted.healthTarget);
 					}
-					else if(decrypted.action == "Ability")
+					else if(decrypted.action == "AbilityButton")
 					{
 					}
 					else if(decrypted.action == "AbilityUsed")
@@ -770,7 +773,7 @@ Crafty.scene('Phase 3', function()
 				{
 					attack(decrypted.xcoor, decrypted.ycoor, decrypted.who, decrypted.healthSelf, decrypted.healthTarget);
 				}
-				else if(decrypted.action == "Ability")
+				else if(decrypted.action == "AbilityButton")
 				{
 				}
 				else if(decrypted.action == "AbilityUsed")
