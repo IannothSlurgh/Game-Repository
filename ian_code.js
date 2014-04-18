@@ -439,6 +439,10 @@ Crafty.scene('Phase 3', function()
 			{
 				document.getElementById("stat_ability").innerHTML = stats.ability_name;
 			}
+			if(stats.cooldown!=null)
+			{
+				document.getElementById("stat_cooldown").innerHTML = stats.cooldown.toString() + " turns";
+			}
 		}
 
 		//Handles the case that the client successfully selects a unit.
@@ -975,14 +979,15 @@ Crafty.scene('Phase 3', function()
 			document.getElementById("stat_range").style.display = "block";
 			document.getElementById("stat_icon").style.display = "block";
 			document.getElementById("stat_log").style.display = "block";
+			document.getElementById("stat_cooldown").style.display = "block";
 			document.getElementById("stat_ability").style.display = "block";
 			document.getElementById("stat_player_turn").style.display = "block";
 			document.getElementById("grid").style.display = "block";
 			document.getElementById("next").style.display = "block";
 			document.getElementById("log").style.display = "block";
 			document.getElementById("battle_log").style.display = "block";
-			document.getElementById("stat_cooldown").style.display = "block";
 			document.getElementById("stat_ability_box").style.display = "block";
+			document.getElementById("stat_cooldown_clock").style.display = "block";
 			
 			//old Hide- probably delete
 			document.getElementById("loggedin").style.display = "none";
