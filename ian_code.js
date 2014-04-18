@@ -399,6 +399,7 @@ Crafty.scene('Phase 3', function()
 			document.getElementById("stat_range").innerHTML = "";
 			document.getElementById("stat_ability").innerHTML = "";
 			document.getElementById("stat_log").innerHTML = "";
+			document.getElementById("stat_ability").innerHTML = "";
 			document.getElementById("stat_icon").src = "";
 			if(document.getElementById("selection") != null)
 			{
@@ -434,6 +435,10 @@ Crafty.scene('Phase 3', function()
 			{
 				document.getElementById("stat_movement").innerHTML = stats.movement.toString();
 			}
+			if(stats.ability_name!=null)
+			{
+				document.getElementById("stat_ability").innerHTML = stats.ability_name;
+			}
 		}
 
 		//Handles the case that the client successfully selects a unit.
@@ -454,7 +459,9 @@ Crafty.scene('Phase 3', function()
 				health:null,
 				movement:null,
 				damage:null,
-				range:null
+				range:null,
+				ability_name:null,
+				cooldown:null
 			};
 			selected_unit.owner = unit_owner;
 			unit_list = findUnitList(unit_owner);
@@ -470,7 +477,8 @@ Crafty.scene('Phase 3', function()
 						stats.movement = unit_list[i].movement;
 						stats.damage = unit_list[i].damage;
 						stats.range = unit_list[i].range;
-
+						stats.ability_name = unit_list[i].ability;
+						stats.cooldown = unit_list[i].cooldown;
 						selected_unit.arr_index = i;
 						//Animate unit on selection (must be your unit. and your turn)
 						if(selected_unit.owner == this_player_name && current_turn == this_player_name)
@@ -973,7 +981,8 @@ Crafty.scene('Phase 3', function()
 			document.getElementById("next").style.display = "block";
 			document.getElementById("log").style.display = "block";
 			document.getElementById("battle_log").style.display = "block";
-
+			document.getElementById("stat_ability_box").style.display = "block";
+			
 			//old Hide- probably delete
 			document.getElementById("loggedin").style.display = "none";
 			document.getElementById("board").style.display = "none";
