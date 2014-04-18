@@ -565,6 +565,10 @@ Crafty.scene('Phase 3', function()
 			{
 				unit_list[i].can_move = true;
 				unit_list[i].can_attack = true;
+				if(unit_list[i].cooldown > 0)
+				{
+					unit_list[i].cooldown -= 1;
+				}
 			}
 			current_turn = nextPlayer;
 		}
