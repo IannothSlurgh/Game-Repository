@@ -554,6 +554,7 @@ Crafty.scene('Phase 3', function()
 			{
 				events_locked = true;
 			}
+			ability_on = false;
 			var turn_text = document.getElementById("stat_player_turn");
 			turn_text.innerHTML = nextPlayer+"\'s turn";
 			turn_text.style.color = getTeamColor(nextPlayer);
@@ -578,7 +579,9 @@ Crafty.scene('Phase 3', function()
 					target.health = healthTarget;
 					break;
 				case 1:
-					
+					var new_unit = {src:user.src, src_select:user.src_select, name:"plant", ability:"Growth", cooldown:3, xcoor:xcoor, ycoor:ycoor, health:8, damage:1, range:1, movement:0, can_move:true, can_attack:true, is_dead:false, has_been_placed:true, arr_index:new_owner.unit_list.length};
+					findUnitList(selected_unit.owner).push(new_unit);
+					document.getElementById("X"+xcoor+"Y"+ycoor).src = new_unit.src;
 					break;
 			}
 			user.can_attack = false;

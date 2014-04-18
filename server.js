@@ -1383,6 +1383,7 @@ function endTurn()
 	selected_unit.xcoor = null;
 	selected_unit.ycoor = null;
 	selected_unit.owner = null;
+	ability_toggle = false;
 	if(! player_1.is_alive 
 		&& ! player_2.is_alive 
 		&& ! player_3.is_alive 
