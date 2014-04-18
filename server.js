@@ -513,7 +513,7 @@ io.sockets.on(
 				switch(name_list[i])
 				{
 					case "warrior":
-						var unit = {src: "", src_select:"", name:"warrior", ability:"N/A", cooldown:0, xcoor:null, ycoor:null, health:16, damage:4, range:1, movement:2, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
+						var unit = {src: "", src_select:"", name:"warrior", ability:"Sweeping Attack", cooldown:0, xcoor:null, ycoor:null, health:16, damage:4, range:1, movement:2, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
 						unit_list.push(checkPlayerWarrior(unit, index));
 						break;
 					case "rogue":
@@ -525,7 +525,7 @@ io.sockets.on(
 						unit_list.push(checkPlayerGoblin(unit, index));
 						break;
 					case "hunter":
-						var unit = {src:"", src_select:"", name:"hunter", ability:"N/A", cooldown:0, xcoor:null, ycoor:null, health:8, damage:2, range:5, movement:1, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
+						var unit = {src:"", src_select:"", name:"hunter", ability:"Snipe", cooldown:0, xcoor:null, ycoor:null, health:8, damage:2, range:5, movement:1, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
 						unit_list.push(checkPlayerHunter(unit, index));
 						break;
 					case "priest":
@@ -1252,6 +1252,72 @@ function ability(xcoor, ycoor)
 				new_owner.unit_list.push(new_unit);
 				results.success = true;
 				results.abilityID = 1;
+			}
+			break;
+		case "Sweeping Attack":
+			//Adjacent target, can be empty
+			if(distance == 1)
+			{
+				var sweep_range = new Array();
+				//Go through all spots surrounding the target, and if these are in range of user, push to array
+				for(var i = target.xcoor-1; i < target.xcoor+1; ++i)
+				{
+					for(var j = target.ycoor-1; j < target.ycoor+1; ++j)
+					{
+						if(getDistance(i, j) == 1)
+						{
+							sweep_range.push({xcoor: i, ycoor: j});
+						}
+					}
+				}
+				//Go through array items
+				while(sweep_range.length>0)
+				{
+					var paired_coor = sweep_range.pop();
+					var target = findUnit(paired_coor.xcoor, paired_coor.ycoor);
+					//If there is a non-user unit at the given square
+					if(target != null && target != user)
+					{
+						//Deal X damage
+						var targeted_player = getPlayerOcuppying(paired_coor.xcoor, paired_coor.ycoor);
+						target.health -= 2;
+						//Handle death.
+						if(target.health <= 0)
+						{
+							target.xcoor = null;
+							target.ycoor = null;
+							target.is_dead = true;
+						}
+						if(!checkPlayerAlive(target_player))
+						{
+							//If even a single player dies as a result of sweeping attack, pass Playerdead in targetHealth.
+							targetHealth = "Playerdead";
+						}
+					}
+				}
+				results.success = true;
+				results.abilityID = 2;
+			}
+			break;
+		case "Snipe":
+			//max distance of 5, min distance of 2, must be a hostile unit
+			if(distance >=2 && distance <=5 && target != null && results.targetOwner != selected_unit.owner)
+			{
+				target.health -= 3;
+				if(target.health <= 0)
+				{
+					target.xcoor = null;
+					target.ycoor = null;
+					target.is_dead = true;
+				}
+				targetHealth = target.health;
+				if(!checkPlayerAlive(target_player))
+				{
+					//Handle possible dead player.
+					targetHealth = "Playerdead";
+				}
+				results.success = true;
+				results.abilityID = 3;
 			}
 			break;
 	}

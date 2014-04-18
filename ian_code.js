@@ -63,7 +63,7 @@ Crafty.scene('Phase 3', function()
 		}		
 
 		//Table of ability ranges.
-		function abilityRange(ability_name)
+		function abilityMaxRange(ability_name)
 		{
 			switch(ability_name)
 			{
@@ -71,6 +71,34 @@ Crafty.scene('Phase 3', function()
 					return 1;
 					break;
 				case "Growth":
+					return 2;
+					break;
+				case "Sweeping Attack":
+					return 1;
+					break;
+				case "Snipe":
+					return 5;
+					break;
+				default:
+					return null;
+					break;
+			}
+		}
+
+		function abilityMinRange(ability_name)
+		{
+			switch(ability_name)
+			{
+				case "Heal":
+					return 1;
+					break;
+				case "Growth":
+					return 1;
+					break;
+				case "Sweep":
+					return 1;
+					break;
+				case "Snipe":
 					return 2;
 					break;
 				default:
@@ -84,9 +112,11 @@ Crafty.scene('Phase 3', function()
 		{
 			var unit = getPlayer(selected_unit.owner).unit_list[selected_unit.arr_index];
 			var bound = Math.max(unit.range, unit.movement);
+			var min_distance;
 			if(ability_on)
 			{
-				bound = abilityRange(unit.ability);
+				bound = abilityMaxRange(unit.ability);
+				min_distance = abilityMaxRange(unit.ability);
 			}
 			//If the unit cannot attack, no shadow period.
 			if(unit.can_attack == false)
@@ -128,7 +158,10 @@ Crafty.scene('Phase 3', function()
 						//Ability shadow
 						if(ability_on)
 						{
-							document.getElementById(shadow_id).src = "http://i.imgur.com/3zrPrCJ.png";
+							if(distance >= min_distance)
+							{
+								document.getElementById(shadow_id).src = "http://i.imgur.com/3zrPrCJ.png";
+							}
 						}
 						else
 						{
@@ -411,6 +444,27 @@ Crafty.scene('Phase 3', function()
 			return true;
 		}
 
+		function updatePlayersLiveHelper(player)
+		{
+			var unit_list = player.unit_list;
+			for(var i = 0; i < unit_list.length; ++i)
+			{
+				player.is_alive = false;
+				if(! unit_list[i].is_dead)
+				{
+					player.is_alive = true;
+				}
+			}			
+		}
+		
+		function updatePlayersLive()
+		{
+			updatePlayersLiveHelper(player_1);
+			updatePlayersLiveHelper(player_2);
+			updatePlayersLiveHelper(player_3);
+			updatePlayersLiveHelper(player_4);
+		}
+		
 		//Clears selected_unit, stats, and hides selection box.
 		function clearSelection()
 		{
@@ -586,6 +640,63 @@ Crafty.scene('Phase 3', function()
 					var new_unit = {src:user.src, src_select:user.src_select, name:"plant", ability:"Growth", cooldown:3, xcoor:xcoor, ycoor:ycoor, health:8, damage:1, range:1, movement:0, can_move:true, can_attack:true, is_dead:false, has_been_placed:true, arr_index:new_owner.unit_list.length};
 					findUnitList(selected_unit.owner).push(new_unit);
 					document.getElementById("X"+xcoor+"Y"+ycoor).src = new_unit.src;
+					user.cooldown = 3;
+					break;
+				case 2:
+					var sweep_range = new Array();
+					//Go through all spots surrounding the target, and if these are in range of user, push to array
+					for(var i = target.xcoor-1; i < target.xcoor+1; ++i)
+					{
+						for(var j = target.ycoor-1; j < target.ycoor+1; ++j)
+						{
+							if(getDistance(target.xcoor, target.ycoor, i, j) == 1)
+							{
+								sweep_range.push({xcoor: i, ycoor: j});
+							}
+						}
+					}
+					while(sweep_range.length>0)
+					{
+						var paired_coor = sweep_range.pop();
+						var target = findUnit(paired_coor.xcoor, paired_coor.ycoor);
+						//If there is a non-user unit at the given square
+						if(target != null && target != user)
+						{
+							//Deal X damage
+							var targeted_player = getPlayerOcuppying(paired_coor.xcoor, paired_coor.ycoor);
+							target.health -= 2;
+							//Handle death.
+							if(target.health <= 0)
+							{
+								document.getElementById("X"+target.xcoor+"Y"+target.ycoor).src = "http://i.imgur.com/ubwIthk.gif";
+								target.xcoor = null;
+								target.ycoor = null;
+								target.is_dead = true;
+								if(healthTarget == "Playerdead")
+								{
+									updatePlayersLive();
+								}
+							}
+						}
+					}
+					checkVictory();
+					break;
+				case 3:
+					if(healthTarget == "Playerdead")
+					{
+						target.is_dead = true;
+						healthTarget = 0;
+						updatePlayersLive();
+					}
+					target.health = healthTarget;
+					if(target.health <= 0)
+					{
+						document.getElementById("X"+target.xcoor+"Y"+target.ycoor).src = "http://i.imgur.com/ubwIthk.gif";
+						target.xcoor = null;
+						target.ycoor = null;
+						target.is_dead = true;
+					}
+					checkVictory();
 					break;
 			}
 			user.can_attack = false;
