@@ -904,7 +904,7 @@ io.sockets.on(
 					else
 					{
 						//If unit at space, select unit.
-						if(isOccupied(decrypted.xcoor, decrypted.ycoor) && !ability_toggled)
+						if(isOccupied(decrypted.xcoor, decrypted.ycoor) && !ability_toggle)
 						{
 							confirmation.action = "Select";
 							confirmation.success = true;
@@ -914,7 +914,7 @@ io.sockets.on(
 						else
 						{
 							//If not occupied, tries to move selected unit.
-							if(selected_unit.owner == decrypted.who && !ability_toggled)
+							if(selected_unit.owner == decrypted.who && !ability_toggle)
 							{
 								confirmation.action = "Move";
 								confirmation.success = move(decrypted.xcoor, decrypted.ycoor);
