@@ -904,9 +904,8 @@ io.sockets.on(
 					else
 					{
 						//If unit at space, select unit.
-						if(isOccupied(decrypted.xcoor, decrypted.ycoor))
+						if(isOccupied(decrypted.xcoor, decrypted.ycoor) && !ability_toggled)
 						{
-							ability_toggled = false;
 							confirmation.action = "Select";
 							confirmation.success = true;
 							select(decrypted.xcoor, decrypted.ycoor);
@@ -915,9 +914,8 @@ io.sockets.on(
 						else
 						{
 							//If not occupied, tries to move selected unit.
-							if(selected_unit.owner == decrypted.who)
+							if(selected_unit.owner == decrypted.who && !ability_toggled)
 							{
-								ability_toggled = false;
 								confirmation.action = "Move";
 								confirmation.success = move(decrypted.xcoor, decrypted.ycoor);
 								confirmation.who = selected_unit.owner;
@@ -1035,7 +1033,7 @@ io.sockets.on(
 					if(!place_phase)
 					{
 						var unit = findUnit(selected_unit.xcoor, selected_unit.ycoor);
-						if(unit.can_attack && unit.can_move && unit.cooldown == 0)
+						if(unit != null && unit.can_attack && unit.can_move && unit.cooldown == 0 && unit.ability != "N/A")
 						{
 							confirmation.success = true;
 							ability_toggle = !ability_toggle;

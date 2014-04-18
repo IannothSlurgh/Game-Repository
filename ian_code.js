@@ -61,12 +61,33 @@ Crafty.scene('Phase 3', function()
 			var distance = Math.max(delta_x, delta_y)
 			return distance;
 		}		
+
+		//Table of ability ranges.
+		function abilityRange(ability_name)
+		{
+			switch(ability_name)
+			{
+				case "Heal":
+					return 1;
+					break;
+				case "Growth":
+					return 2;
+					break;
+				default:
+					return null;
+					break;
+			}
+		}
 		
 		//Function that finds all spaces that can be moved to, checks their occupancy, then adds a shadow to array if unoccupied
 		function generateShadow()
 		{
 			var unit = getPlayer(selected_unit.owner).unit_list[selected_unit.arr_index];
 			var bound = Math.max(unit.range, unit.movement);
+			if(ability_on)
+			{
+				bound = abilityRange(unit.ability);
+			}
 			//If the unit cannot attack, no shadow period.
 			if(unit.can_attack == false)
 			{
@@ -104,29 +125,37 @@ Crafty.scene('Phase 3', function()
 						var shadow_id = "X"+i.toString()+"Y"+j.toString();
 						var distance = getDistance(unit.xcoor, unit.ycoor, i, j);
 						movement_shadow.push(shadow_id);
-						//Outer movement shadow.
-						if(distance > unit.range && distance <= unit.movement)
+						//Ability shadow
+						if(ability_on)
 						{
-							if(unit.can_move)
-							{
-								document.getElementById(shadow_id).src = "http://i.imgur.com/Pa1TQOw.png";
-							}
-							else
-							{
-								movement_shadow.pop();
-							}
-						} //Outer Attack shadow.
-						else if(distance <= unit.range && distance > unit.movement)
-						{
-							document.getElementById(shadow_id).src = "http://i.imgur.com/SfuSfhe.png";
-						} //Inner movement
-						else if(unit.range > unit.movement && unit.can_move)
-						{
-							document.getElementById(shadow_id).src = "http://i.imgur.com/Pa1TQOw.png";
-						}//Inner attack
+							document.getElementById(shadow_id).src = "http://i.imgur.com/3zrPrCJ.png";
+						}
 						else
 						{
-							document.getElementById(shadow_id).src = "http://i.imgur.com/SfuSfhe.png";
+							//Outer movement shadow.
+							if(distance > unit.range && distance <= unit.movement)
+							{
+								if(unit.can_move)
+								{
+									document.getElementById(shadow_id).src = "http://i.imgur.com/Pa1TQOw.png";
+								}
+								else
+								{
+									movement_shadow.pop();
+								}
+							} //Outer Attack shadow.
+							else if(distance <= unit.range && distance > unit.movement)
+							{
+								document.getElementById(shadow_id).src = "http://i.imgur.com/SfuSfhe.png";
+							} //Inner movement
+							else if(unit.range > unit.movement && unit.can_move)
+							{
+								document.getElementById(shadow_id).src = "http://i.imgur.com/Pa1TQOw.png";
+							}//Inner attack
+							else
+							{
+								document.getElementById(shadow_id).src = "http://i.imgur.com/SfuSfhe.png";
+							}
 						}
 					}
 				}
@@ -410,6 +439,8 @@ Crafty.scene('Phase 3', function()
 			hideRedX("noMove");
 			//Remove movement shadow.
 			clearShadow();
+			document.getElementById("stat_cooldown_clock").style.visibility = "hidden";
+			document.getElementById("stat_cooldown").innerHTML = "";
 		}
 
 		//Sets the stats to those indicated in a stats object. (has src, health, damage, range, and movement)
@@ -439,8 +470,9 @@ Crafty.scene('Phase 3', function()
 			{
 				document.getElementById("stat_ability").innerHTML = stats.ability_name;
 			}
-			if(stats.cooldown!=null)
+			if(stats.cooldown!=null && stats.cooldown!=0)
 			{
+				document.getElementById("stat_cooldown_clock").style.visibility = "visible";
 				document.getElementById("stat_cooldown").innerHTML = stats.cooldown.toString() + " turns";
 			}
 		}
@@ -552,6 +584,13 @@ Crafty.scene('Phase 3', function()
 			user.can_attack = false;
 			user.can_move = false;
 			clearSelection();
+		}
+		
+		function abilityButton()
+		{
+			ability_on = !ability_on;
+			clearShadow();
+			generateShadow();
 		}
 		
 		function place(xcoor, ycoor, player_name, nth_unit)
@@ -740,6 +779,7 @@ Crafty.scene('Phase 3', function()
 					}
 					else if(decrypted.action == "AbilityButton")
 					{
+						abilityButton();
 					}
 					else if(decrypted.action == "AbilityUsed")
 					{
@@ -787,6 +827,7 @@ Crafty.scene('Phase 3', function()
 				}
 				else if(decrypted.action == "AbilityButton")
 				{
+					abilityButton();
 				}
 				else if(decrypted.action == "AbilityUsed")
 				{
@@ -986,8 +1027,10 @@ Crafty.scene('Phase 3', function()
 			document.getElementById("next").style.display = "block";
 			document.getElementById("log").style.display = "block";
 			document.getElementById("battle_log").style.display = "block";
+			document.getElementById("stat_ability_box").onclick = function(){ sendEvent("AbilityButton", null, null); };
 			document.getElementById("stat_ability_box").style.display = "block";
 			document.getElementById("stat_cooldown_clock").style.display = "block";
+			document.getElementById("stat_cooldown_clock").style.visibility = "hidden";
 			
 			//old Hide- probably delete
 			document.getElementById("loggedin").style.display = "none";
