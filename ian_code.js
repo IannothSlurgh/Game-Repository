@@ -116,7 +116,7 @@ Crafty.scene('Phase 3', function()
 			if(ability_on)
 			{
 				bound = abilityMaxRange(unit.ability);
-				min_distance = abilityMaxRange(unit.ability);
+				min_distance = abilityMinRange(unit.ability);
 			}
 			//If the unit cannot attack, no shadow period.
 			if(unit.can_attack == false)

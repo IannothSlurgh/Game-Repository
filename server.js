@@ -938,7 +938,7 @@ io.sockets.on(
 							confirmation.success = results.success;
 							confirmation.who = results.targetOwner;
 							confirmation.healthSelf = results.userHealth;
-							confirmation.healthTarget = result.targetHealth
+							confirmation.healthTarget = results.targetHealth
 							if(results.success)
 							{
 								confirmation.dragged_num = results.abilityID;
@@ -1040,6 +1040,7 @@ io.sockets.on(
 						if(unit != null && unit.can_attack && unit.can_move && unit.cooldown == 0 && unit.ability != "N/A")
 						{
 							confirmation.success = true;
+							confirmation.action = "AbilityButton";
 							ability_toggle = !ability_toggle;
 						}
 					}
