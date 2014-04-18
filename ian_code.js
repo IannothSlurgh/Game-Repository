@@ -981,6 +981,7 @@ Crafty.scene('Phase 3', function()
 			document.getElementById("next").style.display = "block";
 			document.getElementById("log").style.display = "block";
 			document.getElementById("battle_log").style.display = "block";
+			document.getElementById("stat_cooldown").style.display = "block";
 			document.getElementById("stat_ability_box").style.display = "block";
 			
 			//old Hide- probably delete
