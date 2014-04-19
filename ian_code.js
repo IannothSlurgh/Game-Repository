@@ -707,11 +707,14 @@ Crafty.scene('Phase 3', function()
 			addRedX("noAttack");
 		}
 		
-		function abilityButton(toggled)
+		function abilityButton(toggled, player_name)
 		{
 			ability_on = toggled;
-			clearShadow();
-			generateShadow();
+			if(this_player_name == player_name)
+			{
+				clearShadow();
+				generateShadow();
+			}
 		}
 		
 		function place(xcoor, ycoor, player_name, nth_unit)
@@ -900,7 +903,7 @@ Crafty.scene('Phase 3', function()
 					}
 					else if(decrypted.action == "AbilityButton")
 					{
-						abilityButton(decrypted.dragged_num);
+						abilityButton(decrypted.dragged_num, decrypted.who);
 					}
 					else if(decrypted.action == "AbilityUsed")
 					{
@@ -948,7 +951,7 @@ Crafty.scene('Phase 3', function()
 				}
 				else if(decrypted.action == "AbilityButton")
 				{
-					abilityButton(decrypted.dragged_num);
+					abilityButton(decrypted.dragged_num, decrypted.who);
 				}
 				else if(decrypted.action == "AbilityUsed")
 				{

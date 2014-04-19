@@ -932,7 +932,7 @@ io.sockets.on(
 						//Ability will be used for 'healer' and 'plant' which are not made yet.
 						if(ability_toggle)
 						{
-							confirmation.type = "AbilityUsed";
+							confirmation.action = "AbilityUsed";
 							var results = ability(decrypted.xcoor, decrypted.ycoor);
 							confirmation.success = results.success;
 							confirmation.who = results.targetOwner;
@@ -1043,6 +1043,7 @@ io.sockets.on(
 							confirmation.action = "AbilityButton";
 							ability_toggle = !ability_toggle;
 							confirmation.dragged_num = ability_toggle;
+							confirmation.who = decrypted.who;
 						}
 					}
 					break;
