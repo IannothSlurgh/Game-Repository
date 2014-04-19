@@ -1286,7 +1286,7 @@ function ability(xcoor, ycoor)
 					{
 						altered_xcoor = xcoor + 2;
 					}
-					if(target.ycoor > user.ycoor)
+					if(ycoor > user.ycoor)
 					{
 						altered_ycoor = ycoor - 2;
 					}
