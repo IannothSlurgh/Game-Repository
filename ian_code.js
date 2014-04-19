@@ -781,7 +781,7 @@ Crafty.scene('Phase 3', function()
 				generateShadow();
 			}
 			//Used for no-target abilities. Sends event once. Only from user client.
-			var user = getPlayer(player_name).unit_list[select_unit.arr_index];
+			var user = getPlayer(player_name).unit_list[selected_unit.arr_index];
 			if(user.ability == "Regeneration" && player_name == this_player_name)
 			{
 				sendEvent("Rclick", user.xcoor, user.ycoor);
