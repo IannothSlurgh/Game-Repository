@@ -675,9 +675,9 @@ Crafty.scene('Phase 3', function()
 				case 2:
 					var sweep_range = new Array();
 					//Go through all spots surrounding the target, and if these are in range of user, push to array
-					for(var i = target.xcoor-1; i < target.xcoor+2; ++i)
+					for(var i = xcoor-1; i < xcoor+2; ++i)
 					{
-						for(var j = target.ycoor-1; j < target.ycoor+2; ++j)
+						for(var j = ycoor-1; j < ycoor+2; ++j)
 						{
 							if(getDistance(user.xcoor, user.ycoor, i, j) == 1)
 							{
@@ -689,24 +689,24 @@ Crafty.scene('Phase 3', function()
 					if(sweep_range.length == 3)
 					{
 						var altered_xcoor, altered_ycoor;
-						if(target.xcoor > user.xcoor)
+						if(xcoor > user.xcoor)
 						{
-							altered_xcoor = target.xcoor - 2;
+							altered_xcoor = xcoor - 2;
 						}
 						else
 						{
-							altered_xcoor = target.xcoor + 2;
+							altered_xcoor = xcoor + 2;
 						}
-						if(target.ycoor > user.ycoor)
+						if(ycoor > user.ycoor)
 						{
-							altered_ycoor = target.ycoor - 2;
+							altered_ycoor = ycoor - 2;
 						}
 						else
 						{
-							altered_ycoor = target.ycoor + 2;
+							altered_ycoor = ycoor + 2;
 						}
-						sweep_range.push({xcoor: target.xcoor, ycoor: altered_ycoor});
-						sweep_range.push({xcoor: altered_xcoor, ycoor: target.ycoor});
+						sweep_range.push({xcoor: xcoor, ycoor: altered_ycoor});
+						sweep_range.push({xcoor: altered_xcoor, ycoor: ycoor});
 					}
 					while(sweep_range.length>0)
 					{
