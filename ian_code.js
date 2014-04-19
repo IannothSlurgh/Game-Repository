@@ -704,9 +704,9 @@ Crafty.scene('Phase 3', function()
 			clearSelection();
 		}
 		
-		function abilityButton()
+		function abilityButton(toggled)
 		{
-			ability_on = !ability_on;
+			ability_on = toggled;
 			clearShadow();
 			generateShadow();
 		}
@@ -897,7 +897,7 @@ Crafty.scene('Phase 3', function()
 					}
 					else if(decrypted.action == "AbilityButton")
 					{
-						abilityButton();
+						abilityButton(decrypted.dragged_num);
 					}
 					else if(decrypted.action == "AbilityUsed")
 					{
@@ -945,7 +945,7 @@ Crafty.scene('Phase 3', function()
 				}
 				else if(decrypted.action == "AbilityButton")
 				{
-					abilityButton();
+					abilityButton(decrypted.dragged_num);
 				}
 				else if(decrypted.action == "AbilityUsed")
 				{

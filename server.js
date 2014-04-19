@@ -899,7 +899,6 @@ io.sockets.on(
 							}
 							console.log("***");
 							confirmation.dragged_num = decrypted.dragged_num;
-							notification.dragged_num = decrypted.dragged_num;
 					}
 					else
 					{
@@ -1042,6 +1041,7 @@ io.sockets.on(
 							confirmation.success = true;
 							confirmation.action = "AbilityButton";
 							ability_toggle = !ability_toggle;
+							confirmation.dragged_num = ability_toggle;
 						}
 					}
 					break;
@@ -1050,6 +1050,7 @@ io.sockets.on(
 			notification.who = confirmation.who;
 			notification.healthSelf = confirmation.healthSelf;
 			notification.healthTarget = confirmation.healthTarget;
+			notification.dragged_num = confirmation.dragged_num;
 			//If operation requested by client is good, tell client so, and tell
 			//All other clients what happened.
 			if(confirmation.success)
