@@ -1241,7 +1241,7 @@ function ability(xcoor, ycoor)
 			{
 				//Add x health, currently 2.
 				target.health += 2;
-				targetHealth = target.health;
+				results.targetHealth = target.health;
 				results.success = true;
 				results.abilityID = 0;
 			}
@@ -1292,10 +1292,11 @@ function ability(xcoor, ycoor)
 							target.ycoor = null;
 							target.is_dead = true;
 						}
+						results.targetHealth = target.health;
 						if(!checkPlayerAlive(targeted_player))
 						{
 							//If even a single player dies as a result of sweeping attack, pass Playerdead in targetHealth.
-							targetHealth = "Playerdead";
+							results.targetHealth = "Playerdead";
 						}
 					}
 				}
@@ -1315,11 +1316,11 @@ function ability(xcoor, ycoor)
 					target.ycoor = null;
 					target.is_dead = true;
 				}
-				targetHealth = target.health;
+				results.targetHealth = target.health;
 				if(!checkPlayerAlive(targeted_player))
 				{
 					//Handle possible dead player.
-					targetHealth = "Playerdead";
+					results.targetHealth = "Playerdead";
 				}
 				results.success = true;
 				results.abilityID = 3;
