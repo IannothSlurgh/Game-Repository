@@ -784,6 +784,7 @@ Crafty.scene('Phase 3', function()
 			var user = getPlayer(player_name).unit_list[selected_unit.arr_index];
 			if(user.ability == "Regeneration" && player_name == this_player_name)
 			{
+				events_locked = false;
 				sendEvent("Rclick", user.xcoor, user.ycoor);
 			}
 		}
