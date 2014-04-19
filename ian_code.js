@@ -907,7 +907,7 @@ Crafty.scene('Phase 3', function()
 					}
 					else if(decrypted.action == "AbilityUsed")
 					{
-						ability(decrypted.xcoor, decrypted.ycoor, decrypted.healthSelf, decrypted.healthTarget, decrpyted.who, decrypted.dragged_num)
+						ability(decrypted.xcoor, decrypted.ycoor, decrypted.healthSelf, decrypted.healthTarget, decrypted.who, decrypted.dragged_num)
 					}
 					else if(decrypted.action == "Place")
 					{
