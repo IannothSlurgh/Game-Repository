@@ -760,10 +760,10 @@ Crafty.scene('Phase 3', function()
 					}
 					checkVictory();
 					break;
+				case 4:
+					target.health = healthUser;
+					break;
 			}
-			case 4:
-				target.health = healthUser;
-				break;
 			user.can_attack = false;
 			user.can_move = false;
 			ability_on = false;
