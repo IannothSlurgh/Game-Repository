@@ -79,6 +79,8 @@ Crafty.scene('Phase 3', function()
 				case "Snipe":
 					return 5;
 					break;
+				case "Regeneration"
+					return 0;
 				default:
 					return null;
 					break;
@@ -101,6 +103,8 @@ Crafty.scene('Phase 3', function()
 				case "Snipe":
 					return 2;
 					break;
+				case "Regeneration"
+					return 0;
 				default:
 					return null;
 					break;
@@ -755,6 +759,9 @@ Crafty.scene('Phase 3', function()
 					checkVictory();
 					break;
 			}
+			case 4:
+				target.health = healthUser;
+				break;
 			user.can_attack = false;
 			user.can_move = false;
 			ability_on = false;
@@ -770,6 +777,12 @@ Crafty.scene('Phase 3', function()
 			{
 				clearShadow();
 				generateShadow();
+			}
+			//Used for no-target abilities. Sends event once. Only from user client.
+			var user = getPlayer(player_name).unit_list[select_unit.arr_index];
+			if(user.ability == "Regeneration" && player_name == this_player_name)
+			{
+				sendEvent("Rclick", user.xcoor, user.ycoor);
 			}
 		}
 		

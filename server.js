@@ -513,27 +513,27 @@ io.sockets.on(
 				switch(name_list[i])
 				{
 					case "warrior":
-						var unit = {src: "", src_select:"", name:"warrior", ability:"Sweeping Attack", cooldown:0, xcoor:null, ycoor:null, health:16, damage:4, range:1, movement:2, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
+						var unit = {src: "", src_select:"", name:"warrior", ability:"Sweeping Attack", cooldown:0, xcoor:null, ycoor:null, health:16, maxHealth:16, damage:4, range:1, movement:2, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
 						unit_list.push(checkPlayerWarrior(unit, index));
 						break;
 					case "rogue":
-						var unit = {src:"", src_select:"", name:"rogue", ability:"N/A", cooldown:0, xcoor:null, ycoor:null, health:10, damage:3, range:1, movement:2, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
+						var unit = {src:"", src_select:"", name:"rogue", ability:"N/A", cooldown:0, xcoor:null, ycoor:null, health:10, maxHealth:10, damage:3, range:1, movement:2, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
 						unit_list.push(checkPlayerRogue(unit, index));
 						break;
 					case "goblin":
-						var unit = {src:"", src_select:"", name:"goblin", ability:"N/A", cooldown:0, xcoor:null, ycoor:null, health:6, damage:2, range:1, movement:6, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
+						var unit = {src:"", src_select:"", name:"goblin", ability:"N/A", cooldown:0, xcoor:null, ycoor:null, health:6, maxHealth:6, damage:2, range:1, movement:6, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
 						unit_list.push(checkPlayerGoblin(unit, index));
 						break;
 					case "hunter":
-						var unit = {src:"", src_select:"", name:"hunter", ability:"Snipe", cooldown:0, xcoor:null, ycoor:null, health:8, damage:2, range:5, movement:1, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
+						var unit = {src:"", src_select:"", name:"hunter", ability:"Snipe", cooldown:0, xcoor:null, ycoor:null, health:8, maxHealth:8, damage:2, range:5, movement:1, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
 						unit_list.push(checkPlayerHunter(unit, index));
 						break;
 					case "priest":
-						var unit = {src:"", src_select:"", name:"priest", ability:"Heal", cooldown:0, xcoor:null, ycoor:null, health:8, damage:1, range:1, movement:2, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
+						var unit = {src:"", src_select:"", name:"priest", ability:"Heal", cooldown:0, xcoor:null, ycoor:null, health:8, maxHealth:8, damage:1, range:1, movement:2, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
 						unit_list.push(checkPlayerPriest(unit, index));
 						break;
 					case "plant":
-						var unit = {src:"", src_select:"", name:"plant", ability:"Growth", cooldown:3, xcoor:null, ycoor:null, health:8, damage:1, range:1, movement:0, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
+						var unit = {src:"", src_select:"", name:"plant", ability:"Growth", cooldown:3, xcoor:null, ycoor:null, health:8, maxHealth:8, damage:1, range:1, movement:0, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
 						unit_list.push(checkPlayerPlant(unit, index));
 						break;
 				}
@@ -1236,11 +1236,15 @@ function ability(xcoor, ycoor)
 	switch(user.ability)
 	{
 		case "Heal":
-			//Range 1, not self, on your team
-			if(distance == 1 && target != null && results.targetOwner == selected_unit.owner)
+			//Range 1, not self, on your team, has injuries
+			if(distance == 1 && target != null && results.targetOwner == selected_unit.owner && target.health != target.maxHealth)
 			{
 				//Add x health, currently 2.
 				target.health += 2;
+				if(target.health > target.maxHealth)
+				{
+					target.health = target.maxHealth;
+				}
 				results.targetHealth = target.health;
 				results.success = true;
 				results.abilityID = 0;
@@ -1351,6 +1355,16 @@ function ability(xcoor, ycoor)
 				results.abilityID = 3;
 			}
 			break;
+		case "Regeneration":
+			if(distance == 0 && target == user && user.health < user.maxHealth)
+			{
+				user.health += 1;
+				results.userHealth = user.health;
+				results.success = true;
+				results.abilityID = 4;				
+			}
+			break;
+		
 	}
 	if(results.success)
 	{
