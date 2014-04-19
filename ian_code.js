@@ -390,7 +390,7 @@ Crafty.scene('Phase 3', function()
 		//Helper function- given a string player_name, return the unit_list of the player object.
 		function findUnitList(player_name)
 		{
-			var unit_list;
+			var unit_list = null;
 			switch(player_name)
 			{
 				case player_1.name:
@@ -413,6 +413,10 @@ Crafty.scene('Phase 3', function()
 		function findUnit(player_name, xcoor, ycoor)
 		{
 			var unit_list = findUnitList(player_name);
+			if(unit_list = null)
+			{
+				return null;
+			}
 			for(var i = 0; i<unit_list.length; ++i)
 			{
 				if(unit_list[i].xcoor == xcoor)
