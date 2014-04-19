@@ -941,6 +941,7 @@ io.sockets.on(
 							if(results.success)
 							{
 								confirmation.dragged_num = results.abilityID;
+								ability_toggle = false;
 							}
 						}
 						else

@@ -701,7 +701,10 @@ Crafty.scene('Phase 3', function()
 			}
 			user.can_attack = false;
 			user.can_move = false;
-			clearSelection();
+			ability_on = false;
+			clearShadow();
+			addRedX("noMove");
+			addRedX("noAttack");
 		}
 		
 		function abilityButton(toggled)
