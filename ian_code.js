@@ -714,6 +714,7 @@ Crafty.scene('Phase 3', function()
 						var targeted_player = getPlayerOccupying(paired_coor.xcoor, paired_coor.ycoor);
 						console.log(targeted_player);
 						var target = findUnit(targeted_player, paired_coor.xcoor, paired_coor.ycoor);
+						console.log("X"+target.xcoor.toString()+"Y"+target.ycoor.toString());
 						//If there is a non-user unit at the given square
 						if(target != null && target != user)
 						{
