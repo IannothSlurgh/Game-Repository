@@ -472,22 +472,22 @@ Crafty.scene('Phase 3', function()
 		// Gets the player occupying a specific space on the grid in phase three
 		function getPlayerOccupying(xcoor, ycoor)
 		{
-			var unit = findUnit(player_1, xcoor, ycoor);
+			var unit = findUnit(player_1.name, xcoor, ycoor);
 			if(unit != null)
 			{
 				return player_1.name;
 			}
-			unit = findUnit(player_2, xcoor, ycoor);
+			unit = findUnit(player_2.name, xcoor, ycoor);
 			if(unit != null)
 			{
 				return player_2.name;
 			}
-			unit = findUnit(player_3, xcoor, ycoor);
+			unit = findUnit(player_3.name, xcoor, ycoor);
 			if(unit != null)
 			{
 				return player_3.name;
 			}
-			unit = findUnit(player_4, xcoor, ycoor);
+			unit = findUnit(player_4.name, xcoor, ycoor);
 			if(unit != null)
 			{
 				return player_4.name;
