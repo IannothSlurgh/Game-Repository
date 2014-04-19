@@ -413,7 +413,7 @@ Crafty.scene('Phase 3', function()
 		function findUnit(player_name, xcoor, ycoor)
 		{
 			var unit_list = findUnitList(player_name);
-			if(unit_list = null)
+			if(unit_list == null)
 			{
 				return null;
 			}
@@ -684,6 +684,29 @@ Crafty.scene('Phase 3', function()
 								sweep_range.push({xcoor: i, ycoor: j});
 							}
 						}
+					}
+					//A diagonal sweep
+					if(sweep_range.length == 3)
+					{
+						var altered_xcoor, altered_ycoor;
+						if(target.xcoor > user.xcoor)
+						{
+							altered_xcoor = target.xcoor - 2;
+						}
+						else
+						{
+							altered_xcoor = target.xcoor + 2;
+						}
+						if(target.ycoor > user.ycoor)
+						{
+							altered_ycoor = target.ycoor - 2;
+						}
+						else
+						{
+							altered_ycoor = target.ycoor + 2;
+						}
+						sweep_range.push({xcoor: target.xcoor, ycoor: altered_ycoor});
+						sweep_range.push({xcoor: altered_xcoor, ycoor: target.ycoor});
 					}
 					while(sweep_range.length>0)
 					{

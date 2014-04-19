@@ -1274,6 +1274,29 @@ function ability(xcoor, ycoor)
 						}
 					}
 				}
+				//A diagonal sweep
+				if(sweep_range.length == 3)
+				{
+					var altered_xcoor, altered_ycoor;
+					if(target.xcoor > user.xcoor)
+					{
+						altered_xcoor = target.xcoor - 2;
+					}
+					else
+					{
+						altered_xcoor = target.xcoor + 2;
+					}
+					if(target.ycoor > user.ycoor)
+					{
+						altered_ycoor = target.ycoor - 2;
+					}
+					else
+					{
+						altered_ycoor = target.ycoor + 2;
+					}
+					sweep_range.push({xcoor: target.xcoor, ycoor: altered_ycoor});
+					sweep_range.push({xcoor: altered_xcoor, ycoor: target.ycoor});
+				}
 				//Go through array items
 				while(sweep_range.length>0)
 				{
