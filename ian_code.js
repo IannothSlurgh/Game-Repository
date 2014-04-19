@@ -679,7 +679,7 @@ Crafty.scene('Phase 3', function()
 					{
 						for(var j = target.ycoor-1; j < target.ycoor+1; ++j)
 						{
-							if(getDistance(target.xcoor, target.ycoor, i, j) == 1)
+							if(getDistance(user.xcoor, user.ycoor, i, j) == 1)
 							{
 								sweep_range.push({xcoor: i, ycoor: j});
 							}

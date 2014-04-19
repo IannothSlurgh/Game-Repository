@@ -1301,6 +1301,7 @@ function ability(xcoor, ycoor)
 				while(sweep_range.length>0)
 				{
 					var paired_coor = sweep_range.pop();
+					console.log("X"+paired_coor.xcoor.toString()+"Y"+paired_coor.ycoor.toString());
 					var target = findUnit(paired_coor.xcoor, paired_coor.ycoor);
 					//If there is a non-user unit at the given square
 					if(target != null && target != user)
