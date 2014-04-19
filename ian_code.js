@@ -658,12 +658,12 @@ Crafty.scene('Phase 3', function()
 					while(sweep_range.length>0)
 					{
 						var paired_coor = sweep_range.pop();
-						var target = findUnit(paired_coor.xcoor, paired_coor.ycoor);
+						var targeted_player = getPlayerOccupying(paired_coor.xcoor, paired_coor.ycoor);
+						var target = findUnit(targeted_player, paired_coor.xcoor, paired_coor.ycoor);
 						//If there is a non-user unit at the given square
 						if(target != null && target != user)
 						{
 							//Deal X damage
-							var targeted_player = getPlayerOcuppying(paired_coor.xcoor, paired_coor.ycoor);
 							target.health -= 2;
 							//Handle death.
 							if(target.health <= 0)
@@ -672,12 +672,12 @@ Crafty.scene('Phase 3', function()
 								target.xcoor = null;
 								target.ycoor = null;
 								target.is_dead = true;
-								if(healthTarget == "Playerdead")
-								{
-									updatePlayersLive();
-								}
 							}
 						}
+					}
+					if(healthTarget == "Playerdead")
+					{
+						updatePlayersLive();
 					}
 					checkVictory();
 					break;
@@ -955,7 +955,7 @@ Crafty.scene('Phase 3', function()
 				}
 				else if(decrypted.action == "AbilityUsed")
 				{
-					ability(decrypted.xcoor, decrypted.ycoor, decrypted.healthSelf, decrypted.healthTarget, decrpyted.who, decrypted.dragged_num)
+					ability(decrypted.xcoor, decrypted.ycoor, decrypted.healthSelf, decrypted.healthTarget, decrypted.who, decrypted.dragged_num)
 				}
 				else if(decrypted.action == "Place")
 				{
