@@ -1289,7 +1289,7 @@ function ability(xcoor, ycoor)
 							target.ycoor = null;
 							target.is_dead = true;
 						}
-						if(!checkPlayerAlive(target_player))
+						if(!checkPlayerAlive(targeted_player))
 						{
 							//If even a single player dies as a result of sweeping attack, pass Playerdead in targetHealth.
 							targetHealth = "Playerdead";
@@ -1304,6 +1304,7 @@ function ability(xcoor, ycoor)
 			//max distance of 5, min distance of 2, must be a hostile unit
 			if(distance >=2 && distance <=5 && target != null && results.targetOwner != selected_unit.owner)
 			{
+				var targeted_player = getPlayerOcuppying(xcoor, ycoor);
 				target.health -= 3;
 				if(target.health <= 0)
 				{
@@ -1312,7 +1313,7 @@ function ability(xcoor, ycoor)
 					target.is_dead = true;
 				}
 				targetHealth = target.health;
-				if(!checkPlayerAlive(target_player))
+				if(!checkPlayerAlive(targeted_player))
 				{
 					//Handle possible dead player.
 					targetHealth = "Playerdead";
