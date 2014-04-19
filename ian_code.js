@@ -675,9 +675,9 @@ Crafty.scene('Phase 3', function()
 				case 2:
 					var sweep_range = new Array();
 					//Go through all spots surrounding the target, and if these are in range of user, push to array
-					for(var i = target.xcoor-1; i < target.xcoor+1; ++i)
+					for(var i = target.xcoor-1; i < target.xcoor+2; ++i)
 					{
-						for(var j = target.ycoor-1; j < target.ycoor+1; ++j)
+						for(var j = target.ycoor-1; j < target.ycoor+2; ++j)
 						{
 							if(getDistance(user.xcoor, user.ycoor, i, j) == 1)
 							{

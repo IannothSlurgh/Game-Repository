@@ -1264,9 +1264,9 @@ function ability(xcoor, ycoor)
 			{
 				var sweep_range = new Array();
 				//Go through all spots surrounding the target, and if these are in range of user, push to array
-				for(var i = target.xcoor-1; i < target.xcoor+1; ++i)
+				for(var i = target.xcoor-1; i < target.xcoor+2; ++i)
 				{
-					for(var j = target.ycoor-1; j < target.ycoor+1; ++j)
+					for(var j = target.ycoor-1; j < target.ycoor+2; ++j)
 					{
 						if(getDistance(i, j) == 1)
 						{
