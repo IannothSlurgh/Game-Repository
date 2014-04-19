@@ -464,6 +464,32 @@ Crafty.scene('Phase 3', function()
 			updatePlayersLiveHelper(player_3);
 			updatePlayersLiveHelper(player_4);
 		}
+
+		// Gets the player occupying a specific space on the grid in phase three
+		function getPlayerOccupying(xcoor, ycoor)
+		{
+			var unit = findUnitHelp(xcoor, ycoor, player_1);
+			if(unit != null)
+			{
+				return player_1.name;
+			}
+			unit = findUnitHelp(xcoor, ycoor, player_2);
+			if(unit != null)
+			{
+				return player_2.name;
+			}
+			unit = findUnitHelp(xcoor, ycoor, player_3);
+			if(unit != null)
+			{
+				return player_3.name;
+			}
+			unit = findUnitHelp(xcoor, ycoor, player_4);
+			if(unit != null)
+			{
+				return player_4.name;
+			}
+			return null;
+		}
 		
 		//Clears selected_unit, stats, and hides selection box.
 		function clearSelection()
