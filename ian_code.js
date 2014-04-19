@@ -671,12 +671,14 @@ Crafty.scene('Phase 3', function()
 			{
 				case 0:
 					target.health = healthTarget;
+					updateBattleLog(selected_unit.owner +"\'s "+ user.name + " has healed his " + target.name + " to a total of "+target.health.toString() + " hitpoints.");
 					break;
 				case 1:
 					var new_unit = {src:user.src, src_select:user.src_select, name:"plant", ability:"Growth", cooldown:3, xcoor:xcoor, ycoor:ycoor, health:8, damage:1, range:1, movement:0, can_move:true, can_attack:true, is_dead:false, has_been_placed:true, arr_index:new_owner.unit_list.length};
 					findUnitList(selected_unit.owner).push(new_unit);
 					document.getElementById("X"+xcoor+"Y"+ycoor).src = new_unit.src;
 					user.cooldown = 3;
+					updateBattleLog(selected_unit.owner+" has spawned a new "+user.name+".");
 					break;
 				case 2:
 					var sweep_range = new Array();
@@ -741,6 +743,7 @@ Crafty.scene('Phase 3', function()
 					{
 						updatePlayersLive();
 					}
+					updateBattleLog(selected_unit.owner + "\'s "+ user.name + " has used sweeping attack.");
 					checkVictory();
 					break;
 				case 3:
@@ -751,17 +754,22 @@ Crafty.scene('Phase 3', function()
 						updatePlayersLive();
 					}
 					target.health = healthTarget;
+					var message = selected_unit.owner+"\'s "+user.name+" has sniped "+ player_name + "\'s " + target.name +" dealing 3 damage."
 					if(target.health <= 0)
 					{
+						message += player_name + "\'s " + target.name + " has perished."
 						document.getElementById("X"+target.xcoor+"Y"+target.ycoor).src = "http://i.imgur.com/ubwIthk.gif";
 						target.xcoor = null;
 						target.ycoor = null;
 						target.is_dead = true;
 					}
+					updateBattleLog(message);
 					checkVictory();
 					break;
 				case 4:
-					target.health = healthUser;
+					user.health = healthUser;
+					document.getElementById("stat_hp").innerHTML = user.health.toString();
+					updateBattleLog(selected_unit.owner+"\'s "+user.name+" has regenerated one hitpoint.");
 					break;
 			}
 			user.can_attack = false;
@@ -869,16 +877,12 @@ Crafty.scene('Phase 3', function()
 			var message = selected_unit.owner + "\'s " + attacker.name + " attacked "
 						+ secondary_player + "\'s " + defender.name + " and did "
 						+ damage_dealt + " damage.";
-			//Only output once
-			if(selected_unit.owner == this_player_name)
+			updateBattleLog(message);
+			if(check_if_dead)
 			{
-				socket.emit('phaseIII_message', message);
-				if(check_if_dead)
-				{
-					var death_message = secondary_player + "\'s " + 
-							defender.name + " died.";
-					socket.emit('phaseIII_message', death_message);
-				}
+				var death_message = secondary_player + "\'s " + 
+						defender.name + " died.";
+				updateBattleLog(death_message);
 			}
 			//Set to health values given by server.
 			defender.health = defender_health;
@@ -915,6 +919,15 @@ Crafty.scene('Phase 3', function()
 			checkVictory();
 		}
 
+		//Function makes sure that a message only emits once.
+		function updateBattleLog(message)
+		{
+			if(current_turn == this_player_name)
+			{
+				socket.emit('phaseIII_message', message);
+			}
+		}
+		
 		//Pass data to server based on player click. Called by the tiles onclick and oncontextmenu
 		function sendEvent(action, xcoor, ycoor)
 		{
