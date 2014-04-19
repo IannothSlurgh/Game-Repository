@@ -712,10 +712,12 @@ Crafty.scene('Phase 3', function()
 					{
 						var paired_coor = sweep_range.pop();
 						var targeted_player = getPlayerOccupying(paired_coor.xcoor, paired_coor.ycoor);
+						console.log(targeted_player);
 						var target = findUnit(targeted_player, paired_coor.xcoor, paired_coor.ycoor);
 						//If there is a non-user unit at the given square
 						if(target != null && target != user)
 						{
+							console.log("Sweeeeep!");
 							//Deal X damage
 							target.health -= 2;
 							//Handle death.

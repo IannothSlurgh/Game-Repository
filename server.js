@@ -1307,6 +1307,7 @@ function ability(xcoor, ycoor)
 					{
 						//Deal X damage
 						var targeted_player = getPlayerOccupying(paired_coor.xcoor, paired_coor.ycoor);
+						console.log("Sweeeep!");
 						target.health -= 2;
 						//Handle death.
 						if(target.health <= 0)
