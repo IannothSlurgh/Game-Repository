@@ -79,9 +79,9 @@ Crafty.scene('Phase 3', function()
 				case "Snipe":
 					return 5;
 					break;
-				case "Regeneration"
+				case "Regeneration":
 					return 0;
-				break;
+					break;
 				default:
 					return null;
 					break;
