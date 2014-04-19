@@ -81,6 +81,7 @@ Crafty.scene('Phase 3', function()
 					break;
 				case "Regeneration"
 					return 0;
+				break;
 				default:
 					return null;
 					break;

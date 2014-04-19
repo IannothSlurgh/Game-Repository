@@ -521,7 +521,7 @@ io.sockets.on(
 						unit_list.push(checkPlayerRogue(unit, index));
 						break;
 					case "goblin":
-						var unit = {src:"", src_select:"", name:"goblin", ability:"N/A", cooldown:0, xcoor:null, ycoor:null, health:6, maxHealth:6, damage:2, range:1, movement:6, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
+						var unit = {src:"", src_select:"", name:"goblin", ability:"Regeneration", cooldown:0, xcoor:null, ycoor:null, health:6, maxHealth:6, damage:2, range:1, movement:6, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
 						unit_list.push(checkPlayerGoblin(unit, index));
 						break;
 					case "hunter":
