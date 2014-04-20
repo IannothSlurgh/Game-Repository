@@ -785,9 +785,19 @@ Crafty.scene('Phase 3', function()
 					updateBattleLog(selected_unit.owner+"\'s "+user.name+" has regenerated one hitpoint.");
 					break;
 				case 5:
+					var message = selected_unit.owner+"\'s "+user.name+" has disarmed " + player_name + "\'s " + target.name;
 					target.damage = 1;
-					target.health = healthTarget;
+					if(target.health != healthTarget)
+					{
+						target.health = healthTarget;
+						message += " dealing 1 damage.";
+					}
+					else
+					{
+						message += ".";
+					}
 					user.cooldown = 2;
+					updateBattleLog(message);
 					break;
 			}
 			user.can_attack = false;
@@ -796,6 +806,8 @@ Crafty.scene('Phase 3', function()
 			clearShadow();
 			addRedX("noMove");
 			addRedX("noAttack");
+			document.getElementById("stat_cooldown_clock").style.visibility = "visible";
+			document.getElementById("stat_cooldown").innerHTML = user.cooldown.toString() + " turns";
 		}
 		
 		function abilityButton(toggled, player_name)
