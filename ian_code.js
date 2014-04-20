@@ -1193,8 +1193,9 @@ Crafty.scene('Phase 3', function()
 				unit.ondragend = 
 				function(mouse_event)
 				{
-					var xcoor = mouse_event.clientX + document.body.scrollLeft;
-					var ycoor = mouse_event.clientY + document.body.scrollTop;
+					var paired_coor = getPos(document.getElementById("div_tiles"));
+					var xcoor = mouse_event.pageX - paired_coor.x - document.body.scrollLeft;
+					var ycoor = mouse_event.pageY - paired_coor.y - document.body.scrollTop;
 					var found_element = document.elementFromPoint(xcoor, ycoor);
 					if(found_element != null)
 					{
