@@ -1072,8 +1072,10 @@ Crafty.scene('Phase 3', function()
 			//Get place clicked.
 			var xcoor = mouse_event.pageX - paired_coor.x - document.body.scrollLeft;
 			var ycoor = mouse_event.pageY - paired_coor.y - document.body.scrollTop;
-			console.log(mouse_event.clientY);
-			console.log(mouse_event.pageY);
+			console.log("page "+"X"+mouse_event.pageX.toString()+"Y"+mouse_event.pageY.toString());
+			console.log("screen "+"X"+mouse_event.screenX.toString()+"Y"+mouse_event.screenY.toString());
+			console.log("client "+"X"+mouse_event.clientX.toString()+"Y"+mouse_event.clientY.toString());
+			console.log("div "+"X"+paired_coor.x.toString()+"Y"+paired_coor.y.toString());
 			//Hide unit camp element so elementFromPoint will return a tile, not unit camp element.
 			unit_camp.style.visibility = "hidden";
 			var found_element = document.elementFromPoint(xcoor, ycoor);
