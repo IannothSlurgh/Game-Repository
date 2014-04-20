@@ -1054,14 +1054,26 @@ Crafty.scene('Phase 3', function()
 				}
 			}
 		}
-
+		
+		//http://stackoverflow.com/questions/288699/get-the-position-of-a-div-span-tag
+		function getPos(el) {
+			// yay readability
+			for (var lx=0, ly=0;
+				 el != null;
+				 lx += el.offsetLeft, ly += el.offsetTop, el = el.offsetParent);
+			return {x: lx,y: ly};
+		}
+		
 		//Unit camp element's onclick function that transports events to tiles beneath the element.
 		function unitCampOnClick(mouse_event)
 		{
+			var paired_coor = getPos(document.getElementById("div_tiles"));
 			var unit_camp = document.getElementById("unit_camp");
 			//Get place clicked.
-			var xcoor = mouse_event.clientX;
-			var ycoor = mouse_event.clientY;
+			var xcoor = mouse_event.pageX - paired_coor.x + document.body.scrollLeft;
+			var ycoor = mouse_event.pageY - paired_coor.y + document.body.scrollTop;
+			console.log(xcoor);
+			console.log(ycoor);
 			//Hide unit camp element so elementFromPoint will return a tile, not unit camp element.
 			unit_camp.style.visibility = "hidden";
 			var found_element = document.elementFromPoint(xcoor, ycoor);
