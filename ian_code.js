@@ -681,6 +681,7 @@ Crafty.scene('Phase 3', function()
 			switch(ability_id)
 			{
 				case 0:
+					user.cooldown = 1;
 					target.health = healthTarget;
 					updateBattleLog(selected_unit.owner +"\'s "+ user.name + " has healed his " + target.name + " to a total of "+target.health.toString() + " hitpoints.");
 					break;
@@ -692,6 +693,7 @@ Crafty.scene('Phase 3', function()
 					updateBattleLog(selected_unit.owner+" has spawned a new "+user.name+".");
 					break;
 				case 2:
+					user.cooldown = 1;
 					var sweep_range = new Array();
 					//Go through all spots surrounding the target, and if these are in range of user, push to array
 					for(var i = xcoor-1; i < xcoor+2; ++i)
@@ -755,6 +757,7 @@ Crafty.scene('Phase 3', function()
 					checkVictory();
 					break;
 				case 3:
+					user.cooldown = 1;
 					if(healthTarget == "Playerdead")
 					{
 						target.is_dead = true;
@@ -776,6 +779,7 @@ Crafty.scene('Phase 3', function()
 					checkVictory();
 					break;
 				case 4:
+					user.cooldown = 1;
 					user.health = healthUser;
 					document.getElementById("stat_hp").innerHTML = user.health.toString();
 					updateBattleLog(selected_unit.owner+"\'s "+user.name+" has regenerated one hitpoint.");

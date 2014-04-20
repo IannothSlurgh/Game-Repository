@@ -513,7 +513,7 @@ io.sockets.on(
 				switch(name_list[i])
 				{
 					case "warrior":
-						var unit = {src: "", src_select:"", name:"warrior", ability:"Sweeping Attack", cooldown:0, xcoor:null, ycoor:null, health:16, maxHealth:16, damage:4, maxDamage:4, range:1, movement:2, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
+						var unit = {src: "", src_select:"", name:"warrior", ability:"Sweeping Attack", cooldown:1, xcoor:null, ycoor:null, health:16, maxHealth:16, damage:4, maxDamage:4, range:1, movement:2, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
 						unit_list.push(checkPlayerWarrior(unit, index));
 						break;
 					case "rogue":
@@ -521,15 +521,15 @@ io.sockets.on(
 						unit_list.push(checkPlayerRogue(unit, index));
 						break;
 					case "goblin":
-						var unit = {src:"", src_select:"", name:"goblin", ability:"Regeneration", cooldown:0, xcoor:null, ycoor:null, health:6, maxHealth:6, damage:2, maxDamage:2, range:1, movement:6, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
+						var unit = {src:"", src_select:"", name:"goblin", ability:"Regeneration", cooldown:1, xcoor:null, ycoor:null, health:6, maxHealth:6, damage:2, maxDamage:2, range:1, movement:6, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
 						unit_list.push(checkPlayerGoblin(unit, index));
 						break;
 					case "hunter":
-						var unit = {src:"", src_select:"", name:"hunter", ability:"Snipe", cooldown:0, xcoor:null, ycoor:null, health:8, maxHealth:8, damage:2, maxDamage:2, range:5, movement:1, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
+						var unit = {src:"", src_select:"", name:"hunter", ability:"Snipe", cooldown:1, xcoor:null, ycoor:null, health:8, maxHealth:8, damage:2, maxDamage:2, range:5, movement:1, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
 						unit_list.push(checkPlayerHunter(unit, index));
 						break;
 					case "priest":
-						var unit = {src:"", src_select:"", name:"priest", ability:"Heal", cooldown:0, xcoor:null, ycoor:null, health:8, maxHealth:8, damage:1, maxDamage:1, range:1, movement:2, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
+						var unit = {src:"", src_select:"", name:"priest", ability:"Heal", cooldown:1, xcoor:null, ycoor:null, health:8, maxHealth:8, damage:1, maxDamage:1, range:1, movement:2, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
 						unit_list.push(checkPlayerPriest(unit, index));
 						break;
 					case "plant":
@@ -1223,6 +1223,7 @@ function ability(xcoor, ycoor)
 				{
 					target.health = target.maxHealth;
 				}
+				user.cooldown = 1;
 				results.targetHealth = target.health;
 				results.success = true;
 				results.abilityID = 0;
@@ -1306,6 +1307,7 @@ function ability(xcoor, ycoor)
 						}
 					}
 				}
+				user.cooldown = 1;
 				results.success = true;
 				results.abilityID = 2;
 			}
@@ -1328,6 +1330,7 @@ function ability(xcoor, ycoor)
 					//Handle possible dead player.
 					results.targetHealth = "Playerdead";
 				}
+				user.cooldown = 1;
 				results.success = true;
 				results.abilityID = 3;
 			}
@@ -1338,10 +1341,11 @@ function ability(xcoor, ycoor)
 				user.health += 1;
 				results.userHealth = user.health;
 				results.success = true;
+				user.cooldown = 1;
 				results.abilityID = 4;				
 			}
 			break;
-		case "Disarm";
+		case "Disarm":
 			if(distance == 1 && target != null && results.targetOwner != selected_unit.owner)
 			{
 				user.cooldown = 2;
@@ -1350,7 +1354,7 @@ function ability(xcoor, ycoor)
 				{
 					target.health -= 1;
 				}
-				targetHealth = target.health;
+				results.targetHealth = target.health;
 				results.success = true;
 				results.abilityID = 5;	
 			}
