@@ -82,6 +82,9 @@ Crafty.scene('Phase 3', function()
 				case "Regeneration":
 					return 0;
 					break;
+				case "Disarm":
+					return 1;
+					break;
 				default:
 					return null;
 					break;
@@ -106,6 +109,9 @@ Crafty.scene('Phase 3', function()
 					break;
 				case "Regeneration":
 					return 0;
+					break;
+				case "Disarm":
+					return 1;
 					break;
 				default:
 					return null;
@@ -659,6 +665,11 @@ Crafty.scene('Phase 3', function()
 				{
 					unit_list[i].cooldown -= 1;
 				}
+				//Units that are disarmed quickly pick weapons back up.
+				if(unit_list[i].damage < unit_list[i].maxDamage)
+				{
+					unit_list[i].damage = unit_list[i].maxDamage;
+				}
 			}
 			current_turn = nextPlayer;
 		}
@@ -768,6 +779,11 @@ Crafty.scene('Phase 3', function()
 					user.health = healthUser;
 					document.getElementById("stat_hp").innerHTML = user.health.toString();
 					updateBattleLog(selected_unit.owner+"\'s "+user.name+" has regenerated one hitpoint.");
+					break;
+				case 5:
+					target.damage = 1;
+					target.health = healthTarget;
+					user.cooldown = 2;
 					break;
 			}
 			user.can_attack = false;
