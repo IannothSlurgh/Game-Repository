@@ -799,17 +799,7 @@ io.sockets.on(
 				//If all players ready, go to phase III
 				if(num_of_players_ready == clients.length)
 				{
-					console.log("***");
-					console.log(player_1.unit_list);
-					console.log(player_2.unit_list);
-					console.log(player_3.unit_list);
-					console.log(player_4.unit_list);
-					console.log("***");
 					sort_scores();
-					console.log("---");
-					console.log(turn_order);
-					console.log(score_list);
-					console.log("---");
 					io.sockets.emit('moveToPhase3');
 				}
 			}
@@ -888,16 +878,6 @@ io.sockets.on(
 								notification.starting_player = confirmation.starting_player;
 							}
 							confirmation.who = decrypted.who;
-							console.log("***");
-							if(decrypted.dragged_num != null)
-							{
-								console.log(decrypted.dragged_num.toString());
-							}
-							else
-							{
-								console.log("null");
-							}
-							console.log("***");
 							confirmation.dragged_num = decrypted.dragged_num;
 					}
 					else
@@ -1109,7 +1089,6 @@ function getDistance(xcoor, ycoor)
 	var delta_x = Math.abs(xcoor - original_x);
 	var delta_y = Math.abs(ycoor - original_y);
 	var distance = Math.max(delta_x, delta_y)
-	console.log(distance);
 	return distance;
 }
 
@@ -1170,12 +1149,6 @@ function getPlayer(player_name)
 	if(player_4.name == player_name)
 	{
 		player = player_4;
-	}
-	if(player == null)
-	{
-		console.log("***");
-		console.log(player_name);
-		console.log("***");
 	}
 	return player;
 }
@@ -1305,14 +1278,12 @@ function ability(xcoor, ycoor)
 				while(sweep_range.length>0)
 				{
 					var paired_coor = sweep_range.pop();
-					console.log("X"+paired_coor.xcoor.toString()+"Y"+paired_coor.ycoor.toString());
 					var target = findUnit(paired_coor.xcoor, paired_coor.ycoor);
 					//If there is a non-user unit at the given square
 					if(target != null && target != user)
 					{
 						//Deal X damage
 						var targeted_player = getPlayerOccupying(paired_coor.xcoor, paired_coor.ycoor);
-						console.log("Sweeeep!");
 						target.health -= 2;
 						//Handle death.
 						if(target.health <= 0)

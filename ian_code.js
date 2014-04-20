@@ -720,13 +720,10 @@ Crafty.scene('Phase 3', function()
 					{
 						var paired_coor = sweep_range.pop();
 						var targeted_player = getPlayerOccupying(paired_coor.xcoor, paired_coor.ycoor);
-						console.log(targeted_player);
 						var target = findUnit(targeted_player, paired_coor.xcoor, paired_coor.ycoor);
-						console.log("X"+paired_coor.xcoor.toString()+"Y"+paired_coor.ycoor.toString());
 						//If there is a non-user unit at the given square
 						if(target != null && target != user)
 						{
-							console.log("Sweeeeep!");
 							//Deal X damage
 							target.health -= 2;
 							//Handle death.
@@ -754,16 +751,17 @@ Crafty.scene('Phase 3', function()
 						updatePlayersLive();
 					}
 					target.health = healthTarget;
-					var message = selected_unit.owner+"\'s "+user.name+" has sniped "+ player_name + "\'s " + target.name +" dealing 3 damage."
+					var message = selected_unit.owner+"\'s "+user.name+" has sniped "+ player_name + "\'s " + target.name +" dealing 3 damage. "
+					updateBattleLog(message);
 					if(target.health <= 0)
 					{
-						message += player_name + "\'s " + target.name + " has perished."
+						message = player_name + "\'s " + target.name + " has perished."
+						updateBattleLog(message);
 						document.getElementById("X"+target.xcoor+"Y"+target.ycoor).src = "http://i.imgur.com/ubwIthk.gif";
 						target.xcoor = null;
 						target.ycoor = null;
 						target.is_dead = true;
 					}
-					updateBattleLog(message);
 					checkVictory();
 					break;
 				case 4:
@@ -931,7 +929,6 @@ Crafty.scene('Phase 3', function()
 		//Pass data to server based on player click. Called by the tiles onclick and oncontextmenu
 		function sendEvent(action, xcoor, ycoor)
 		{
-			console.log("Event sent");
 			//If its your turn and you are not waiting on a server response already.
 			if(! events_locked )
 			{
@@ -1063,8 +1060,8 @@ Crafty.scene('Phase 3', function()
 		{
 			var unit_camp = document.getElementById("unit_camp");
 			//Get place clicked.
-			var xcoor = mouse_event.clientX + document.body.scrollLeft;
-			var ycoor = mouse_event.clientY + document.body.scrollTop;
+			var xcoor = mouse_event.clientX;
+			var ycoor = mouse_event.clientY;
 			//Hide unit camp element so elementFromPoint will return a tile, not unit camp element.
 			unit_camp.style.visibility = "hidden";
 			var found_element = document.elementFromPoint(xcoor, ycoor);
@@ -1128,7 +1125,7 @@ Crafty.scene('Phase 3', function()
 	function paintInventory(unit_list)
 	{
 		//Create unit inventory back-drop
-		addImage("unit_inventory", "http://i.imgur.com/xOprkXs.png", 685, 500, 0, 176, 124);
+		addImage("unit_inventory", "http://i.imgur.com/MbsROVB.png", 685, 500, 0, 176, 124);
 		var inventory = document.getElementById("unit_inventory");
 		inventory.ondragstart = 
 		function()
@@ -1147,7 +1144,7 @@ Crafty.scene('Phase 3', function()
 			//Paint squares left to right, after first row, do second.
 			var square_left = 685+(43*(i%4));
 			var square_top = 533+43*(i>3);
-			addImage(square_id, "http://i.imgur.com/Uka6Tb2.png", square_left, square_top, 1, 46, 46);
+			addImage(square_id, "http://i.imgur.com/K8tJmAt.png", square_left, square_top, 1, 46, 46);
 			var square = document.getElementById(square_id);
 			square.oncontextmenu = 
 			function()
@@ -1221,6 +1218,7 @@ Crafty.scene('Phase 3', function()
 				}
 			}
 			//Reveal phase 3 elements.
+			document.getElementById("div_tiles").style.display = "block";
 			document.getElementById("stat_end_turn").onclick = function(){ sendEvent("Endturn", null, null); };
 			document.getElementById("stat_end_turn").style.display = "block";
 			document.getElementById("stat_hp").style.display = "block";
