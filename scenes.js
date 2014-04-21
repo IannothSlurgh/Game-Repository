@@ -347,7 +347,7 @@ Crafty.scene('Game', function()
  	socket.on('destroyMoney', function(message)
  	{
  		var money_index = message.collected_money_index;
- 		Crafty.e('2D, Canvas, Text, Tween')
+ 		Crafty.e('2D, DOM, Text, Tween')
 			.attr({x: money_list[money_index].x, y: money_list[money_index].y})
 			.text('+50')
 			.textColor('#FFFFFF')
@@ -414,7 +414,7 @@ Crafty.scene('Game', function()
 	//redistributes money on the screen
 	this.add_money = this.bind('MoneyCollected', function(money)
 	{
-		Crafty.e('2D, Canvas, Text, Tween')
+		Crafty.e('2D, DOM, Text, Tween')
 			.attr({x: money.x, y: money.y})
 			.text('+50')
 			.textColor('#FFFFFF')
