@@ -347,6 +347,15 @@ Crafty.scene('Game', function()
  	socket.on('destroyMoney', function(message)
  	{
  		var money_index = message.collected_money_index;
+ 		Crafty.e('2D, Canvas, Text, Tween')
+			.attr({x: money_list[money_index].x, y: money_list[money_index].y})
+			.text('+50')
+			.textColor('#FFFFFF')
+			.textFont({weight: 'bold'})
+			.tween({alpha: 0.0, y: this.y - 10}, 1000)
+			.bind('EndTween', function(){
+				this.destroy();
+			});
   		money_list[money_index].x = message.x;
   		money_list[money_index].y = message.y;
   	});
@@ -405,6 +414,16 @@ Crafty.scene('Game', function()
 	//redistributes money on the screen
 	this.add_money = this.bind('MoneyCollected', function(money)
 	{
+		Crafty.e('2D, Canvas, Text, Tween')
+			.attr({x: money.x, y: money.y})
+			.text('+50')
+			.textColor('#FFFFFF')
+			.textFont({weight: 'bold'})
+			.tween({alpha: 0.0, y: this.y - 10}, 1000)
+			.bind('EndTween', function(){
+				this.destroy();
+			});
+		
 		var exit = false;
 		
 		while(!exit){
