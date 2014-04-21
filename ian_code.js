@@ -1381,6 +1381,7 @@ Crafty.scene('Phase 3', function()
 			var div_tiles = document.getElementById("div_tiles");
 			var blood_splat = document.getElementById("Splat");
 			div_tiles.removeChild(blood_splat);
+			console.log("attempted to remove splat");
 		}
 		init();
 	});
