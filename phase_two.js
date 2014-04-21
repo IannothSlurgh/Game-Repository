@@ -16,10 +16,11 @@ function printUnitList() {
 	while(i < units.length - 1) {
 		theString = theString + units[i] + ", ";
 		i++;
-		if(i == 7) {
-			theString = theString + "\n" + "\t";
-		}
 	}
+	if(units.length > 0) {
+		theString = theString + units[i]
+	}
+
 	//update client page
 	document.getElementById("theUnits").innerHTML=theString;
 }
