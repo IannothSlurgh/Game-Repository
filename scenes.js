@@ -63,7 +63,7 @@ function place_player()
 	
 	var player_text = Crafty.e("2D, DOM, Text")
 		.attr({x: col * 16, y: row * 16 - 15, w: 75})
-		.textColor('rgb(255, 250, 250)')
+		.textColor('#FFFFFF')
 		.text(list_of_users[player_number]);
 		
 	player = Crafty.e('PlayerCharacter').at(col, row).attach(player_text);
@@ -116,7 +116,7 @@ function place_enemy_player(index)
 	//need to change width and x position based on user_name
 	var enemy_text = Crafty.e("2D, DOM, Text")
 		.attr({x: col * 16, y: row * 16 - 15, w: 75})
-		.textColor('rgb(255, 250, 250)')
+		.textColor('#FFFFFF')
 		.text(list_of_users[index]);
 	
 	enemy_list.push(Crafty.e('EnemyPlayer').attr({index: index}).at(col, row).attach(enemy_text));
@@ -332,21 +332,6 @@ Crafty.scene('Game', function()
 	//updates the position of an enemy player
 	socket.on('updateEnemyPlayer', function(message)
 	{
-		var enemy_index = message.index;
-		for(var i = 0; i < enemy_list.length; i++)
-		{
-			if(enemy_list[i].index == enemy_index)
-			{
-				enemy_list[i].x = message.x;
-				enemy_list[i].y = message.y;
-			}
-		}
-	});
-	
-	//send message to server to indicate that one of the players has collided with a piece of money
-	socket.on('destroyMoney', function(message)
-	{
-		var money_index = message.collected_money_index;
 		money_list[money_index].x = message.x;
 		money_list[money_index].y = message.y;
 	});
@@ -376,7 +361,7 @@ Crafty.scene('Game', function()
 	Crafty.e("2D, DOM, Text")
 		.attr({x: 100, y: 0, w: 100})
 		.text("Time = " + Math.floor(time_left/60) + ":"+(time_left%60))
-		.textColor('rgb(255, 250, 250)')
+		.textColor('#FFFFFF')
 		.bind('ChangeTimer', function()
 		{
 			time_left -= 1;
