@@ -16,6 +16,9 @@ function printUnitList() {
 	while(i < units.length - 1) {
 		theString = theString + units[i] + ", ";
 		i++;
+		if(i == 7) {
+			theString = theString + "\n" + "\t";
+		}
 	}
 	
 	if(units.length > 0) {
@@ -29,7 +32,7 @@ function printUnitList() {
 //updates the current resources for the client
 function updateResources() {
 	document.getElementById("money").innerHTML=money + "/" + player.score;
-	document.getElementById("counter").innerHTML=unitCount + "/8";
+	document.getElementById("counter").innerHTML=unitCount + "/16";
 }
 
 //add a warrior to the unit list
@@ -92,6 +95,18 @@ function selectGoblin()
 	}
 }
 
+//add a plant to the unit list
+function selectPlant()
+{
+	if(unitCount < 16 && money >= 50 && !ready) {
+		units[unitCount] = "plant";
+		unitCount++;
+		money = money - 50;
+		updateResources();
+		printUnitList();
+	}
+}
+
 //reset the resources of the client and clear the unit list
 function reset()
 {
@@ -99,18 +114,6 @@ function reset()
 		money = player.score;
 		units.length = 0;
 		unitCount = 0;
-		updateResources();
-		printUnitList();
-	}
-}
-
-//add a plant to the unit list
-function selectPlant()
-{
-	if(unitCount < 8 && money >= 50 && !ready) {
-		units[unitCount] = "plant";
-		unitCount++;
-		money = money - 50;
 		updateResources();
 		printUnitList();
 	}
