@@ -1379,9 +1379,8 @@ Crafty.scene('Phase 3', function()
 		//Finish constructing phase 3.
 		function deleteSplat() {
 			var div_tiles = document.getElementById("div_tiles");
-			var blood_splat = document.getElementByID("Splat");
+			var blood_splat = document.getElementById("Splat");
 			div_tiles.removeChild(blood_splat);
-			console.log("attempted to delete blood");
 		}
 		init();
 	});
