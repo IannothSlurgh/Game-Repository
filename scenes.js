@@ -352,7 +352,7 @@ Crafty.scene('Game', function()
 			.text('+50')
 			.textColor('#FFFFFF')
 			.textFont({weight: 'bold'})
-			.tween({alpha: 0.0, y: this.y - 10}, 1000)
+			.tween({alpha: 0.0, y: money_list[money_index].y - 10}, 1000)
 			.bind('EndTween', function(){
 				this.destroy();
 			});
@@ -419,7 +419,7 @@ Crafty.scene('Game', function()
 			.text('+50')
 			.textColor('#FFFFFF')
 			.textFont({weight: 'bold'})
-			.tween({alpha: 0.0, y: this.y - 10}, 1000)
+			.tween({alpha: 0.0, y: money.y - 10}, 1000)
 			.bind('EndTween', function(){
 				this.destroy();
 			});
