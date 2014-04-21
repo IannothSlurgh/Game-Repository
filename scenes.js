@@ -333,15 +333,23 @@ Crafty.scene('Game', function()
 	socket.on('updateEnemyPlayer', function(message)
 	{
 		var enemy_index = message.index;
-		for(var i = 0; i < enemy_list.length; i++)
-		{
-			if(enemy_list[i].index == enemy_index)
-			{
-				enemy_list[i].x = message.x;
-				enemy_list[i].y = message.y;
-			}
-		}
-	});
+ -		for(var i = 0; i < enemy_list.length; i++)
+ -		{
+ -			if(enemy_list[i].index == enemy_index)
+ -			{
+ -				enemy_list[i].x = message.x;
+ -				enemy_list[i].y = message.y;
+ -			}
+ -		}
+ -	});
+ -	
+ -	//send message to server to indicate that one of the players has collided with a piece of money
+ -	socket.on('destroyMoney', function(message)
+ -	{
+ -		var money_index = message.collected_money_index;
+  		money_list[money_index].x = message.x;
+  		money_list[money_index].y = message.y;
+  	});
 	
 	
 	
