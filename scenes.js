@@ -335,7 +335,7 @@ Crafty.scene('Game', function()
 		var enemy_index = message.index;
 		for(var i = 0; i < enemy_list.length; i++)
 		{
-			if(enemy_list[i] == enemy_index)
+			if(enemy_list[i].index == enemy_index)
 			{
 				enemy_list[i].x = message.x;
 				enemy_list[i].y = message.y;
@@ -349,7 +349,7 @@ Crafty.scene('Game', function()
 	Crafty.e("2D, DOM, Text")
 		.attr({x: 0, y: 0, w: 75})
 		.text("Gold: 0")
-		.textColor('rgb(255, 250, 250)')
+		.textColor('#FFFFFF')
 		.bind('ChangeScore', function(player)
 		{
 			//receive signal from server
