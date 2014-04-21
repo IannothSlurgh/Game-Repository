@@ -31,7 +31,7 @@ Crafty.scene('Phase 3', function()
 {
 	$(document).ready(function() 
 	{
-		var animated_blood; //contains the blood splatter object
+		//var animated_blood; //contains the blood splatter object
 		//Once client sends an event to server, the client cannot send any more until the server sends a confirmation to the client.
 		var events_locked = false;
 
@@ -686,7 +686,7 @@ Crafty.scene('Phase 3', function()
 					updateBattleLog(selected_unit.owner +"\'s "+ user.name + " has healed his " + target.name + " to a total of "+target.health.toString() + " hitpoints.");
 					break;
 				case 1: //growth
-					var new_unit = {src:user.src, src_select:user.src_select, name:"plant", ability:"Growth", cooldown:3, xcoor:xcoor, ycoor:ycoor, health:8, damage:1, range:1, movement:0, can_move:true, can_attack:true, is_dead:false, has_been_placed:true, arr_index:new_owner.unit_list.length};
+					var new_unit = {src:user.src, src_select:user.src_select, name:"plant", ability:"Growth", cooldown:3, xcoor:xcoor, ycoor:ycoor, health:8, damage:1, range:1, movement:0, can_move:true, can_attack:true, is_dead:false, has_been_placed:true, arr_index:selected_unit.unit_list.length};
 					findUnitList(selected_unit.owner).push(new_unit);
 					document.getElementById("X"+xcoor+"Y"+ycoor).src = new_unit.src;
 					user.cooldown = 3;
@@ -739,8 +739,8 @@ Crafty.scene('Phase 3', function()
 						{
 							//Deal X damage
 							target.health -= 2;
-							addImage("Splat", "http://i.imgur.com/4F5NYWU.gif", getAbsoluteFromGrid(target.xcoor), getAbsoluteFromGrid(target.ycoor), 3, 40, 40);
-							animated_blood = setTimeout(deleteSplat(), 600);
+							//addImage("Splat", "http://i.imgur.com/4F5NYWU.gif", getAbsoluteFromGrid(target.xcoor), getAbsoluteFromGrid(target.ycoor), 3, 40, 40);
+							//animated_blood = setTimeout(deleteSplat(), 600);
 							//Handle death.
 							if(target.health <= 0)
 							{
@@ -767,8 +767,8 @@ Crafty.scene('Phase 3', function()
 						updatePlayersLive();
 					}
 					target.health = healthTarget;
-					addImage("Splat", "http://i.imgur.com/4F5NYWU.gif", getAbsoluteFromGrid(target.xcoor), getAbsoluteFromGrid(target.ycoor), 3, 40, 40);
-					animated_blood = setTimeout(deleteSplat(), 600);
+					//addImage("Splat", "http://i.imgur.com/4F5NYWU.gif", getAbsoluteFromGrid(target.xcoor), getAbsoluteFromGrid(target.ycoor), 3, 40, 40);
+					//animated_blood = setTimeout(deleteSplat(), 600);
 					var message = selected_unit.owner+"\'s "+user.name+" has sniped "+ player_name + "\'s " + target.name +" dealing 3 damage. "
 					updateBattleLog(message);
 					if(target.health <= 0)
@@ -794,8 +794,8 @@ Crafty.scene('Phase 3', function()
 					if(target.health != healthTarget)
 					{
 						target.health = healthTarget;
-						addImage("Splat", "http://i.imgur.com/4F5NYWU.gif", getAbsoluteFromGrid(target.xcoor), getAbsoluteFromGrid(target.ycoor), 3, 40, 40);
-						animated_blood = setTimeout(deleteSplat(), 600);
+						//addImage("Splat", "http://i.imgur.com/4F5NYWU.gif", getAbsoluteFromGrid(target.xcoor), getAbsoluteFromGrid(target.ycoor), 3, 40, 40);
+						//animated_blood = setTimeout(deleteSplat(), 600);
 						message += " dealing 1 damage.";
 					}
 					else
@@ -914,8 +914,8 @@ Crafty.scene('Phase 3', function()
 						+ secondary_player + "\'s " + defender.name + " and did "
 						+ damage_dealt + " damage.";
 			updateBattleLog(message);
-			addImage("Splat", "http://i.imgur.com/4F5NYWU.gif", getAbsoluteFromGrid(defender.xcoor), getAbsoluteFromGrid(defender.ycoor), 3, 40, 40);
-			animated_blood = setTimeout(deleteSplat(), 600);
+			//addImage("Splat", "http://i.imgur.com/4F5NYWU.gif", getAbsoluteFromGrid(defender.xcoor), getAbsoluteFromGrid(defender.ycoor), 3, 40, 40);
+			//animated_blood = setTimeout(deleteSplat(), 600);
 			if(check_if_dead)
 			{
 				var death_message = secondary_player + "\'s " + 
@@ -1373,7 +1373,7 @@ Crafty.scene('Phase 3', function()
 				}
 			});
 		//Finish constructing phase 3.
-		var count = 0;
+		/*var count = 0;
 		function deleteSplat() {
 			if(count == 1) {
 				var div_tiles = document.getElementById("div_tiles");
@@ -1387,7 +1387,7 @@ Crafty.scene('Phase 3', function()
 				count++;
 			}
 			
-		}
+		}*/
 		init();
 	});
  });
