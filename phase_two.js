@@ -20,11 +20,6 @@ function printUnitList() {
 			theString = theString + "\n" + "\t";
 		}
 	}
-	
-	if(units.length > 0) {
-		theString = theString + units[i]
-	}
-	
 	//update client page
 	document.getElementById("theUnits").innerHTML=theString;
 }
@@ -32,13 +27,13 @@ function printUnitList() {
 //updates the current resources for the client
 function updateResources() {
 	document.getElementById("money").innerHTML=money + "/" + player.score;
-	document.getElementById("counter").innerHTML=unitCount + "/16";
+	document.getElementById("counter").innerHTML=unitCount + "/8";
 }
 
 //add a warrior to the unit list
 function selectWarrior()
 {
-	if(unitCount < 16 && money >= 400 && !ready) {
+	if(unitCount < 8 && money >= 400 && !ready) {
 		units[unitCount] = "warrior";
 		unitCount++;
 		money = money - 400;
@@ -50,7 +45,7 @@ function selectWarrior()
 //add a hunter to the unit list
 function selectHunter()
 {
-	if(unitCount < 16 && money >= 300 && !ready) {
+	if(unitCount < 8 && money >= 300 && !ready) {
 		units[unitCount] = "hunter";
 		unitCount++;
 		money = money - 300;
@@ -62,7 +57,7 @@ function selectHunter()
 //add a priest to the unit list
 function selectPriest()
 {
-	if(unitCount < 16 && money >= 250 && !ready) {
+	if(unitCount < 8 && money >= 250 && !ready) {
 		units[unitCount] = "priest";
 		unitCount++;
 		money = money - 250;
@@ -74,7 +69,7 @@ function selectPriest()
 //add a rogue to the unit list
 function selectRogue()
 {
-	if(unitCount < 16 && money >= 200 && !ready) {
+	if(unitCount < 8 && money >= 200 && !ready) {
 		units[unitCount] = "rogue";
 		unitCount++;
 		money = money - 200;
@@ -86,7 +81,7 @@ function selectRogue()
 //add a goblin to the unit list
 function selectGoblin()
 {
-	if(unitCount < 16 && money >= 100 && !ready) {
+	if(unitCount < 8 && money >= 100 && !ready) {
 		units[unitCount] = "goblin";
 		unitCount++;
 		money = money - 100;
@@ -98,7 +93,7 @@ function selectGoblin()
 //add a plant to the unit list
 function selectPlant()
 {
-	if(unitCount < 16 && money >= 50 && !ready) {
+	if(unitCount < 8 && money >= 50 && !ready) {
 		units[unitCount] = "plant";
 		unitCount++;
 		money = money - 50;

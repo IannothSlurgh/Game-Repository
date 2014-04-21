@@ -521,19 +521,19 @@ io.sockets.on(
 						unit_list.push(checkPlayerRogue(unit, index));
 						break;
 					case "goblin":
-						var unit = {src:"", src_select:"", name:"goblin", ability:"Regeneration", cooldown:1, xcoor:null, ycoor:null, health:6, maxHealth:6, damage:2, maxDamage:2, range:1, movement:6, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
+						var unit = {src:"", src_select:"", name:"goblin", ability:"Regeneration", cooldown:1, xcoor:null, ycoor:null, health:6, maxHealth:6, damage:2, maxDamage:2, range:1, movement:4, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
 						unit_list.push(checkPlayerGoblin(unit, index));
 						break;
 					case "hunter":
-						var unit = {src:"", src_select:"", name:"hunter", ability:"Snipe", cooldown:1, xcoor:null, ycoor:null, health:8, maxHealth:8, damage:2, maxDamage:2, range:5, movement:1, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
+						var unit = {src:"", src_select:"", name:"hunter", ability:"Snipe", cooldown:2, xcoor:null, ycoor:null, health:8, maxHealth:8, damage:2, maxDamage:2, range:4, movement:1, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
 						unit_list.push(checkPlayerHunter(unit, index));
 						break;
 					case "priest":
-						var unit = {src:"", src_select:"", name:"priest", ability:"Heal", cooldown:1, xcoor:null, ycoor:null, health:8, maxHealth:8, damage:1, maxDamage:1, range:1, movement:2, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
+						var unit = {src:"", src_select:"", name:"priest", ability:"Heal", cooldown:1, xcoor:null, ycoor:null, health:8, maxHealth:8, damage:2, maxDamage:2, range:1, movement:2, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
 						unit_list.push(checkPlayerPriest(unit, index));
 						break;
 					case "plant":
-						var unit = {src:"", src_select:"", name:"plant", ability:"Growth", cooldown:3, xcoor:null, ycoor:null, health:8, maxHealth:8, damage:1, maxDamage:1, range:1, movement:0, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
+						var unit = {src:"", src_select:"", name:"plant", ability:"Growth", cooldown:3, xcoor:null, ycoor:null, health:2, maxHealth:2, damage:2, maxDamage:2, range:2, movement:0, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
 						unit_list.push(checkPlayerPlant(unit, index));
 						break;
 				}
@@ -656,24 +656,24 @@ io.sockets.on(
 		{
 			switch(index)
 			{
-				case 0:
-					unit.src = "http://i.imgur.com/3G4LY2t.png";
-					unit.src_select = "http://i.imgur.com/9E12eT8.gif";
+				case 0: //blue
+					unit.src = "http://i.imgur.com/Pa0Wqa6.png";
+					unit.src_select = "http://i.imgur.com/17DTbXa.gif";
 					return unit;
 					break;
-				case 1:
-					unit.src = "http://i.imgur.com/7pYt5wt.png";
-					unit.src_select = "http://i.imgur.com/nut6uE1.gif";
+				case 1: //teal
+					unit.src = "http://i.imgur.com/Pa0Wqa6.png";
+					unit.src_select = "http://i.imgur.com/mciTvVX.gif";
 					return unit;
 					break;
-				case 2:
-					unit.src = "http://i.imgur.com/cMBKJYG.png";
-					unit.src_select = "http://i.imgur.com/yC20NDl.gif";
+				case 2: //orange
+					unit.src = "http://i.imgur.com/CyTHQCx.png";
+					unit.src_select = "http://i.imgur.com/Z7YEMQn.gif";
 					return unit;
 					break;
-				case 3:
-					unit.src = "http://i.imgur.com/YWn3lj0.png";
-					unit.src_select = "http://i.imgur.com/LJhYTN2.gif";
+				case 3: //purple
+					unit.src = "http://i.imgur.com/SazlWEv.png";
+					unit.src_select = "http://i.imgur.com/PJDHJEP.gif";
 					return unit;
 					break;
 			}
@@ -684,24 +684,24 @@ io.sockets.on(
 		{
 			switch(index)
 			{
-				case 0:
-					unit.src = "http://i.imgur.com/3G4LY2t.png";
-					unit.src_select = "http://i.imgur.com/9E12eT8.gif";
+				case 0: //blue
+					unit.src = "http://i.imgur.com/JDyYsGm.png";
+					unit.src_select = "http://i.imgur.com/ryWDXFI.gif";
 					return unit;
 					break;
-				case 1:
-					unit.src = "http://i.imgur.com/7pYt5wt.png";
-					unit.src_select = "http://i.imgur.com/nut6uE1.gif";
+				case 1: //teal
+					unit.src = "http://i.imgur.com/X9rIqTR.png";
+					unit.src_select = "http://i.imgur.com/MSArSja.gif";
 					return unit;
 					break;
-				case 2:
-					unit.src = "http://i.imgur.com/cMBKJYG.png";
-					unit.src_select = "http://i.imgur.com/yC20NDl.gif";
+				case 2: //orange
+					unit.src = "http://i.imgur.com/otSNqgf.png";
+					unit.src_select = "http://i.imgur.com/B5TRtrt.gif";
 					return unit;
 					break;
-				case 3:
-					unit.src = "http://i.imgur.com/YWn3lj0.png";
-					unit.src_select = "http://i.imgur.com/LJhYTN2.gif";
+				case 3: //purple
+					unit.src = "http://i.imgur.com/L228ysr.png";
+					unit.src_select = "http://i.imgur.com/xJfT2ny.gif";
 					return unit;
 					break;
 			}
@@ -1314,7 +1314,7 @@ function ability(xcoor, ycoor)
 			break;
 		case "Snipe":
 			//max distance of 5, min distance of 2, must be a hostile unit
-			if(distance >=2 && distance <=5 && target != null && results.targetOwner != selected_unit.owner)
+			if(distance >=2 && distance <=4 && target != null && results.targetOwner != selected_unit.owner)
 			{
 				var targeted_player = getPlayerOccupying(xcoor, ycoor);
 				target.health -= 3;
@@ -1330,7 +1330,7 @@ function ability(xcoor, ycoor)
 					//Handle possible dead player.
 					results.targetHealth = "Playerdead";
 				}
-				user.cooldown = 1;
+				user.cooldown = 2;
 				results.success = true;
 				results.abilityID = 3;
 			}
