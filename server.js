@@ -34,7 +34,7 @@ function handler(request, response)
 
 //---------------Maze Algorithm--------------------------------------------------------------
 //stores the maze for phase one in an array of strings
-var maze_data = new Array(56);
+var maze_data = new Array(55);
 
 //determines whether a cell has been visited already by the algorithm
 function hasUnvisitedNeighbor(row, col, dir)
@@ -43,13 +43,13 @@ function hasUnvisitedNeighbor(row, col, dir)
 	{
 		return (maze_data[row][col - 2] == 'U');
 	}
-	else if(dir == 1 && (col + 2) < 40){
+	else if(dir == 1 && (col + 2) < 39){
 		return (maze_data[row][col + 2] == 'U');
 	}
 	else if(dir == 2 && (row - 2) >= 0){
 		return (maze_data[row - 2][col] == 'U');
 	}
-	else if(dir == 3 && (row + 2) < 56){
+	else if(dir == 3 && (row + 2) < 55){
 		return (maze_data[row + 2][col] == 'U');
 	}
 	else{;
@@ -98,24 +98,24 @@ function generateMaze(row, column)
 //makes the maze into a checkered board
 function initializeMaze()
 {
-	for(var i = 0; i < 56; i++)
+	for(var i = 0; i < 55; i++)
 	{
-		maze_data[i] = new Array(40);
-		for(var j = 0; j < 40; j++)
+		maze_data[i] = new Array(39);
+		for(var j = 0; j < 39; j++)
 		{
 			maze_data[i][j] = 'U';
 		}
 	}
-	for(var x = 0; x < 56; x++)
+	for(var x = 0; x < 55; x++)
 	{
-		for(var y = 0; y < 40; y++)
+		for(var y = 0; y < 39; y++)
 		{
 			var at_edge = x == 0 
-				|| x == 56 - 1 
+				|| x == 55 - 1 
 				|| y == 0 
-				|| y == 40 - 1;
+				|| y == 39 - 1;
 				
-			var cell_num = x + (y * 40);
+			var cell_num = x + (y * 39);
 			
 			if(at_edge)
 			{
@@ -138,7 +138,7 @@ function initializeMaze()
 //modifies the maze to make it look consistent overall
 function modifyMaze()
 {
-	for(var x = 1; x < 56 - 1; x++)
+	for(var x = 1; x < 55 - 1; x++)
 	{
 		maze_data[x][1] = '.';
 		if(maze_data[x][3] == '#' 
@@ -146,15 +146,15 @@ function modifyMaze()
 		{
 			maze_data[x][2] = '#';
 		}
-		maze_data[x][40 - 2] = '.';
-		if(maze_data[x][40 - 4] == '#' 
+		maze_data[x][39 - 2] = '.';
+		if(maze_data[x][39 - 4] == '#' 
 			&& Math.random() < .75)
 		{
-			maze_data[x][40 - 3] = '#';
+			maze_data[x][39 - 3] = '#';
 		}
 	}
 	
-	for(var y = 1; y < 40 - 1; y++)
+	for(var y = 1; y < 39 - 1; y++)
 	{
 		maze_data[1][y] = '.';
 		if(maze_data[3][y] == '#' 
@@ -163,11 +163,11 @@ function modifyMaze()
 			maze_data[2][y] = '#';
 		}
 		
-		maze_data[56 - 2][y] = '.';
-		if(maze_data[56 - 4][y] == '#' 
+		maze_data[55 - 2][y] = '.';
+		if(maze_data[55 - 4][y] == '#' 
 			&& Math.random() < .75)
 		{
-			maze_data[56 - 3][y] = '#';
+			maze_data[55 - 3][y] = '#';
 		}
 	}
 }
@@ -194,9 +194,9 @@ function mazeGenerationAlgorithm()
 	
 	modifyMaze();
 	
-	for(var x = 2; x < 56-2; x++)
+	for(var x = 2; x < 55-2; x++)
 	{
-		for(var y = 2; y < 40 - 2; y++)
+		for(var y = 2; y < 39 - 2; y++)
 		{
 			if(maze_data[x][y] == '.')
 			{
@@ -242,8 +242,8 @@ function mazeGenerationAlgorithm()
 	var money_count = 0;
 	while(money_count < max_money)
 	{
-		var x = Math.floor(Math.random() * 56);
-		var y = Math.floor(Math.random() * 40);
+		var x = Math.floor(Math.random() * 55);
+		var y = Math.floor(Math.random() * 39);
 		
 		if(maze_data[x][y] == '.')
 		{
