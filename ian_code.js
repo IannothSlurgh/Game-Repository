@@ -740,8 +740,8 @@ Crafty.scene('Phase 3', function()
 							//Deal X damage
 							target.health -= 2;
 							addImage("Splat", "http://i.imgur.com/4F5NYWU.gif", getAbsoluteFromGrid(target.xcoor), getAbsoluteFromGrid(target.ycoor), 3, 40, 40);
-							var animated_blood = setTimeout(deleteSplat(), 600);
-							clearInterval(animated_blood);
+							var animated_blood = setTimeout(deleteSplat, 600);
+							clearTimeout(animated_blood);
 							//Handle death.
 							if(target.health <= 0)
 							{
@@ -769,8 +769,8 @@ Crafty.scene('Phase 3', function()
 					}
 					target.health = healthTarget;
 					addImage("Splat", "http://i.imgur.com/4F5NYWU.gif", getAbsoluteFromGrid(target.xcoor), getAbsoluteFromGrid(target.ycoor), 3, 40, 40);
-					var animated_blood = setTimeout(deleteSplat(), 600);
-					clearInterval(animated_blood);
+					var animated_blood = setTimeout(deleteSplat, 600);
+					clearTimeout(animated_blood);
 					var message = selected_unit.owner+"\'s "+user.name+" has sniped "+ player_name + "\'s " + target.name +" dealing 3 damage. "
 					updateBattleLog(message);
 					if(target.health <= 0)
@@ -797,8 +797,8 @@ Crafty.scene('Phase 3', function()
 					{
 						target.health = healthTarget;
 						addImage("Splat", "http://i.imgur.com/4F5NYWU.gif", getAbsoluteFromGrid(target.xcoor), getAbsoluteFromGrid(target.ycoor), 3, 40, 40);
-						var animated_blood = setTimeout(deleteSplat(), 600);
-						clearInterval(animated_blood);
+						var animated_blood = setTimeout(deleteSplat, 600);
+						clearTimeout(animated_blood);
 						message += " dealing 1 damage.";
 					}
 					else
@@ -918,8 +918,8 @@ Crafty.scene('Phase 3', function()
 						+ damage_dealt + " damage.";
 			updateBattleLog(message);
 			addImage("Splat", "http://i.imgur.com/4F5NYWU.gif", getAbsoluteFromGrid(defender.xcoor), getAbsoluteFromGrid(defender.ycoor), 3, 40, 40);
-			var animated_blood = setTimeout(deleteSplat(), 600);
-			clearInterval(animated_blood);
+			var animated_blood = setTimeout(deleteSplat, 600);
+			clearTimeout(animated_blood);
 			if(check_if_dead)
 			{
 				var death_message = secondary_player + "\'s " + 
