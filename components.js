@@ -43,7 +43,7 @@ Crafty.c('EnemyPlayer', {
 		});
 		
 		this.requires('Actor, Color')
-			.color('rgb(223, 0, 255)');
+			.color('rgb(204, 0, 0)');
 	},
 });
 
