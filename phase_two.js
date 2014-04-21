@@ -122,7 +122,6 @@ function ready_method()
 	{
 		ready = true;
 		clearInterval(counter);
-		console.log(user_str);
 		if(unitCount == 0) {
 			units[unitCount] = "goblin";
 			unitCount++;

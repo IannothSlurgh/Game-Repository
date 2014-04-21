@@ -31,7 +31,7 @@ Crafty.scene('Phase 3', function()
 {
 	$(document).ready(function() 
 	{
-
+		var animated_blood; //contains the blood splatter object
 		//Once client sends an event to server, the client cannot send any more until the server sends a confirmation to the client.
 		var events_locked = false;
 
@@ -740,8 +740,7 @@ Crafty.scene('Phase 3', function()
 							//Deal X damage
 							target.health -= 2;
 							addImage("Splat", "http://i.imgur.com/4F5NYWU.gif", getAbsoluteFromGrid(target.xcoor), getAbsoluteFromGrid(target.ycoor), 3, 40, 40);
-							var animated_blood = setTimeout(deleteSplat(), 600);
-							clearTimeout(animated_blood);
+							animated_blood = setTimeout(deleteSplat(), 600);
 							//Handle death.
 							if(target.health <= 0)
 							{
@@ -769,8 +768,7 @@ Crafty.scene('Phase 3', function()
 					}
 					target.health = healthTarget;
 					addImage("Splat", "http://i.imgur.com/4F5NYWU.gif", getAbsoluteFromGrid(target.xcoor), getAbsoluteFromGrid(target.ycoor), 3, 40, 40);
-					var animated_blood = setTimeout(deleteSplat(), 600);
-					clearTimeout(animated_blood);
+					animated_blood = setTimeout(deleteSplat(), 600);
 					var message = selected_unit.owner+"\'s "+user.name+" has sniped "+ player_name + "\'s " + target.name +" dealing 3 damage. "
 					updateBattleLog(message);
 					if(target.health <= 0)
@@ -797,8 +795,7 @@ Crafty.scene('Phase 3', function()
 					{
 						target.health = healthTarget;
 						addImage("Splat", "http://i.imgur.com/4F5NYWU.gif", getAbsoluteFromGrid(target.xcoor), getAbsoluteFromGrid(target.ycoor), 3, 40, 40);
-						var animated_blood = setTimeout(deleteSplat(), 600);
-						clearTimeout(animated_blood);
+						animated_blood = setTimeout(deleteSplat(), 600);
 						message += " dealing 1 damage.";
 					}
 					else
@@ -918,8 +915,7 @@ Crafty.scene('Phase 3', function()
 						+ damage_dealt + " damage.";
 			updateBattleLog(message);
 			addImage("Splat", "http://i.imgur.com/4F5NYWU.gif", getAbsoluteFromGrid(defender.xcoor), getAbsoluteFromGrid(defender.ycoor), 3, 40, 40);
-			var animated_blood = setTimeout(deleteSplat(), 600);
-			clearTimeout(animated_blood);
+			animated_blood = setTimeout(deleteSplat(), 600);
 			if(check_if_dead)
 			{
 				var death_message = secondary_player + "\'s " + 
@@ -1377,11 +1373,20 @@ Crafty.scene('Phase 3', function()
 				}
 			});
 		//Finish constructing phase 3.
+		var count = 0;
 		function deleteSplat() {
-			var div_tiles = document.getElementById("div_tiles");
-			var blood_splat = document.getElementById("Splat");
-			div_tiles.removeChild(blood_splat);
-			console.log("attempted to remove splat");
+			if(count == 1) {
+				var div_tiles = document.getElementById("div_tiles");
+				var blood_splat = document.getElementById("Splat");
+				div_tiles.removeChild(blood_splat);
+				console.log("attempted to remove splat");
+				count = 0;
+				clearTimeout(animated_blood);
+			}
+			else {
+				count++;
+			}
+			
 		}
 		init();
 	});
