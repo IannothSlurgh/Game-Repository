@@ -2,10 +2,10 @@
 //code written by Jason Sitzman
 //all illustrations in phase 2 of the game produced by Jason Sitzman
 
-var money;
-var units=new Array();
-var unitCount = 0;
-var ready = false;
+var money; //int
+var units=new Array(); //array of strings
+var unitCount = 0; //int
+var ready = false; //bool
 
 //prints a list of the client's current units purchased
 function printUnitList() {
@@ -17,6 +17,7 @@ function printUnitList() {
 		theString = theString + units[i] + ", ";
 		i++;
 	}
+	
 	if(units.length > 0) {
 		theString = theString + units[i]
 	}
@@ -34,7 +35,7 @@ function updateResources() {
 //add a warrior to the unit list
 function selectWarrior()
 {
-	if(unitCount < 8 && money >= 400 && !ready) {
+	if(unitCount < 16 && money >= 400 && !ready) {
 		units[unitCount] = "warrior";
 		unitCount++;
 		money = money - 400;
@@ -46,7 +47,7 @@ function selectWarrior()
 //add a hunter to the unit list
 function selectHunter()
 {
-	if(unitCount < 8 && money >= 300 && !ready) {
+	if(unitCount < 16 && money >= 300 && !ready) {
 		units[unitCount] = "hunter";
 		unitCount++;
 		money = money - 300;
@@ -55,10 +56,22 @@ function selectHunter()
 	}
 }
 
+//add a priest to the unit list
+function selectPriest()
+{
+	if(unitCount < 16 && money >= 250 && !ready) {
+		units[unitCount] = "priest";
+		unitCount++;
+		money = money - 250;
+		updateResources();
+		printUnitList();
+	}
+}
+
 //add a rogue to the unit list
 function selectRogue()
 {
-	if(unitCount < 8 && money >= 200 && !ready) {
+	if(unitCount < 16 && money >= 200 && !ready) {
 		units[unitCount] = "rogue";
 		unitCount++;
 		money = money - 200;
@@ -70,7 +83,7 @@ function selectRogue()
 //add a goblin to the unit list
 function selectGoblin()
 {
-	if(unitCount < 8 && money >= 100 && !ready) {
+	if(unitCount < 16 && money >= 100 && !ready) {
 		units[unitCount] = "goblin";
 		unitCount++;
 		money = money - 100;
@@ -86,6 +99,18 @@ function reset()
 		money = player.score;
 		units.length = 0;
 		unitCount = 0;
+		updateResources();
+		printUnitList();
+	}
+}
+
+//add a plant to the unit list
+function selectPlant()
+{
+	if(unitCount < 8 && money >= 50 && !ready) {
+		units[unitCount] = "plant";
+		unitCount++;
+		money = money - 50;
 		updateResources();
 		printUnitList();
 	}
