@@ -790,7 +790,7 @@ Crafty.scene('Phase 3', function()
 					break;
 				case 5: //disarm
 					var message = selected_unit.owner+"\'s "+user.name+" has disarmed " + player_name + "\'s " + target.name;
-					target.damage = 1;
+					target.damage = 0;
 					if(target.health != healthTarget)
 					{
 						target.health = healthTarget;

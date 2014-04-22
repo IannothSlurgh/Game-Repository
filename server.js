@@ -657,7 +657,7 @@ io.sockets.on(
 			switch(index)
 			{
 				case 0: //blue
-					unit.src = "http://i.imgur.com/Pa0Wqa6.png";
+					unit.src = "http://i.imgur.com/9atUWUu.png";
 					unit.src_select = "http://i.imgur.com/17DTbXa.gif";
 					return unit;
 					break;
@@ -801,6 +801,11 @@ io.sockets.on(
 				{
 					sort_scores();
 					io.sockets.emit('moveToPhase3');
+					for(var i = 0; i < getPlayer(turn_order[0]).unit_list.length; ++i) {
+						if(getPlayer(turn_order[0]).unit_list[i].cooldown > 0) {
+							getPlayer(turn_order[0]).unit_list[i].cooldown -= 1;
+						}
+					}
 				}
 			}
 		);
@@ -1011,7 +1016,7 @@ io.sockets.on(
 									if(unit_list[i].damage < unit_list[i].maxDamage)
 									{
 										unit_list[i].damage = unit_list[i].maxDamage;
-									}									
+									}
 								}
 							}
 						}
@@ -1022,6 +1027,9 @@ io.sockets.on(
 					if(!place_phase)
 					{
 						var unit = findUnit(selected_unit.xcoor, selected_unit.ycoor);
+						console.log("************");
+						console.log(unit);
+						console.log("************");
 						if(unit != null && unit.can_attack && unit.can_move && unit.cooldown == 0 && unit.ability != "N/A")
 						{
 							confirmation.success = true;
@@ -1236,7 +1244,7 @@ function ability(xcoor, ycoor)
 				var new_owner = getPlayer(selected_unit.owner);
 				user.cooldown = 3;
 				//Newly grown plant is of same color, starts with growth on cooldown, is at clicked x-y, considered placed, can immediately act, is placed.
-				var new_unit = {src:user.src, src_select:user.src_select, name:"plant", ability:"Growth", cooldown:3, xcoor:xcoor, ycoor:ycoor, health:8, damage:1, range:1, movement:0, can_move:true, can_attack:true, is_dead:false, has_been_placed:true, arr_index:new_owner.unit_list.length};
+				var new_unit = {src:user.src, src_select:user.src_select, name:"plant", ability:"Growth", cooldown:3, xcoor:xcoor, ycoor:ycoor, health:2, damage:2, range:2, movement:0, can_move:true, can_attack:true, is_dead:false, has_been_placed:true, arr_index:new_owner.unit_list.length};
 				new_owner.unit_list.push(new_unit);
 				results.success = true;
 				results.abilityID = 1;
@@ -1349,7 +1357,7 @@ function ability(xcoor, ycoor)
 			if(distance == 1 && target != null && results.targetOwner != selected_unit.owner)
 			{
 				user.cooldown = 2;
-				target.damage = 1;
+				target.damage = 0;
 				if(target.health > 1)
 				{
 					target.health -= 1;
