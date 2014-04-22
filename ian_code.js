@@ -1112,11 +1112,6 @@ Crafty.scene('Phase 3', function()
 			//Get place clicked.
 			var xcoor = mouse_event.pageX - paired_coor.x - document.body.scrollLeft;
 			var ycoor = mouse_event.pageY - paired_coor.y - document.body.scrollTop;
-			console.log("unit-camp intercept");
-			console.log("page "+"X"+mouse_event.pageX.toString()+"Y"+mouse_event.pageY.toString());
-			console.log("screen "+"X"+mouse_event.screenX.toString()+"Y"+mouse_event.screenY.toString());
-			console.log("client "+"X"+mouse_event.clientX.toString()+"Y"+mouse_event.clientY.toString());
-			console.log("div "+"X"+paired_coor.x.toString()+"Y"+paired_coor.y.toString());
 			//Hide unit camp element so elementFromPoint will return a tile, not unit camp element.
 			unit_camp.style.visibility = "hidden";
 			var found_element = document.elementFromPoint(xcoor, ycoor);
@@ -1124,11 +1119,9 @@ Crafty.scene('Phase 3', function()
 			//If the click was aimed at a tile, make it happen.
 			if(found_element != null)
 			{
-				console.log(found_element.id);
 				//If no onclick, not the element we want.
 				if(typeof found_element.onclick == "function")
 				{
-					console.log("enter");
 					found_element.onclick(mouse_event);
 				}
 			}
@@ -1225,7 +1218,6 @@ Crafty.scene('Phase 3', function()
 				{
 					return function()
 					{
-						console.log("drag start" + parseInt(unit.id.substring(14)).toString());
 						//Set global variable telling the index of the dragged unit.
 						inventory_dragged_unit = parseInt(unit.id.substring(14));
 					}
@@ -1237,10 +1229,6 @@ Crafty.scene('Phase 3', function()
 					var paired_coor = getPos(document.getElementById("div_tiles"));
 					var xcoor = mouse_event.pageX - paired_coor.x - document.body.scrollLeft;
 					var ycoor = mouse_event.pageY - paired_coor.y - document.body.scrollTop;
-					console.log("drop");
-					console.log("page "+"X"+mouse_event.pageX.toString()+"Y"+mouse_event.pageY.toString());
-					console.log("screen "+"X"+mouse_event.screenX.toString()+"Y"+mouse_event.screenY.toString());
-					console.log("client "+"X"+mouse_event.clientX.toString()+"Y"+mouse_event.clientY.toString());
 					var found_element = document.elementFromPoint(xcoor, ycoor);
 					if(found_element != null)
 					{
@@ -1330,14 +1318,6 @@ Crafty.scene('Phase 3', function()
 			paintInventory(getPlayer(this_player_name).unit_list);
 			socket.emit('Testing', "Hello");
 		}
-
-		//Old testing function. Probably delete.
-		function Testing(message)
-		{
-			console.log(message);
-		}
-		socket.on('Testing', Testing);
-
 		socket.on('phaseIII_notification',
 			function(message) 
 			{

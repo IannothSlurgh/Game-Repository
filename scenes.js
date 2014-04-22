@@ -448,16 +448,13 @@ Crafty.scene('Game', function()
 //draws the buttons and images of the start screen
 Crafty.scene('StartScreen', function()
 {
-	
-	console.log('This is working.');
 	Crafty.e('2D, Canvas, Image')
 		.attr({x: 0, y: 0})
 		.image("https://raw.githubusercontent.com/IannothSlurgh/Game-Repository/master/start_background.png");
-		
-	console.log('This is working.');
+	
 	Crafty.e('MineCart')
 		.attr({x: -100, y: 201});
-		
+	
 	Crafty.e('2D, Canvas, Image')
 		.attr({x: 200, y: 10})
 		.image("https://raw.githubusercontent.com/IannothSlurgh/Game-Repository/master/title_img.png");
@@ -563,7 +560,6 @@ Crafty.scene('ConnectionRoom', function()
 			var status = obj.status;
 			list_of_users = names;
 			player_number = names.indexOf(user_str);
-			console.log("Player_number = " + player_number);
 			$('#loggedin').empty();
 			
 			var original = $('<div class = users>Users:</div>');
@@ -734,13 +730,11 @@ Crafty.scene('Phase 2', function()
 	socket.on('SetPlayerOneUnitList', function(message)
 	{
 		player_1.unit_list = JSON.parse(message).unit_list;
-		console.log(player_1.unit_list);
 	});
 	
 	socket.on('SetPlayerTwoUnitList', function(message)
 	{
 		player_2.unit_list = JSON.parse(message).unit_list;
-		console.log(player_2.unit_list);
 	});
 	
 	socket.on('SetPlayerThreeUnitList', function(message)

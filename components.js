@@ -173,7 +173,6 @@ Crafty.c('MineCart', {
 				
 				var track_num = Math.floor(Math.random() * 3);
 				var direction = Math.round(Math.random());
-				console.log(track_num);
 				switch(track_num)
 				{
 				case 0:

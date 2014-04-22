@@ -188,8 +188,6 @@ function mazeGenerationAlgorithm()
 		row = Math.floor(Math.random() * 39);
 	}
 	
-	console.log("Maze starts @ (" + col + "," + row +")");
-	
 	generateMaze(col, row);
 	
 	modifyMaze();
@@ -475,7 +473,6 @@ io.sockets.on(
 			if(true) 
 			{
 				var obj = JSON.parse(message);
-				console.log(obj);
 				client.broadcast.emit('updateEnemyPlayer', obj);
 			}
 		});
@@ -487,7 +484,6 @@ io.sockets.on(
 			if(true) 
 			{
 				var obj = JSON.parse(message);
-				console.log(obj);
 				client.broadcast.emit('destroyMoney', obj);
 			}
 		});
@@ -521,11 +517,11 @@ io.sockets.on(
 						unit_list.push(checkPlayerRogue(unit, index));
 						break;
 					case "goblin":
-						var unit = {src:"", src_select:"", name:"goblin", ability:"Regeneration", cooldown:1, xcoor:null, ycoor:null, health:6, maxHealth:6, damage:2, maxDamage:2, range:1, movement:4, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
+						var unit = {src:"", src_select:"", name:"goblin", ability:"Regeneration", cooldown:1, xcoor:null, ycoor:null, health:6, maxHealth:6, damage:2, maxDamage:2, range:1, movement:6, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
 						unit_list.push(checkPlayerGoblin(unit, index));
 						break;
 					case "hunter":
-						var unit = {src:"", src_select:"", name:"hunter", ability:"Snipe", cooldown:2, xcoor:null, ycoor:null, health:8, maxHealth:8, damage:2, maxDamage:2, range:4, movement:1, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
+						var unit = {src:"", src_select:"", name:"hunter", ability:"Snipe", cooldown:2, xcoor:null, ycoor:null, health:6, maxHealth:8, damage:2, maxDamage:2, range:4, movement:1, can_move:true, can_attack:true, is_dead:false, has_been_placed:false, arr_index:i};
 						unit_list.push(checkPlayerHunter(unit, index));
 						break;
 					case "priest":
@@ -733,7 +729,6 @@ io.sockets.on(
 			function(message)
 			{
 				var username = JSON.parse(message).user_name;
-				console.log(username);
 				var str_unit_list = JSON.parse(message).player_units;
 				var index = clients.indexOf(username);
 				//If a 3rd or 4th player sends ready, make defaults for 4 person
@@ -780,8 +775,7 @@ io.sockets.on(
 						io.sockets.emit('SetPlayerFourUnitList', JSON.stringify({unit_list : player_4.unit_list}));
 						break;
 					default:
-						console.log("No such name");
-					break;
+						break;
 				}
 				
 				var num_of_players_ready = 0;
@@ -834,7 +828,6 @@ io.sockets.on(
 		function translateMessagePhaseIII(message)
 		{
 			var decrypted = JSON.parse(message);
-			console.log(decrypted);
 			//Response to sender.
 			var confirmation =
 			{
@@ -867,7 +860,6 @@ io.sockets.on(
 				case "Lclick":
 					if(place_phase)
 					{
-						console.log(decrypted);
 						confirmation.action = "Place";
 						//Check if a place is possible with the given message.
 						confirmation.success = place(decrypted.xcoor, decrypted.ycoor, decrypted.who, decrypted.dragged_num); 
@@ -1027,9 +1019,6 @@ io.sockets.on(
 					if(!place_phase)
 					{
 						var unit = findUnit(selected_unit.xcoor, selected_unit.ycoor);
-						console.log("************");
-						console.log(unit);
-						console.log("************");
 						if(unit != null && unit.can_attack && unit.can_move && unit.cooldown == 0 && unit.ability != "N/A")
 						{
 							confirmation.success = true;
