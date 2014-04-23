@@ -563,7 +563,7 @@ Crafty.scene('Phase 3', function()
 			}
 			if(stats.ability_name!=null)
 			{
-				switch(ability_name)
+				switch(stats.ability_name)
 				{
 					case "Heal":
 						document.getElementById("stat_ability").src = "http://i.imgur.com/ZAVh5ol.png"; //heal untoggled
