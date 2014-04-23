@@ -567,21 +567,27 @@ Crafty.scene('Phase 3', function()
 				{
 					case "Heal":
 						document.getElementById("stat_ability").src = "http://i.imgur.com/ZAVh5ol.png"; //heal untoggled
+						document.getElementById("stat_ability").style.display = "block";
 						break;
 					case "Growth":
 						document.getElementById("stat_ability").src = "http://i.imgur.com/Cla0Kbe.png"; //growth untoggled
+						document.getElementById("stat_ability").style.display = "block";
 						break;
 					case "Sweeping Attack":
 						document.getElementById("stat_ability").src = "http://i.imgur.com/713Va07.png"; //sweeping attack untoggled
+						document.getElementById("stat_ability").style.display = "block";
 						break;
 					case "Snipe":
 						document.getElementById("stat_ability").src = "http://i.imgur.com/FFbncgG.png"; //snipe untoggled
+						document.getElementById("stat_ability").style.display = "block";
 						break;
 					case "Regeneration":
 						document.getElementById("stat_ability").src = "http://i.imgur.com/VujYsCC.png"; //regneration untoggled
+						document.getElementById("stat_ability").style.display = "block";
 						break;
 					case "Disarm":
 						document.getElementById("stat_ability").src = "http://i.imgur.com/ZLs6ETc.png"; //disarm untoggled
+						document.getElementById("stat_ability").style.display = "block";
 						break;
 					default:
 						return null;
@@ -707,6 +713,7 @@ Crafty.scene('Phase 3', function()
 					target.health = healthTarget;
 					updateBattleLog(selected_unit.owner +"\'s "+ user.name + " has healed his " + target.name + " to a total of "+target.health.toString() + " hitpoints.");
 					document.getElementById("stat_ability").src = "http://i.imgur.com/ZAVh5ol.png"; //heal untoggled
+					document.getElementById("stat_ability").style.display = "block";
 					break;
 				case 1: //growth
 					var new_unit = {src:user.src, src_select:user.src_select, name:"plant", ability:"Growth", cooldown:3, xcoor:xcoor, ycoor:ycoor, health:2, damage:2, range:2, movement:0, can_move:true, can_attack:true, is_dead:false, has_been_placed:true, arr_index:getPlayer(selected_unit.owner).unit_list.length};
@@ -715,6 +722,7 @@ Crafty.scene('Phase 3', function()
 					user.cooldown = 3;
 					updateBattleLog(selected_unit.owner+" has spawned a new "+user.name+".");
 					document.getElementById("stat_ability").src = "http://i.imgur.com/Cla0Kbe.png"; //growth untoggled
+					document.getElementById("stat_ability").style.display = "block";
 					break;
 				case 2: //sweeping attack
 					user.cooldown = 1;
@@ -781,6 +789,7 @@ Crafty.scene('Phase 3', function()
 					}
 					updateBattleLog(selected_unit.owner + "\'s "+ user.name + " has used sweeping attack.");
 					document.getElementById("stat_ability").src = "http://i.imgur.com/713Va07.png"; //sweeping attack untoggled
+					document.getElementById("stat_ability").style.display = "block";
 					checkVictory();
 					break;
 				case 3: //snipe
@@ -797,6 +806,7 @@ Crafty.scene('Phase 3', function()
 					var message = selected_unit.owner+"\'s "+user.name+" has sniped "+ player_name + "\'s " + target.name +" dealing 3 damage. "
 					updateBattleLog(message);
 					document.getElementById("stat_ability").src = "http://i.imgur.com/FFbncgG.png"; //snipe untoggled
+					document.getElementById("stat_ability").style.display = "block";
 					if(target.health <= 0)
 					{
 						message = player_name + "\'s " + target.name + " has perished."
@@ -814,6 +824,7 @@ Crafty.scene('Phase 3', function()
 					document.getElementById("stat_hp").innerHTML = user.health.toString();
 					updateBattleLog(selected_unit.owner+"\'s "+user.name+" has regenerated one hitpoint.");
 					document.getElementById("stat_ability").src = "http://i.imgur.com/VujYsCC.png"; // regeneration untoggled
+					document.getElementById("stat_ability").style.display = "block";
 					break;
 				case 5: //disarm
 					var message = selected_unit.owner+"\'s "+user.name+" has disarmed " + player_name + "\'s " + target.name;
@@ -832,6 +843,7 @@ Crafty.scene('Phase 3', function()
 					user.cooldown = 2;
 					updateBattleLog(message);
 					document.getElementById("stat_ability").src = "http://i.imgur.com/ZLs6ETc.png"; //disarm untoggled
+					document.getElementById("stat_ability").style.display = "block";
 					break;
 			}
 			user.can_attack = false;
@@ -861,21 +873,27 @@ Crafty.scene('Phase 3', function()
 				{
 					case "Heal":
 						document.getElementById("stat_ability").src = "http://i.imgur.com/ZLU0Rzm.gif"; //heal toggled
+						document.getElementById("stat_ability").style.display = "block";
 						break;
 					case "Growth":
 						document.getElementById("stat_ability").src = "http://i.imgur.com/tP8FPId.gif"; //growth toggled
+						document.getElementById("stat_ability").style.display = "block";
 						break;
 					case "Sweeping Attack":
 						document.getElementById("stat_ability").src = "http://i.imgur.com/3nAZ8QF.gif"; //sweeping attack toggled
+						document.getElementById("stat_ability").style.display = "block";
 						break;
 					case "Snipe":
 						document.getElementById("stat_ability").src = "http://i.imgur.com/2Lo1JkF.gif"; //snipe toggled
+						document.getElementById("stat_ability").style.display = "block";
 						break;
 					case "Regeneration":
 						document.getElementById("stat_ability").src = "http://i.imgur.com/PZSEm48.gif"; //regneration toggled
+						document.getElementById("stat_ability").style.display = "block";
 						break;
 					case "Disarm":
 						document.getElementById("stat_ability").src = "http://i.imgur.com/cdCYIcr.gif"; //disarm toggled
+						document.getElementById("stat_ability").style.display = "block";
 						break;
 					default:
 						return null;
