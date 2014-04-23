@@ -1425,6 +1425,9 @@ Crafty.scene('Phase 3', function()
 				}
 			});
 		//Finish constructing phase 3.
+		function eventSender() {
+			sendEvent("AbilityButton", null, null);
+		}
 		/*var count = 0;
 		function deleteSplat() {
 			if(count == 1) {
