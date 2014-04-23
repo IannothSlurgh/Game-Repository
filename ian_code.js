@@ -1330,8 +1330,7 @@ Crafty.scene('Phase 3', function()
 			document.getElementById("yourUnitList").style.display = "none";
 			document.getElementById("ready").style.display = "none";
 			document.getElementById("reset").style.display = "none";
-			document.getElementById("stat_ability").onclick = eventSender();
-
+			
 			//Generate tiles on grid.
 			for(var i = 0; i<14; ++i)
 			{
@@ -1352,6 +1351,7 @@ Crafty.scene('Phase 3', function()
 			document.getElementById("stat_log").style.display = "block";
 			document.getElementById("stat_cooldown").style.display = "block";
 			document.getElementById("stat_ability").style.display = "block";
+			document.getElementById("stat_ability").onclick = function(){ sendEvent("AbilityButton", null, null); };
 			document.getElementById("stat_player_turn").style.display = "block";
 			document.getElementById("grid").style.display = "block";
 			document.getElementById("next").style.display = "block";
@@ -1426,10 +1426,6 @@ Crafty.scene('Phase 3', function()
 				}
 			});
 		//Finish constructing phase 3.
-		function eventSender() {
-			console.log("AbilityButton toggled on!");
-			sendEvent("AbilityButton", null, null);
-		}
 		/*var count = 0;
 		function deleteSplat() {
 			if(count == 1) {
