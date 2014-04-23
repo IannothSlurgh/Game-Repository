@@ -522,9 +522,8 @@ Crafty.scene('Phase 3', function()
 			document.getElementById("stat_damage").innerHTML = "";
 			document.getElementById("stat_movement").innerHTML = "";
 			document.getElementById("stat_range").innerHTML = "";
-			document.getElementById("stat_ability").innerHTML = "";
+			document.getElementById("stat_ability").style.display = "none";
 			document.getElementById("stat_log").innerHTML = "";
-			document.getElementById("stat_ability").innerHTML = "";
 			document.getElementById("stat_icon").src = "";
 			if(document.getElementById("selection") != null)
 			{
@@ -564,7 +563,30 @@ Crafty.scene('Phase 3', function()
 			}
 			if(stats.ability_name!=null)
 			{
-				document.getElementById("stat_ability").innerHTML = stats.ability_name;
+				switch(ability_name)
+				{
+					case "Heal":
+						document.getElementById("stat_ability").src = "http://i.imgur.com/ZAVh5ol.png"; //heal untoggled
+						break;
+					case "Growth":
+						document.getElementById("stat_ability").src = "http://i.imgur.com/Cla0Kbe.png"; //growth untoggled
+						break;
+					case "Sweeping Attack":
+						document.getElementById("stat_ability").src = "http://i.imgur.com/713Va07.png"; //sweeping attack untoggled
+						break;
+					case "Snipe":
+						document.getElementById("stat_ability").src = "http://i.imgur.com/FFbncgG.png"; //snipe untoggled
+						break;
+					case "Regeneration":
+						document.getElementById("stat_ability").src = "http://i.imgur.com/VujYsCC.png"; //regneration untoggled
+						break;
+					case "Disarm":
+						document.getElementById("stat_ability").src = "http://i.imgur.com/ZLs6ETc.png"; //disarm untoggled
+						break;
+					default:
+						return null;
+						break;
+				}
 			}
 			if(stats.cooldown!=null && stats.cooldown!=0)
 			{
@@ -684,6 +706,7 @@ Crafty.scene('Phase 3', function()
 					user.cooldown = 1;
 					target.health = healthTarget;
 					updateBattleLog(selected_unit.owner +"\'s "+ user.name + " has healed his " + target.name + " to a total of "+target.health.toString() + " hitpoints.");
+					document.getElementById("stat_ability").src = "http://i.imgur.com/ZAVh5ol.png"; //heal untoggled
 					break;
 				case 1: //growth
 					var new_unit = {src:user.src, src_select:user.src_select, name:"plant", ability:"Growth", cooldown:3, xcoor:xcoor, ycoor:ycoor, health:2, damage:2, range:2, movement:0, can_move:true, can_attack:true, is_dead:false, has_been_placed:true, arr_index:getPlayer(selected_unit.owner).unit_list.length};
@@ -691,6 +714,7 @@ Crafty.scene('Phase 3', function()
 					document.getElementById("X"+xcoor+"Y"+ycoor).src = new_unit.src;
 					user.cooldown = 3;
 					updateBattleLog(selected_unit.owner+" has spawned a new "+user.name+".");
+					document.getElementById("stat_ability").src = "http://i.imgur.com/Cla0Kbe.png"; //growth untoggled
 					break;
 				case 2: //sweeping attack
 					user.cooldown = 1;
@@ -756,6 +780,7 @@ Crafty.scene('Phase 3', function()
 						updatePlayersLive();
 					}
 					updateBattleLog(selected_unit.owner + "\'s "+ user.name + " has used sweeping attack.");
+					document.getElementById("stat_ability").src = "http://i.imgur.com/713Va07.png"; //sweeping attack untoggled
 					checkVictory();
 					break;
 				case 3: //snipe
@@ -771,6 +796,7 @@ Crafty.scene('Phase 3', function()
 					//animated_blood = setTimeout(deleteSplat(), 600);
 					var message = selected_unit.owner+"\'s "+user.name+" has sniped "+ player_name + "\'s " + target.name +" dealing 3 damage. "
 					updateBattleLog(message);
+					document.getElementById("stat_ability").src = "http://i.imgur.com/FFbncgG.png"; //snipe untoggled
 					if(target.health <= 0)
 					{
 						message = player_name + "\'s " + target.name + " has perished."
@@ -782,11 +808,12 @@ Crafty.scene('Phase 3', function()
 					}
 					checkVictory();
 					break;
-				case 4: //regen
+				case 4: //regeneration
 					user.cooldown = 1;
 					user.health = healthUser;
 					document.getElementById("stat_hp").innerHTML = user.health.toString();
 					updateBattleLog(selected_unit.owner+"\'s "+user.name+" has regenerated one hitpoint.");
+					document.getElementById("stat_ability").src = "http://i.imgur.com/VujYsCC.png"; // regeneration untoggled
 					break;
 				case 5: //disarm
 					var message = selected_unit.owner+"\'s "+user.name+" has disarmed " + player_name + "\'s " + target.name;
@@ -804,6 +831,7 @@ Crafty.scene('Phase 3', function()
 					}
 					user.cooldown = 2;
 					updateBattleLog(message);
+					document.getElementById("stat_ability").src = "http://i.imgur.com/ZLs6ETc.png"; //disarm untoggled
 					break;
 			}
 			user.can_attack = false;
@@ -824,8 +852,36 @@ Crafty.scene('Phase 3', function()
 				clearShadow();
 				generateShadow();
 			}
+			
+			
 			//Used for no-target abilities. Sends event once. Only from user client.
 			var user = getPlayer(player_name).unit_list[selected_unit.arr_index];
+			
+			switch(user.ability)
+				{
+					case "Heal":
+						document.getElementById("stat_ability").src = "http://i.imgur.com/ZLU0Rzm.gif"; //heal toggled
+						break;
+					case "Growth":
+						document.getElementById("stat_ability").src = "http://i.imgur.com/tP8FPId.gif"; //growth toggled
+						break;
+					case "Sweeping Attack":
+						document.getElementById("stat_ability").src = "http://i.imgur.com/3nAZ8QF.gif"; //sweeping attack toggled
+						break;
+					case "Snipe":
+						document.getElementById("stat_ability").src = "http://i.imgur.com/2Lo1JkF.gif"; //snipe toggled
+						break;
+					case "Regeneration":
+						document.getElementById("stat_ability").src = "http://i.imgur.com/PZSEm48.gif"; //regneration toggled
+						break;
+					case "Disarm":
+						document.getElementById("stat_ability").src = "http://i.imgur.com/cdCYIcr.gif"; //disarm toggled
+						break;
+					default:
+						return null;
+						break;
+				}
+			
 			if(user.ability == "Regeneration" && player_name == this_player_name)
 			{
 				events_locked = false;
@@ -1282,8 +1338,6 @@ Crafty.scene('Phase 3', function()
 			document.getElementById("next").style.display = "block";
 			document.getElementById("log").style.display = "block";
 			document.getElementById("battle_log").style.display = "block";
-			document.getElementById("stat_ability_box").onclick = function(){ sendEvent("AbilityButton", null, null); };
-			document.getElementById("stat_ability_box").style.display = "block";
 			document.getElementById("stat_cooldown_clock").style.display = "block";
 			document.getElementById("stat_cooldown_clock").style.visibility = "hidden";
 			
