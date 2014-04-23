@@ -1330,6 +1330,7 @@ Crafty.scene('Phase 3', function()
 			document.getElementById("yourUnitList").style.display = "none";
 			document.getElementById("ready").style.display = "none";
 			document.getElementById("reset").style.display = "none";
+			document.getElementById("stat_ability").onclick = eventSender();
 
 			//Generate tiles on grid.
 			for(var i = 0; i<14; ++i)
