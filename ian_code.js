@@ -1427,6 +1427,7 @@ Crafty.scene('Phase 3', function()
 			});
 		//Finish constructing phase 3.
 		function eventSender() {
+			console.log("AbilityButton toggled on!");
 			sendEvent("AbilityButton", null, null);
 		}
 		/*var count = 0;
